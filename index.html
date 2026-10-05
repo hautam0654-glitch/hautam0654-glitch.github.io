@@ -11,7 +11,7 @@
 <style>
 /* Layout: info strip + header + navy nav, a dark hero with a drawn gear set, section cards overlapping the hero, then one page per section. */
 :root{
-  --navy:#0F1E3D; --navy-2:#16294F; --navy-3:#0A1530; --amber:#F2A413; --amber-ink:#1A1300; --amber-soft:#FFF3D6;
+  --navy:#0F1E3D; --navy-2:color-mix(in srgb,var(--navy) 90%,#fff); --navy-3:color-mix(in srgb,var(--navy) 78%,#000); --amber:#F2A413; --amber-ink:#1A1300; --amber-soft:color-mix(in srgb,var(--amber) 18%,var(--surface));
   --bg:#F6F7FA; --surface:#FFFFFF; --surface-2:#F1F3F8; --ink:#0F1E3D; --muted:#5C667C; --line:#E1E5EE;
   --good:#0E9468; --good-soft:#E2F5EE; --danger:#C62828; --danger-soft:#FCE9E9; --blue:#2457E8; --blue-soft:#E8EEFF;
   --shadow:0 1px 2px rgba(15,30,61,.06),0 8px 24px rgba(15,30,61,.08);
@@ -20,7 +20,7 @@
 }
 @media (prefers-color-scheme:dark){:root{
   --bg:#0A1020; --surface:#111A30; --surface-2:#18233F; --ink:#E9EDF6; --muted:#93A0BA; --line:#24304D;
-  --amber-soft:#3A2C08; --good:#3FCB98; --good-soft:#123227; --danger:#FF6B6B; --danger-soft:#3A1A1A; --blue:#7C9EFF; --blue-soft:#1B2847;
+  --good:#3FCB98; --good-soft:#123227; --danger:#FF6B6B; --danger-soft:#3A1A1A; --blue:#7C9EFF; --blue-soft:#1B2847;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3); color-scheme:dark}}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -41,7 +41,7 @@ img{max-width:100%}
 .head{background:var(--surface);border-bottom:1px solid var(--line)}
 .head .in{display:flex;align-items:center;gap:20px;padding-block:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;min-width:0}
-.logo{width:48px;height:48px;border-radius:12px;background:var(--navy);display:grid;place-items:center;flex:none}
+.logo{width:48px;height:48px;border-radius:12px;background:var(--navy);display:grid;place-items:center;flex:none;color:var(--amber)}
 .logo svg{width:30px;height:30px}
 .brand b{display:block;font-size:19px;font-weight:800;line-height:1.15;color:var(--ink)}
 .brand span{font-size:12.5px;color:var(--muted)}
@@ -65,7 +65,7 @@ img{max-width:100%}
 /* hero */
 .hero{position:relative;background:var(--navy-3);color:#fff;overflow:hidden;isolation:isolate}
 .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:-2}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(10,21,48,.94) 0%,rgba(10,21,48,.78) 45%,rgba(10,21,48,.35) 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,color-mix(in srgb,var(--navy-3) 94%,transparent) 0%,color-mix(in srgb,var(--navy-3) 78%,transparent) 45%,color-mix(in srgb,var(--navy-3) 35%,transparent) 100%)}
 .hero canvas{position:absolute;right:-60px;top:50%;transform:translateY(-50%);width:min(620px,70vw);height:min(620px,70vw);z-index:-1;opacity:.9}
 .hero .in{padding-block:70px 150px}
 .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.04em;text-transform:uppercase}
@@ -78,7 +78,7 @@ img{max-width:100%}
 .pillbtn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
 
 /* overlapping section cards */
-.feat{margin-top:-96px;position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.feat{margin-top:-96px;position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
 .fcard{appearance:none;border:0;background:var(--navy);color:#fff;text-align:center;padding:44px 16px 22px;position:relative;cursor:pointer;border-radius:4px 4px var(--r) var(--r);box-shadow:var(--shadow);transition:transform .18s,background .18s;margin-top:34px;min-width:0}
 .fcard:hover{transform:translateY(-6px);background:var(--navy-2)}
 .fcard .bump{position:absolute;left:50%;top:-34px;transform:translateX(-50%);width:76px;height:68px;background:inherit;border-radius:38px 38px 0 0;display:grid;place-items:center;padding-top:8px}
@@ -219,8 +219,19 @@ label.f .field{color:var(--ink);font-weight:400;font-size:14.5px}
 footer{background:var(--navy-3);color:#C9D2E6;margin-top:64px;font-size:13.5px}
 footer .in{padding-block:26px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer b{color:#fff}
+/* admin */
+.adm{display:flex;flex-direction:column;gap:18px}
+.adm .panel h3{font-size:18px;font-weight:800;margin:0 0 4px}
+.adm .panel>p{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+.adm .stack{display:flex;flex-direction:column;gap:12px}
+.secrow{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--surface-2)}
+.secrow-f{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ck{display:inline-flex;gap:8px;align-items:center;font-size:14px}
+.colors{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end}
+.colors input[type=color]{width:56px;height:40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:2px;cursor:pointer}
+.savebar{position:sticky;bottom:12px;z-index:5;background:var(--navy);color:#fff;border-radius:14px;padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 
-@media (max-width:1000px){.feat{grid-template-columns:repeat(3,minmax(0,1fr))}.infos{display:none}}
+@media (max-width:1000px){.infos{display:none}}
 @media (max-width:760px){
   .in{padding-inline:16px}
   .hero .in{padding-block:44px 120px}
@@ -242,7 +253,7 @@ footer b{color:#fff}
 <div class="strip"><div class="in"><span id="strip-l"></span><span id="strip-r"></span></div></div>
 <header class="head"><div class="in">
   <button class="brand" data-go="home">
-    <span class="logo"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" stroke="#F2A413" stroke-width="2.4"/><g stroke="#F2A413" stroke-width="3.2" stroke-linecap="round"><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M6.8 25.2l2.8-2.8M22.4 9.6l2.8-2.8"/></g></svg></span>
+    <span class="logo"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2.4"/><g stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M6.8 25.2l2.8-2.8M22.4 9.6l2.8-2.8"/></g></svg></span>
     <span><b id="brand-name">Hồ sơ Ô tô</b><span id="brand-sub">Công nghệ Kỹ thuật Ô tô</span></span>
   </button>
   <div class="infos" id="infos"></div>
@@ -274,15 +285,36 @@ const IC = {
   cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'
 };
 /* the four item sections; "subjects" is handled separately */
-const SECS = {
+const DEFAULT_SECS = {
   papers:{label:"Bài báo", short:"Bài báo và báo cáo khoa học", slug:"bai-bao", one:"bài báo", blurb:"Bài báo, báo cáo khoa học, tiểu luận và các bài nghiên cứu.", f1:["authors","Tác giả","VD: Hầu N. M. Tâm, Nguyễn V. A."], f2:["venue","Nơi đăng / hội nghị","VD: Hội nghị Khoa học Sinh viên 2026"], layout:"cite"},
   slides:{label:"Slide", short:"Slide thuyết trình, báo cáo", slug:"slide", one:"slide", blurb:"Slide thuyết trình, báo cáo tiến độ và bài trình bày trên lớp.", f1:["context","Môn học / dịp trình bày","VD: Báo cáo đồ án Thiết kế ô tô"], layout:"card"},
   models:{label:"Thiết kế 3D", short:"Mô hình CAD và bản vẽ", slug:"thiet-ke-3d", one:"thiết kế", blurb:"Mô hình CAD, bản vẽ và các chi tiết thiết kế để in 3D.", f1:["software","Phần mềm","VD: SolidWorks, Fusion 360"], f2:["material","Vật liệu / cách chế tạo","VD: In 3D nhựa PLA"], layout:"card"},
   products:{label:"Sản phẩm", short:"Mô hình và đồ án đã chế tạo", slug:"san-pham", one:"sản phẩm", blurb:"Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.", f1:["context","Môn học / cuộc thi","VD: Racing Car 2026"], layout:"card"}
 };
-const SLUG2SEC = Object.fromEntries(Object.entries(SECS).map(([k,v]) => [v.slug, k]));
+let SECS = {}, SUBJ = {}, SLUG2SEC = {};
+IC.folder = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+const icon = k => IC[k] || IC.folder;
+function buildSecs(){
+  const cfg = (data.site && data.site.sections) || {}; const s0 = cfg.subjects || {};
+  SUBJ = {label:s0.label || "Môn học", short:s0.short || "Tài liệu các môn chuyên ngành", blurb:s0.blurb || "Tài liệu của các môn chuyên ngành, xếp theo học kỳ.", hidden:!!s0.hidden};
+  SECS = {};
+  for (const [k,d] of Object.entries(DEFAULT_SECS)){ const c = cfg[k] || {};
+    SECS[k] = Object.assign({}, d, {label:c.label || d.label, short:c.short || d.short, blurb:c.blurb || d.blurb, hidden:!!c.hidden, one:(c.label && c.label !== d.label) ? "mục" : d.one}); }
+  for (const [k,c] of Object.entries(cfg)){ if (!c || !c.custom || DEFAULT_SECS[k] || k === "subjects") continue;
+    SECS[k] = {label:c.label || "Mục mới", short:c.short || "", blurb:c.blurb || "", one:"mục", slug:k, f1:["context","Thông tin thêm","VD: thời gian, nơi thực hiện"], layout:c.layout === "cite" ? "cite" : "card", hidden:!!c.hidden, custom:true}; }
+  SLUG2SEC = Object.fromEntries(Object.entries(SECS).map(([k,v]) => [v.slug, k]));
+}
+const site = () => data.site || {};
+const txt = (group, key, def) => { const g = site()[group] || {}; return (g[key] === undefined || g[key] === null) ? def : g[key]; };
+function hexRgb(h){ const m = /^#?([0-9a-f]{6})$/i.exec(h || ""); if (!m) return null; const n = parseInt(m[1],16); return [n>>16 & 255, n>>8 & 255, n & 255]; }
+function applyTheme(){
+  const th = site().theme || {}; const r = document.documentElement.style;
+  if (hexRgb(th.navy)) r.setProperty("--navy", th.navy); else r.removeProperty("--navy");
+  const a = hexRgb(th.accent);
+  if (a){ r.setProperty("--amber", th.accent); r.setProperty("--amber-ink", (0.299*a[0] + 0.587*a[1] + 0.114*a[2]) > 150 ? "#141414" : "#FFFFFF"); } else { r.removeProperty("--amber"); r.removeProperty("--amber-ink"); }
+}
 
-let data = {profile:{}, settings:{showScores:true}, subjects:[], docs:[], items:[]};
+let data = {profile:{}, settings:{showScores:true}, site:{}, subjects:[], docs:[], items:[]};
 let dataSha = null, token = null;
 const st = {view:"home", code:null, sec:null, id:null, q:"", error:null, queue:[]};
 try { token = localStorage.getItem(TOKEN_KEY) || null; } catch(e){}
@@ -320,6 +352,8 @@ function normalize(){
   data.items = Array.isArray(data.items) ? data.items : [];
   data.settings = data.settings || {showScores:true};
   data.profile = data.profile || {};
+  data.site = (data.site && typeof data.site === "object") ? data.site : {};
+  buildSecs(); applyTheme();
 }
 async function loadData(){
   st.error = null;
@@ -373,14 +407,14 @@ function compressImage(file, max){
 function renderChrome(){
   const p = data.profile;
   $("strip-l").innerHTML = `Hồ sơ học tập của <b>${esc(p.name || "")}</b>`;
-  $("strip-r").innerHTML = token ? `Đang đăng nhập (chủ trang) · <button id="edit-profile">Sửa thông tin trang</button>` : esc(p.nganh || "");
+  $("strip-r").innerHTML = token ? `Đang đăng nhập (quản trị) · <button data-go="admin">Mở trang quản trị</button>` : esc(p.nganh || "");
   $("brand-name").textContent = "Hồ sơ Ô tô " + (p.lop || "");
   $("brand-sub").textContent = p.nganh || "Công nghệ Kỹ thuật Ô tô";
   $("infos").innerHTML = [[IC.cap,"Lớp",p.lop],[IC.pin,"Trường",p.truong],[IC.cal,"Niên khóa",p.nienKhoa]].filter(x=>x[2]).map(([i,k,v]) => `<div class="info">${i}<div><b>${esc(k)}</b><span>${esc(v)}</span></div></div>`).join("");
-  const cur = st.view === "home" ? "home" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
-  const tabs = [["home","Trang chủ"],["subjects","Môn học"]].concat(Object.entries(SECS).map(([k,s]) => [k,s.label]));
-  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${l}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${token ? "Đăng xuất" : "Đăng nhập"}</button>`;
-  $("foot-l").innerHTML = `<b>${esc(p.name || "")}</b> · ${esc([p.lop,p.truong].filter(Boolean).join(" · "))}`;
+  const cur = st.view === "home" ? "home" : st.view === "admin" ? "admin" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
+  const tabs = [["home","Trang chủ"]].concat(SUBJ.hidden ? [] : [["subjects",SUBJ.label]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k,s.label])).concat(token ? [["admin","Quản trị"]] : []);
+  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${token ? "Đăng xuất" : "Đăng nhập"}</button>`;
+  $("foot-l").innerHTML = `<b>${esc(p.name || "")}</b>${[p.lop,p.truong].filter(Boolean).length ? " · " + esc([p.lop,p.truong].filter(Boolean).join(" · ")) : ""}${site().footer ? "<br>" + esc(site().footer) : ""}`;
   const n = data.docs.length + data.items.length;
   $("foot-r").textContent = n + " mục đã đăng";
 }
@@ -389,26 +423,30 @@ function renderChrome(){
 function countOf(k){ return k === "subjects" ? data.subjects.length : data.items.filter(i => i.section === k).length; }
 function renderHome(){
   const p = data.profile;
-  const feats = [["subjects","Môn học","Tài liệu các môn chuyên ngành", data.subjects.length + " môn"]].concat(Object.entries(SECS).map(([k,s]) => [k, s.label, s.short, countOf(k) + " " + s.one]));
+  const feats = (SUBJ.hidden ? [] : [["subjects", SUBJ.label, SUBJ.short, data.subjects.length + " môn"]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k, s.label, s.short, countOf(k) + " " + s.one]));
+  const first = feats[0] ? feats[0][0] : null, second = SECS.products && !SECS.products.hidden ? "products" : (feats[1] ? feats[1][0] : null);
+  const showGear = txt("hero","gear",true) !== false, b1 = txt("hero","b1","XEM MÔN HỌC"), b2 = txt("hero","b2","SẢN PHẨM");
+  const eyebrow = txt("hero","eyebrow",[p.nganh, p.nienKhoa].filter(Boolean).join(" · "));
+  const nFiles = data.docs.filter(d => d.path).length + data.items.reduce((n,i) => n + (i.files||[]).length, 0);
   const recent = [...data.items.map(i => ({t:i.title, when:i.added, kind:SECS[i.section] ? SECS[i.section].label : "", go:`data-item="${esc(i.id)}"`, ext:(i.files && i.files[0]) ? extOfName(i.files[0].name) : "mục"})),
     ...data.docs.map(d => { const s = data.subjects.find(x => x.code === d.subject); return {t:d.title, when:d.added, kind:s ? s.name : "Môn học", go:`data-sub="${esc(d.subject)}"`, ext:extOfName(d.name) || (d.link ? "link" : "file")}; })]
     .sort((a,b) => String(b.when||"").localeCompare(String(a.when||""))).slice(0,6);
   $("main").innerHTML = `
-  <section class="hero"><div class="hero-bg" ${p.cover ? `style="background-image:url('${esc(href(p.cover))}')"` : ""}></div><canvas id="gear" width="900" height="900" aria-hidden="true" ${p.cover ? "hidden" : ""}></canvas>
-    <div class="in"><span class="eyebrow">${esc(p.truong || "Đại học Lạc Hồng")} · ${esc(p.nienKhoa || "")}</span>
-      <h1>Hồ sơ học tập <em>Kỹ thuật Ô tô</em></h1>
+  <section class="hero"><div class="hero-bg" ${p.cover ? `style="background-image:url('${esc(href(p.cover))}')"` : ""}></div><canvas id="gear" width="900" height="900" aria-hidden="true" ${showGear ? "" : "hidden"}></canvas>
+    <div class="in">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}
+      <h1>${esc(txt("hero","t1","Hồ sơ học tập"))} <em>${esc(txt("hero","t2","Kỹ thuật Ô tô"))}</em></h1>
       <p>${esc(p.intro || "")}</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="pillbtn" data-go="subjects">XEM MÔN HỌC</button><button class="pillbtn ghost" data-go="products">SẢN PHẨM</button></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">${first && b1 ? `<button class="pillbtn" data-go="${first}">${esc(b1)}</button>` : ""}${second && b2 ? `<button class="pillbtn ghost" data-go="${second}">${esc(b2)}</button>` : ""}</div>
     </div></section>
-  <div class="in"><div class="feat">${feats.map(([k,l,b,c]) => `<button class="fcard" data-go="${k}"><span class="bump">${IC[k]}</span><b>${esc(l)}</b><span>${esc(b)}</span><i>${esc(c)}</i></button>`).join("")}</div></div>
+  <div class="in"><div class="feat">${feats.map(([k,l,b,c]) => `<button class="fcard" data-go="${k}"><span class="bump">${icon(k)}</span><b>${esc(l)}</b><span>${esc(b)}</span><i>${esc(c)}</i></button>`).join("")}</div></div>
   ${st.error ? `<div class="in" style="margin-top:28px"><div class="empty"><h3>Không tải được dữ liệu</h3><p>${esc(st.error)}</p></div></div>` : ""}
-  <section class="sec"><div class="in"><div class="sec-title"><h2>Mới cập nhật</h2><p>Những tài liệu và sản phẩm vừa được đưa lên hồ sơ.</p></div>
+  ${txt("home","showRecent",true) === false ? "" : `<section class="sec"><div class="in"><div class="sec-title"><h2>${esc(txt("home","recentTitle","Mới cập nhật"))}</h2><p>${esc(txt("home","recentSub","Những tài liệu và sản phẩm vừa được đưa lên hồ sơ."))}</p></div>
     ${recent.length ? `<div class="docs" style="margin-top:0">${recent.map(r => `<div class="doc"><span class="ext ${extClass(r.ext)}">${esc(String(r.ext).slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(r.t)}</div><div class="d">${esc([r.kind, fmtDate(r.when)].filter(Boolean).join(" · "))}</div></div><div class="acts"><button class="btn sm navy" ${r.go}>Xem</button></div></div>`).join("")}</div>`
       : `<div class="empty"><h3>Chưa có mục nào</h3><p>${token ? "Chọn một mục ở trên rồi thêm tài liệu, bài báo, slide, thiết kế hoặc sản phẩm đầu tiên." : "Chủ trang chưa đăng nội dung."}</p></div>`}
-  </div></section>
-  <section class="band"><div class="in"><div class="sec-title"><h2>Hồ sơ bằng con số</h2></div>
-    <div class="stats"><div class="stat"><b>${data.subjects.length}</b><span>Môn chuyên ngành</span></div><div class="stat"><b>${data.docs.length}</b><span>Tài liệu môn học</span></div><div class="stat"><b>${countOf("papers") + countOf("slides")}</b><span>Bài báo và slide</span></div><div class="stat"><b>${countOf("models") + countOf("products")}</b><span>Thiết kế và sản phẩm</span></div></div>
-  </div></section>`;
+  </div></section>`}
+  ${txt("home","showStats",true) === false ? "" : `<section class="band"><div class="in"><div class="sec-title"><h2>${esc(txt("home","statsTitle","Hồ sơ bằng con số"))}</h2></div>
+    <div class="stats"><div class="stat"><b>${data.subjects.length}</b><span>Môn học</span></div><div class="stat"><b>${data.docs.length}</b><span>Tài liệu môn học</span></div><div class="stat"><b>${data.items.length}</b><span>Bài đăng ở các mục</span></div><div class="stat"><b>${nFiles}</b><span>File đính kèm</span></div></div>
+  </div></section>`}`;
   drawGear();
 }
 
@@ -419,6 +457,7 @@ function drawGear(){
   const c = $("gear"); if (!c || c.hidden) return; const g = c.getContext("2d"); const W = c.width, cx = W/2, cy = W/2;
   const m = 10.5, zs = 24, zp = 24, zr = 72; const rs = m*zs/2, rp = m*zp/2, rr = m*zr/2, a = rs + rp;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ac = (hexRgb((site().theme || {}).accent) || [242,164,19]).join(",");
   function gear(x, y, r, z, rot, internal, col){
     const ad = m, de = 1.25*m; const ro = internal ? r - ad : r + ad, ri = internal ? r + de : r - de; const p = Math.PI*2/z;
     g.beginPath();
@@ -434,8 +473,8 @@ function drawGear(){
     const th = reduce ? 0 : ts/9000;                 /* carrier angle, ring fixed */
     const sun = th*(1 + zr/zs), pl = th*(1 - zr/zp);
     g.clearRect(0,0,W,W);
-    gear(cx,cy,rr,zr,0,true,"rgba(242,164,19,.55)");
-    gear(cx,cy,rs,zs,sun,false,"rgba(242,164,19,.95)");
+    gear(cx,cy,rr,zr,0,true,`rgba(${ac},.55)`);
+    gear(cx,cy,rs,zs,sun,false,`rgba(${ac},.95)`);
     for (let k=0;k<3;k++){ const ang = th + k*Math.PI*2/3; const x = cx + a*Math.cos(ang), y = cy + a*Math.sin(ang);
       gear(x,y,rp,zp,pl + Math.PI/zp,false,"rgba(255,255,255,.75)"); }
     g.beginPath(); for (let k=0;k<3;k++){ const ang = th + k*Math.PI*2/3; const x = cx + a*Math.cos(ang), y = cy + a*Math.sin(ang); k ? g.lineTo(x,y) : g.moveTo(x,y); } g.closePath(); g.strokeStyle = "rgba(255,255,255,.25)"; g.lineWidth = 1.5; g.stroke();
@@ -459,7 +498,7 @@ function subjectList(q){
     return `<section class="sem"><div class="sem-head"><h3>${n ? "Học kỳ " + n : "Khác"}</h3><span>${n ? "Năm " + Math.ceil(n/2) + " · " : ""}${ss.length} môn</span></div><div class="grid">${ss.map(cardSub).join("")}</div></section>`; }).join("");
 }
 function renderSubjects(){
-  $("main").innerHTML = pageHead("Môn học", "Tài liệu của các môn chuyên ngành, xếp theo học kỳ.") + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm môn học…" value="${esc(st.q)}" aria-label="Tìm môn học">${token ? `<button class="btn primary" id="add-sub">+ Thêm môn</button>` : ""}</div><div id="list">${subjectList(st.q.trim().toLowerCase())}</div></div>`;
+  $("main").innerHTML = pageHead(SUBJ.label, SUBJ.blurb) + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm môn học…" value="${esc(st.q)}" aria-label="Tìm môn học">${token ? `<button class="btn primary" id="add-sub">+ Thêm môn</button>` : ""}</div><div id="list">${subjectList(st.q.trim().toLowerCase())}</div></div>`;
 }
 function rowDoc(d){
   const e = extOfName(d.name) || (d.link ? "link" : "file"); const h = d.path ? href(d.path) : safeUrl(d.link);
@@ -471,7 +510,7 @@ function renderSubject(){
   const s = data.subjects.find(x => x.code === st.code); if (!s){ st.view = "subjects"; return renderSubjects(); }
   const docs = docsOf(s.code).sort((a,b) => String(b.added||"").localeCompare(String(a.added||"")));
   const showScore = data.settings.showScores && s.score !== null && s.score !== undefined && s.score !== "";
-  let html = pageHead(s.name, "", ["Môn học", 'data-go="subjects"']) + `<div class="in page"><div class="subhead"><div style="min-width:0;flex:1 1 300px"><div class="code">Mã môn ${esc(s.code)}</div>
+  let html = pageHead(s.name, "", [SUBJ.label, 'data-go="subjects"']) + `<div class="in page"><div class="subhead"><div style="min-width:0;flex:1 1 300px"><div class="code">Mã môn ${esc(s.code)}</div>
     <div class="meta" style="margin-top:8px">${s.sem ? `<span class="pill">Học kỳ ${esc(s.sem)}</span>` : ""}${s.credits ? `<span class="pill">Hệ số ${esc(s.credits)}</span>` : ""}<span class="pill${docs.length ? " has" : ""}">${docs.length} tài liệu</span></div>
     ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="btn sm" id="edit-sub">Sửa môn</button><button class="btn sm" id="add-link">+ Thêm link (Drive, YouTube…)</button></div>` : ""}</div>
     ${showScore ? `<div class="big"><b>${fmtScore(s.score)}</b><span>Điểm trung bình</span></div>` : ""}</div>`;
@@ -487,7 +526,7 @@ function renderQueue(){ const el = $("queue"); if (!el) return;
 function itemMeta(i){ const S = SECS[i.section]; const bits = []; if (S.f1 && i[S.f1[0]]) bits.push(i[S.f1[0]]); if (i.date) bits.push(fmtDate(i.date)); return bits; }
 function cardItem(i){
   const n = (i.files||[]).length;
-  return `<button class="card" data-item="${esc(i.id)}">${i.cover ? `<img class="cover" src="${esc(href(i.cover))}" alt="${esc(i.title)}" loading="lazy">` : `<div class="cover ph">${IC[i.section]}</div>`}
+  return `<button class="card" data-item="${esc(i.id)}">${i.cover ? `<img class="cover" src="${esc(href(i.cover))}" alt="${esc(i.title)}" loading="lazy">` : `<div class="cover ph">${icon(i.section)}</div>`}
     <div class="card-b"><div class="t">${esc(i.title)}</div>${i.desc ? `<div class="d">${esc(i.desc)}</div>` : ""}<div class="m">${itemMeta(i).map(b => `<span>${esc(b)}</span>`).join("<span>·</span>")}${n ? `<span class="pill has">${n} file</span>` : ""}</div></div></button>`;
 }
 function citeItem(i){
@@ -520,18 +559,20 @@ function renderItem(){
 }
 
 /* ---------- routing ---------- */
-function render(){ renderChrome(); ({home:renderHome, subjects:renderSubjects, subject:renderSubject, section:renderSection, item:renderItem}[st.view] || renderHome)(); }
-function hashOf(){ return st.view === "home" ? "" : st.view === "subjects" ? "#mon-hoc" : st.view === "subject" ? "#mon-" + st.code : st.view === "section" ? "#" + SECS[st.sec].slug : "#muc-" + st.id; }
+function render(){ renderChrome(); if (st.view === "admin" && !token) st.view = "home"; if (st.view === "section" && !SECS[st.sec]) st.view = "home";
+  ({home:renderHome, subjects:renderSubjects, subject:renderSubject, section:renderSection, item:renderItem, admin:renderAdmin}[st.view] || renderHome)(); }
+function hashOf(){ return st.view === "home" ? "" : st.view === "admin" ? "#quan-tri" : st.view === "subjects" ? "#mon-hoc" : st.view === "subject" ? "#mon-" + st.code : st.view === "section" ? "#" + SECS[st.sec].slug : "#muc-" + st.id; }
 function go(view, arg){
   st.q = ""; st.view = view; st.code = st.id = null;
   if (view === "subject") st.code = arg; if (view === "section") st.sec = arg; if (view === "item"){ st.id = arg; const i = data.items.find(x => x.id === arg); st.sec = i ? i.section : null; }
-  if (view === "home" || view === "subjects" || view === "subject") st.sec = null;
+  if (view === "home" || view === "subjects" || view === "subject" || view === "admin") st.sec = null;
   const h = hashOf(); if (location.hash !== h) history.pushState(null, "", h || location.pathname);
   render(); window.scrollTo(0,0);
 }
 function fromHash(){
   const h = decodeURIComponent(location.hash.slice(1)); st.code = st.id = st.sec = null; st.view = "home";
   if (h === "mon-hoc") st.view = "subjects";
+  else if (h === "quan-tri") st.view = "admin";
   else if (SLUG2SEC[h]){ st.view = "section"; st.sec = SLUG2SEC[h]; }
   else if (h.startsWith("mon-") && data.subjects.some(s => s.code === h.slice(4))){ st.view = "subject"; st.code = h.slice(4); }
   else if (h.startsWith("muc-")){ const i = data.items.find(x => x.id === h.slice(4)); if (i){ st.view = "item"; st.id = i.id; st.sec = i.section; } }
@@ -566,7 +607,7 @@ async function addFiles(files){
 /* ---------- dialogs ---------- */
 const dlg = $("dlg");
 function openDlg(html){ dlg.innerHTML = html; if (!dlg.open){ try { dlg.showModal(); } catch(e){ dlg.setAttribute("open",""); } } dlg.scrollTop = 0; }
-function closeDlg(){ try { dlg.close(); } catch(e){ dlg.removeAttribute("open"); } dlg.innerHTML = ""; draft = null; }
+function closeDlg(){ try { dlg.close(); } catch(e){ dlg.removeAttribute("open"); } dlg.innerHTML = ""; if (st.view !== "admin") draft = null; }
 const dhead = t => `<div class="dh"><h3>${t}</h3><button type="button" class="x" data-close aria-label="Đóng">×</button></div>`;
 
 function loginDlg(){
@@ -612,18 +653,47 @@ function docDlg(d){
   <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit">Lưu</button></div></form>`);
   $("d-title").focus();
 }
-function profileDlg(){
-  const p = data.profile; const f = [["name","Họ tên"],["lop","Lớp"],["truong","Trường"],["nganh","Ngành"],["nienKhoa","Niên khóa"]];
+/* ---------- admin page: every text, section, colour of the site ---------- */
+let adm = null;
+function admRows(){
+  return adm.map((s,k) => `<div class="secrow" data-k="${k}">
+    <div class="two"><label class="f">Tên mục (hiện trên menu)<input class="field" data-a="label" value="${esc(s.label)}"></label><label class="f">Dòng mô tả trên thẻ trang chủ<input class="field" data-a="short" value="${esc(s.short)}"></label></div>
+    <label class="f">Mô tả ở đầu trang của mục<input class="field" data-a="blurb" value="${esc(s.blurb)}"></label>
+    <div class="secrow-f"><label class="ck"><input type="checkbox" data-a="show" ${s.hidden ? "" : "checked"}> Hiện mục này</label>
+      ${s.custom ? `<label class="ck">Kiểu hiển thị <select class="field" data-a="layout" style="width:auto;padding:5px 8px"><option value="card" ${s.layout==="card" ? "selected" : ""}>Thẻ có ảnh</option><option value="cite" ${s.layout==="cite" ? "selected" : ""}>Danh sách</option></select></label><button type="button" class="btn sm danger" data-rm-sec="${k}">Xóa mục</button>` : ""}</div></div>`).join("");
+}
+function admRead(){
+  document.querySelectorAll(".secrow").forEach(r => { const s = adm[Number(r.dataset.k)]; if (!s) return;
+    s.label = r.querySelector('[data-a="label"]').value.trim(); s.short = r.querySelector('[data-a="short"]').value.trim(); s.blurb = r.querySelector('[data-a="blurb"]').value.trim();
+    s.hidden = !r.querySelector('[data-a="show"]').checked; const l = r.querySelector('[data-a="layout"]'); if (l) s.layout = l.value; });
+}
+function renderAdmin(){
+  const p = data.profile; const th = site().theme || {};
+  adm = [{key:"subjects", label:SUBJ.label, short:SUBJ.short, blurb:SUBJ.blurb, hidden:SUBJ.hidden}].concat(Object.entries(SECS).map(([k,s]) => ({key:k, label:s.label, short:s.short, blurb:s.blurb, hidden:!!s.hidden, layout:s.layout, custom:!!s.custom})));
   draft = {cover:p.cover || null, newCover:null, files:[], newFiles:[], removed:[]};
-  openDlg(`<form id="prof-form" novalidate>${dhead("Thông tin trang")}<div class="db">${f.map(([k,l]) => `<label class="f">${l}<input class="field" id="p-${k}" value="${esc(p[k]||"")}"></label>`).join("")}
-    <label class="f">Lời giới thiệu<textarea class="field" id="p-intro" rows="3">${esc(p.intro||"")}</textarea></label>
-    <div><label class="f" style="margin-bottom:6px">Ảnh bìa trang chủ (không bắt buộc)</label><div class="picks" id="cover-box"></div></div>
-    <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" id="p-scores" ${data.settings.showScores ? "checked" : ""}> Hiện điểm trung bình của từng môn cho người xem</label>
-    <div class="msg" id="busy" hidden></div></div>
-  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="save-go">Lưu</button></div></form>`);
+  const inp = (id, label, val, ph) => `<label class="f">${label}<input class="field" id="${id}" value="${esc(val ?? "")}" ${ph ? `placeholder="${esc(ph)}"` : ""}></label>`;
+  $("main").innerHTML = pageHead("Quản trị", "Sửa mọi nội dung của trang: chữ, các mục, màu sắc. Bấm “Lưu thay đổi” ở cuối trang để áp dụng.") + `<div class="in page"><form id="adm-form" class="adm" novalidate>
+    <div class="panel"><h3>Thông tin chung</h3><p>Hiện ở đầu trang và chân trang. Để trống ô nào thì ô đó không hiện.</p>
+      <div class="stack"><div class="two">${inp("p-name","Họ tên",p.name)}${inp("p-lop","Lớp",p.lop)}</div><div class="two">${inp("p-truong","Trường",p.truong)}${inp("p-nganh","Ngành",p.nganh)}</div><div class="two">${inp("p-nienKhoa","Niên khóa",p.nienKhoa)}${inp("s-footer","Dòng chữ thêm ở chân trang",site().footer,"VD: Liên hệ: email của bạn")}</div></div></div>
+    <div class="panel"><h3>Trang chủ</h3><p>Phần mở đầu có bánh răng và các tiêu đề bên dưới.</p>
+      <div class="stack">${inp("h-eyebrow","Dòng chữ nhỏ phía trên tiêu đề",txt("hero","eyebrow",[p.nganh,p.nienKhoa].filter(Boolean).join(" · ")))}
+        <div class="two">${inp("h-t1","Tiêu đề – phần chữ trắng",txt("hero","t1","Hồ sơ học tập"))}${inp("h-t2","Tiêu đề – phần chữ màu nhấn",txt("hero","t2","Kỹ thuật Ô tô"))}</div>
+        <label class="f">Lời giới thiệu<textarea class="field" id="p-intro" rows="3">${esc(p.intro || "")}</textarea></label>
+        <div class="two">${inp("h-b1","Chữ trên nút thứ nhất",txt("hero","b1","XEM MÔN HỌC"))}${inp("h-b2","Chữ trên nút thứ hai",txt("hero","b2","SẢN PHẨM"))}</div>
+        <div><label class="f" style="margin-bottom:6px">Ảnh nền phần mở đầu (không bắt buộc)</label><div class="picks" id="cover-box"></div></div>
+        <label class="ck"><input type="checkbox" id="h-gear" ${txt("hero","gear",true) !== false ? "checked" : ""}> Hiện bộ bánh răng đang quay</label>
+        <div class="two">${inp("o-recentTitle","Tiêu đề phần “Mới cập nhật”",txt("home","recentTitle","Mới cập nhật"))}${inp("o-statsTitle","Tiêu đề phần con số",txt("home","statsTitle","Hồ sơ bằng con số"))}</div>
+        ${inp("o-recentSub","Dòng mô tả dưới “Mới cập nhật”",txt("home","recentSub","Những tài liệu và sản phẩm vừa được đưa lên hồ sơ."))}
+        <div class="secrow-f"><label class="ck"><input type="checkbox" id="o-showRecent" ${txt("home","showRecent",true) !== false ? "checked" : ""}> Hiện phần “Mới cập nhật”</label><label class="ck"><input type="checkbox" id="o-showStats" ${txt("home","showStats",true) !== false ? "checked" : ""}> Hiện phần con số</label></div></div></div>
+    <div class="panel"><h3>Các mục của trang</h3><p>Đổi tên, mô tả, ẩn hoặc hiện từng mục. Bạn cũng có thể tạo mục mới, ví dụ Chứng chỉ hay Cuộc thi.</p>
+      <div class="stack" id="sec-rows">${admRows()}</div><button type="button" class="btn" id="add-sec" style="margin-top:12px">+ Thêm mục mới</button></div>
+    <div class="panel"><h3>Giao diện</h3><p>Màu của menu, phần mở đầu, nút bấm và bánh răng.</p>
+      <div class="colors"><label class="f">Màu nền chính<input type="color" id="t-navy" value="${esc(hexRgb(th.navy) ? th.navy : "#0F1E3D")}"></label><label class="f">Màu nhấn<input type="color" id="t-accent" value="${esc(hexRgb(th.accent) ? th.accent : "#F2A413")}"></label><button type="button" class="btn sm" id="t-reset">Về màu mặc định</button></div>
+      <label class="ck" style="margin-top:14px"><input type="checkbox" id="p-scores" ${data.settings.showScores ? "checked" : ""}> Hiện điểm trung bình của từng môn cho người xem</label></div>
+    <div class="savebar"><span id="busy">Thay đổi chỉ có hiệu lực sau khi lưu.</span><button class="btn primary" type="submit" id="save-go">Lưu thay đổi</button></div>
+  </form></div>`;
   drawCoverBox();
 }
-
 /* item editor: cover + files are staged in `draft` and uploaded on save */
 let draft = null;
 function drawCoverBox(){
@@ -672,10 +742,13 @@ document.addEventListener("click", async e => {
   if (e.target.matches('input[type="file"]')) return;
   const t = e.target.closest("button, [data-close], .drop"); if (!t) return;
   if (t.hasAttribute("data-close")){ closeDlg(); return; }
-  if (t.dataset.go){ const k = t.dataset.go; if (k === "home") go("home"); else if (k === "subjects") go("subjects"); else go("section", k); return; }
+  if (t.dataset.go){ const k = t.dataset.go; if (k === "home") go("home"); else if (k === "subjects") go("subjects"); else if (k === "admin") go("admin"); else go("section", k); return; }
   if (t.dataset.sub){ go("subject", t.dataset.sub); return; }
   if (t.dataset.item){ go("item", t.dataset.item); return; }
   if (t.dataset.editDoc){ docDlg(data.docs.find(d => d.id === t.dataset.editDoc)); return; }
+  if (t.dataset.rmSec !== undefined){ admRead(); const k = Number(t.dataset.rmSec); const sdel = adm[k]; if (!sdel) return;
+    if (data.items.some(i => i.section === sdel.key)){ toast("Mục này còn bài đăng. Hãy xóa hết bài trong mục trước."); return; }
+    adm.splice(k,1); $("sec-rows").innerHTML = admRows(); return; }
   if (t.dataset.rmOld !== undefined){ const f = draft.files.splice(Number(t.dataset.rmOld),1)[0]; if (f) draft.removed.push(f.path); drawFileBox(); return; }
   if (t.dataset.rmNew !== undefined){ draft.newFiles.splice(Number(t.dataset.rmNew),1); drawFileBox(); return; }
   if (t.dataset.delDoc){
@@ -687,7 +760,8 @@ document.addEventListener("click", async e => {
   }
   switch (t.id){
     case "login-btn": token ? signOut() : loginDlg(); break;
-    case "edit-profile": profileDlg(); break;
+    case "add-sec": admRead(); adm.push({key:"c-" + Date.now().toString(36), label:"Mục mới", short:"", blurb:"", hidden:false, layout:"card", custom:true}); $("sec-rows").innerHTML = admRows(); { const rows = document.querySelectorAll(".secrow"); const last = rows[rows.length-1]; if (last){ const f = last.querySelector('[data-a="label"]'); f.focus(); f.select(); } } break;
+    case "t-reset": $("t-navy").value = "#0F1E3D"; $("t-accent").value = "#F2A413"; break;
     case "add-sub": subjectDlg(null); break;
     case "edit-sub": subjectDlg(data.subjects.find(s => s.code === st.code)); break;
     case "add-link": docDlg(null); break;
@@ -749,14 +823,23 @@ document.addEventListener("submit", async e => {
       else { er.textContent = err.code === 403 ? "Mã truy cập thiếu quyền ghi (Contents: Read and write)." : "Chưa tải lên được: " + (err.message || "lỗi mạng") + ". Thử lại."; er.hidden = false; }
     }
   }
-  if (f.id === "prof-form"){
-    const busyEl = $("busy"); const busy = m => { busyEl.textContent = m; busyEl.hidden = false; }; $("save-go").disabled = true;
+  if (f.id === "adm-form"){
+    const busyEl = $("busy"); const busy = m => { busyEl.textContent = m; }; $("save-go").disabled = true; admRead();
     try {
-      const up = await uploadDraft("trang", busy);
+      const up = await uploadDraft("trang", busy); busy("Đang lưu…");
       ["name","lop","truong","nganh","nienKhoa"].forEach(k => data.profile[k] = $("p-"+k).value.trim());
       data.profile.intro = $("p-intro").value.trim(); data.profile.cover = up.cover || null; data.settings.showScores = $("p-scores").checked;
-      const olds = up.olds; closeDlg(); if (await commit("Cập nhật thông tin trang", "Đã lưu thông tin.")){ for (const p of olds){ try { await removeFile(p, "Dọn ảnh cũ"); } catch(_){} } }
-    } catch(err){ $("save-go").disabled = false; busy("Chưa lưu được. Thử lại."); }
+      const secs = {}; adm.forEach(a => { secs[a.key] = {label:a.label, short:a.short, blurb:a.blurb, hidden:!!a.hidden}; if (a.custom){ secs[a.key].custom = true; secs[a.key].layout = a.layout === "cite" ? "cite" : "card"; if (!secs[a.key].label) secs[a.key].label = "Mục mới"; } });
+      const navy = $("t-navy").value, accent = $("t-accent").value;
+      data.site = {
+        hero:{eyebrow:$("h-eyebrow").value.trim(), t1:$("h-t1").value.trim(), t2:$("h-t2").value.trim(), b1:$("h-b1").value.trim(), b2:$("h-b2").value.trim(), gear:$("h-gear").checked},
+        home:{recentTitle:$("o-recentTitle").value.trim(), recentSub:$("o-recentSub").value.trim(), statsTitle:$("o-statsTitle").value.trim(), showRecent:$("o-showRecent").checked, showStats:$("o-showStats").checked},
+        sections:secs, footer:$("s-footer").value.trim(),
+        theme:{navy:navy.toUpperCase() === "#0F1E3D" ? "" : navy, accent:accent.toUpperCase() === "#F2A413" ? "" : accent}
+      };
+      const olds = up.olds; buildSecs(); applyTheme();
+      if (await commit("Cập nhật nội dung trang", "Đã lưu. Người xem bên ngoài sẽ thấy sau khoảng 1 phút.")){ for (const pth of olds){ try { await removeFile(pth, "Dọn ảnh cũ"); } catch(_){} } }
+    } catch(err){ $("save-go").disabled = false; busy(err.code === 401 ? "Phiên đăng nhập hết hạn. Hãy đăng nhập lại." : "Chưa lưu được. Kiểm tra mạng rồi thử lại."); }
   }
 });
 document.addEventListener("input", e => { if (e.target.id === "q"){ st.q = e.target.value; const q = st.q.trim().toLowerCase(); $("list").innerHTML = st.view === "subjects" ? subjectList(q) : itemList(st.sec, q); } });
@@ -770,7 +853,7 @@ document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === 
 ["dragenter","dragover"].forEach(ev => document.addEventListener(ev, e => { const d = e.target.closest && e.target.closest("#drop"); if (d){ e.preventDefault(); d.classList.add("over"); } }));
 document.addEventListener("dragleave", e => { const d = e.target.closest && e.target.closest("#drop"); if (d && !d.contains(e.relatedTarget)) d.classList.remove("over"); });
 document.addEventListener("drop", e => { const d = e.target.closest && e.target.closest("#drop"); if (d){ e.preventDefault(); d.classList.remove("over"); if (e.dataTransfer && e.dataTransfer.files.length) addFiles([...e.dataTransfer.files]); } });
-dlg.addEventListener("cancel", () => { dlg.innerHTML = ""; draft = null; });
+dlg.addEventListener("cancel", () => { dlg.innerHTML = ""; if (st.view !== "admin") draft = null; });
 window.addEventListener("popstate", () => { fromHash(); render(); });
 
 
