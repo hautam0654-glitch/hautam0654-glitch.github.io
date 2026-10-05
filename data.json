@@ -502,14 +502,6 @@
     "short": "Mô hình và đồ án đã chế tạo",
     "blurb": "Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.",
     "hidden": false
-   },
-   "c-muvbmxhi": {
-    "label": "Địa chỉ / Map",
-    "short": "",
-    "blurb": "",
-    "hidden": false,
-    "custom": true,
-    "layout": "card"
    }
   },
   "footer": "",
