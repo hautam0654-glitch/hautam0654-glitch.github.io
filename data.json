@@ -473,6 +473,24 @@
    "links": [],
    "software": "",
    "material": ""
+  },
+  {
+   "id": "xmuvburj42ldw",
+   "section": "products",
+   "added": "2026-10-05T14:10:42.784Z",
+   "title": "Sàn Rc",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "files/san-pham/Nhom-4mm-muvbuq1rsi.dxf",
+     "name": "Nhom 4mm.dxf",
+     "size": 21196
+    }
+   ],
+   "links": [],
+   "context": ""
   }
  ],
  "site": {
