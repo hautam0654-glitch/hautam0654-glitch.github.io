@@ -364,6 +364,60 @@
    ],
    "links": [],
    "context": ""
+  },
+  {
+   "id": "xmuvbgxa0pm80",
+   "section": "models",
+   "added": "2026-10-05T13:59:57.048Z",
+   "title": "AMT 2 CẤP",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "files/thiet-ke-3d/A4-Main-Shaft-SPUR-Gears-muvbgebx9k.stl",
+     "name": "A4-Main Shaft SPUR Gears.stl",
+     "size": 1840384
+    },
+    {
+     "path": "files/thiet-ke-3d/A2-Sliding-Dog-Clutch-muvbghdp75.stl",
+     "name": "A2-Sliding Dog Clutch.stl",
+     "size": 288484
+    },
+    {
+     "path": "files/thiet-ke-3d/A1-Main-Shaft-muvbgjhpjm.stl",
+     "name": "A1-Main Shaft.stl",
+     "size": 42284
+    },
+    {
+     "path": "files/thiet-ke-3d/B1-Counter-Shaft-muvbgkz73y.stl",
+     "name": "B1-Counter Shaft.stl",
+     "size": 66684
+    },
+    {
+     "path": "files/thiet-ke-3d/B2-Counter-Shaft-SPUR-Gears-muvbgmhq85.stl",
+     "name": "B2-Counter Shaft SPUR Gears.stl",
+     "size": 1730484
+    },
+    {
+     "path": "files/thiet-ke-3d/B2-Counter-Shaft-HERRINGBONE-Gears-muvbgpphw1.stl",
+     "name": "B2-Counter Shaft HERRINGBONE Gears.stl",
+     "size": 1493984
+    },
+    {
+     "path": "files/thiet-ke-3d/C2-Bearings-muvbgsbxt7.stl",
+     "name": "C2-Bearings.stl",
+     "size": 621584
+    },
+    {
+     "path": "files/thiet-ke-3d/C1-Housing-muvbgur1id.stl",
+     "name": "C1-Housing.stl",
+     "size": 1493184
+    }
+   ],
+   "links": [],
+   "software": "",
+   "material": ""
   }
  ],
  "site": {
