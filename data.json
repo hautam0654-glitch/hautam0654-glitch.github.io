@@ -102,5 +102,59 @@
   }
  ],
  "docs": [],
- "items": []
+ "items": [],
+ "site": {
+  "hero": {
+   "eyebrow": "Công nghệ Kỹ thuật Ô tô · 2024–2028",
+   "t1": "Hồ sơ học tập",
+   "t2": "Kỹ thuật Ô tô",
+   "b1": "XEM MÔN HỌC",
+   "b2": "SẢN PHẨM",
+   "gear": true
+  },
+  "home": {
+   "recentTitle": "Mới cập nhật",
+   "recentSub": "Những tài liệu và sản phẩm vừa được đưa lên hồ sơ.",
+   "statsTitle": "Hồ sơ bằng con số",
+   "showRecent": true,
+   "showStats": true
+  },
+  "sections": {
+   "subjects": {
+    "label": "Môn học",
+    "short": "Tài liệu các môn chuyên ngành",
+    "blurb": "Tài liệu của các môn chuyên ngành, xếp theo học kỳ.",
+    "hidden": false
+   },
+   "papers": {
+    "label": "Bài báo",
+    "short": "Bài báo và báo cáo khoa học",
+    "blurb": "Bài báo, báo cáo khoa học, tiểu luận và các bài nghiên cứu.",
+    "hidden": false
+   },
+   "slides": {
+    "label": "Slide",
+    "short": "Slide thuyết trình, báo cáo",
+    "blurb": "Slide thuyết trình, báo cáo tiến độ và bài trình bày trên lớp.",
+    "hidden": false
+   },
+   "models": {
+    "label": "Thiết kế 3D",
+    "short": "Mô hình CAD và bản vẽ",
+    "blurb": "Mô hình CAD, bản vẽ và các chi tiết thiết kế để in 3D.",
+    "hidden": false
+   },
+   "products": {
+    "label": "Sản phẩm",
+    "short": "Mô hình và đồ án đã chế tạo",
+    "blurb": "Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.",
+    "hidden": false
+   }
+  },
+  "footer": "",
+  "theme": {
+   "navy": "",
+   "accent": ""
+  }
+ }
 }
