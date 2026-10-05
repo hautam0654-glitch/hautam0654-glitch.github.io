@@ -3,115 +3,202 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Tài liệu Ô tô 24OT113</title>
-<meta name="description" content="Kho tài liệu các môn chuyên ngành Công nghệ Kỹ thuật Ô tô – Hầu Ngọc Minh Tâm, Đại học Lạc Hồng.">
+<title>Hồ sơ Ô tô 24OT113</title>
+<meta name="description" content="Hồ sơ học tập ngành Công nghệ Kỹ thuật Ô tô của Hầu Ngọc Minh Tâm – Đại học Lạc Hồng: môn học, bài báo, slide, thiết kế 3D và sản phẩm.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap">
 <style>
-/* Layout: top bar + hero, then subject cards grouped by semester; a subject opens into its document list with a drop zone for the owner. */
+/* Layout: info strip + header + navy nav, a dark hero with a drawn gear set, section cards overlapping the hero, then one page per section. */
 :root{
-  --bg:#F3F5F9; --surface:#FFFFFF; --surface-2:#F6F8FB; --ink:#0E1626; --muted:#5A6478; --line:#E2E6EE;
-  --accent:#2457E8; --accent-soft:#E8EEFF; --accent-ink:#FFFFFF;
-  --good:#0E9468; --good-soft:#E2F5EE; --warm:#D9620F; --warm-soft:#FDEEE4; --danger:#C62828; --danger-soft:#FCE9E9;
-  --shadow:0 1px 2px rgba(14,22,38,.05),0 4px 16px rgba(14,22,38,.06);
-  --font:"Be Vietnam Pro","Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif; --r:14px;
+  --navy:#0F1E3D; --navy-2:#16294F; --navy-3:#0A1530; --amber:#F2A413; --amber-ink:#1A1300; --amber-soft:#FFF3D6;
+  --bg:#F6F7FA; --surface:#FFFFFF; --surface-2:#F1F3F8; --ink:#0F1E3D; --muted:#5C667C; --line:#E1E5EE;
+  --good:#0E9468; --good-soft:#E2F5EE; --danger:#C62828; --danger-soft:#FCE9E9; --blue:#2457E8; --blue-soft:#E8EEFF;
+  --shadow:0 1px 2px rgba(15,30,61,.06),0 8px 24px rgba(15,30,61,.08);
+  --font:"Be Vietnam Pro","Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif; --r:14px; --w:1160px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root{
-  --bg:#0A0E15; --surface:#121925; --surface-2:#172031; --ink:#E8ECF4; --muted:#8C97AD; --line:#232D3E;
-  --accent:#7097FF; --accent-soft:#1B2847; --accent-ink:#0A0E15;
-  --good:#3FCB98; --good-soft:#123227; --warm:#FF8F4F; --warm-soft:#3A2416; --danger:#FF6B6B; --danger-soft:#3A1A1A;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}}
+  --bg:#0A1020; --surface:#111A30; --surface-2:#18233F; --ink:#E9EDF6; --muted:#93A0BA; --line:#24304D;
+  --amber-soft:#3A2C08; --good:#3FCB98; --good-soft:#123227; --danger:#FF6B6B; --danger-soft:#3A1A1A; --blue:#7C9EFF; --blue-soft:#1B2847;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3); color-scheme:dark}}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 html,body,button,input,select,textarea,dialog{font-family:var(--font)}
-body{margin:0;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font:inherit;color:inherit}
-a{color:var(--accent)}
+a{color:var(--blue)}
+img{max-width:100%}
 [hidden]{display:none!important}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.in{max-width:var(--w);margin:0 auto;padding-inline:20px}
 
-.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top-in{max-width:1120px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink);min-width:0;background:none;border:0;cursor:pointer;padding:0}
-.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--good));color:#fff;display:grid;place-items:center;font-size:14px;font-weight:800;flex:none}
-.brand span.t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.grow{flex:1}
-.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:22px 110px}
+/* strip + header */
+.strip{background:var(--navy-3);color:#C9D2E6;font-size:13px}
+.strip .in{display:flex;justify-content:space-between;gap:12px;padding-block:8px;flex-wrap:wrap}
+.strip b{color:#fff;font-weight:600}
+.strip button{background:none;border:0;color:var(--amber);font-weight:600;cursor:pointer;padding:0;font-size:13px;text-decoration:underline}
+.head{background:var(--surface);border-bottom:1px solid var(--line)}
+.head .in{display:flex;align-items:center;gap:20px;padding-block:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;min-width:0}
+.logo{width:48px;height:48px;border-radius:12px;background:var(--navy);display:grid;place-items:center;flex:none}
+.logo svg{width:30px;height:30px}
+.brand b{display:block;font-size:19px;font-weight:800;line-height:1.15;color:var(--ink)}
+.brand span{font-size:12.5px;color:var(--muted)}
+.infos{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+.info{display:flex;gap:10px;align-items:center}
+.info svg{width:22px;height:22px;color:var(--amber);flex:none}
+.info b{display:block;font-size:13.5px;line-height:1.2}
+.info span{font-size:12.5px;color:var(--muted)}
 
-.btn{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;color:var(--ink);text-decoration:none;white-space:nowrap}
+/* nav */
+.navwrap{position:sticky;top:0;z-index:20;background:var(--navy)}
+.nav{display:flex;align-items:stretch;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{appearance:none;border:0;background:none;color:#D5DCEC;font-weight:600;font-size:14px;padding:14px 16px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
+.nav button:hover{color:#fff}
+.nav button[aria-current="page"]{color:#fff;border-bottom-color:var(--amber)}
+.nav .sp{flex:1}
+.nav .cta{position:sticky;right:0;background:var(--amber);color:var(--amber-ink);font-weight:700;border-bottom:0;padding-inline:20px;clip-path:polygon(12px 0,100% 0,100% 100%,0 100%)}
+.nav .cta:hover{color:var(--amber-ink);filter:brightness(1.06)}
+
+/* hero */
+.hero{position:relative;background:var(--navy-3);color:#fff;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:-2}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(10,21,48,.94) 0%,rgba(10,21,48,.78) 45%,rgba(10,21,48,.35) 100%)}
+.hero canvas{position:absolute;right:-60px;top:50%;transform:translateY(-50%);width:min(620px,70vw);height:min(620px,70vw);z-index:-1;opacity:.9}
+.hero .in{padding-block:70px 150px}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.04em;text-transform:uppercase}
+.hero .eyebrow::before{content:"";width:28px;height:2px;background:var(--amber)}
+.hero h1{font-size:clamp(34px,5.6vw,60px);font-weight:900;line-height:1.08;margin:14px 0 16px;letter-spacing:-.02em;max-width:16ch;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero p{max-width:54ch;color:#D5DCEC;margin:0 0 26px;font-size:16px}
+.pillbtn{appearance:none;border:0;background:var(--amber);color:var(--amber-ink);font-weight:700;font-size:14px;letter-spacing:.03em;padding:13px 26px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.pillbtn:hover{filter:brightness(1.07)}
+.pillbtn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+
+/* overlapping section cards */
+.feat{margin-top:-96px;position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.fcard{appearance:none;border:0;background:var(--navy);color:#fff;text-align:center;padding:44px 16px 22px;position:relative;cursor:pointer;border-radius:4px 4px var(--r) var(--r);box-shadow:var(--shadow);transition:transform .18s,background .18s;margin-top:34px;min-width:0}
+.fcard:hover{transform:translateY(-6px);background:var(--navy-2)}
+.fcard .bump{position:absolute;left:50%;top:-34px;transform:translateX(-50%);width:76px;height:68px;background:inherit;border-radius:38px 38px 0 0;display:grid;place-items:center;padding-top:8px}
+.fcard .bump svg{width:28px;height:28px;color:var(--amber)}
+.fcard b{display:block;font-size:18px;font-weight:800;line-height:1.25}
+.fcard span{display:block;font-size:13px;color:#C9D2E6;margin-top:6px}
+.fcard i{display:inline-block;font-style:normal;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--amber-ink);background:var(--amber);padding:2px 12px;border-radius:999px}
+
+/* sections */
+.sec{padding-block:64px 8px}
+.sec-title{text-align:center;margin-bottom:34px}
+.sec-title h2{font-size:clamp(26px,3.6vw,36px);font-weight:800;margin:0;letter-spacing:-.015em;text-wrap:balance}
+.sec-title h2::after{content:"";display:block;width:44px;height:3px;background:var(--navy);margin:14px auto 0}
+@media (prefers-color-scheme:dark){.sec-title h2::after{background:var(--amber)}}
+.sec-title p{color:var(--muted);max-width:60ch;margin:14px auto 0}
+.band{background:linear-gradient(to bottom,transparent 55%,var(--amber) 55%);margin-top:56px;padding-bottom:0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:38px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:13.5px;color:var(--muted)}
+
+.page-head{background:var(--navy);color:#fff;padding-block:40px}
+.page-head .crumbs{font-size:13px;color:#C9D2E6;margin-bottom:6px}
+.page-head .crumbs button{background:none;border:0;color:var(--amber);cursor:pointer;padding:0;font-weight:600}
+.page-head h1{font-size:clamp(28px,4vw,40px);font-weight:900;margin:0;letter-spacing:-.015em;text-wrap:balance}
+.page-head p{color:#D5DCEC;margin:8px 0 0;max-width:64ch}
+.page{padding-block:28px 40px}
+
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.bar .field{flex:1 1 240px;width:auto}
+.btn{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;color:var(--ink);text-decoration:none;white-space:nowrap}
 .btn:hover{border-color:var(--muted)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn.primary:hover{filter:brightness(1.07)}
+.btn.primary{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.navy{background:var(--navy);border-color:var(--navy);color:#fff}
 .btn.danger{color:var(--danger)}
 .btn.danger.armed{background:var(--danger);border-color:var(--danger);color:#fff}
-.btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
+.btn.sm{padding:5px 11px;font-size:13px;border-radius:8px}
 .btn:disabled{opacity:.55;cursor:default}
-.field{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 12px;min-width:0;outline:none;width:100%}
-.field:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;min-width:0;outline:none;width:100%}
+.field:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
 
-.hero{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(closest-side,var(--accent-soft),transparent);pointer-events:none}
-.eyebrow{font-size:12.5px;font-weight:600;color:var(--accent);position:relative}
-h1{font-size:clamp(25px,3.6vw,36px);font-weight:800;line-height:1.15;margin:6px 0 8px;letter-spacing:-.015em;text-wrap:balance;position:relative}
-.intro{color:var(--muted);margin:0;max-width:66ch;position:relative}
-.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative}
-.fact{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px}
-.fact b{font-weight:600}
-.fact span{color:var(--muted);margin-right:5px}
-
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0 4px}
-.bar .field{flex:1 1 240px;width:auto}
-.sem{margin-top:26px}
-.sem-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
-.sem-head h2{font-size:19px;font-weight:800;margin:0}
+.sem{margin-top:28px}
+.sem-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;border-left:4px solid var(--amber);padding-left:12px}
+.sem-head h3{font-size:19px;font-weight:800;margin:0}
 .sem-head span{font-size:13px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .sub{appearance:none;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s;min-width:0}
-.sub:hover{transform:translateY(-3px);border-color:var(--accent)}
+.sub:hover{transform:translateY(-3px);border-color:var(--amber)}
 .sub-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .code{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .sub-name{font-weight:700;line-height:1.35;font-size:15.5px}
-.score{font-weight:800;font-size:17px;padding:2px 10px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font-variant-numeric:tabular-nums;flex:none}
+.score{font-weight:800;font-size:17px;padding:2px 10px;border-radius:10px;background:var(--blue-soft);color:var(--blue);font-variant-numeric:tabular-nums;flex:none}
 .score.top{background:var(--good-soft);color:var(--good)}
 .sub-foot{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);margin-top:auto;flex-wrap:wrap}
-.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted)}
-.pill.has{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.pill{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted)}
+.pill.has{background:var(--amber-soft);border-color:transparent;color:var(--ink)}
 
-.crumb{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+/* item cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{appearance:none;text-align:left;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .15s,border-color .15s;min-width:0}
+.card:hover{transform:translateY(-4px);border-color:var(--amber)}
+.cover{aspect-ratio:16/10;width:100%;object-fit:cover;display:block;background:var(--surface-2)}
+.cover.ph{display:grid;place-items:center;background:linear-gradient(135deg,var(--navy),var(--navy-2));color:var(--amber)}
+.cover.ph svg{width:46px;height:46px;opacity:.9}
+.card-b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;border-top:3px solid var(--amber)}
+.card-b .t{font-weight:700;line-height:1.35;font-size:15.5px}
+.card-b .d{color:var(--muted);font-size:13.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-b .m{display:flex;gap:6px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);align-items:center}
+.cites{display:flex;flex-direction:column;gap:12px}
+.cite{appearance:none;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:6px var(--r) var(--r) 6px;padding:16px 18px;cursor:pointer;box-shadow:var(--shadow);display:block;width:100%}
+.cite:hover{border-color:var(--amber)}
+.cite .t{font-weight:700;font-size:16px;line-height:1.4}
+.cite .a{color:var(--muted);font-size:14px;margin-top:2px}
+.cite .v{font-style:italic}
+.cite .m{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+/* subject + docs */
 .subhead{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
-.subhead h2{font-size:clamp(21px,3vw,28px);font-weight:800;margin:2px 0 6px;line-height:1.2;text-wrap:balance}
 .subhead .meta{display:flex;gap:8px;flex-wrap:wrap}
 .subhead .big{margin-left:auto;text-align:center}
-.subhead .big b{display:block;font-size:34px;font-weight:800;line-height:1;color:var(--good);font-variant-numeric:tabular-nums}
+.subhead .big b{display:block;font-size:36px;font-weight:900;line-height:1;color:var(--good);font-variant-numeric:tabular-nums}
 .subhead .big span{font-size:12px;color:var(--muted)}
-
 .drop{margin-top:16px;border:2px dashed var(--line);border-radius:var(--r);padding:26px 18px;text-align:center;color:var(--muted);background:var(--surface);cursor:pointer;transition:border-color .15s,background .15s}
-.drop.over{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.drop.over{border-color:var(--amber);background:var(--amber-soft);color:var(--ink)}
 .drop b{color:var(--ink);display:block;font-size:16px;margin-bottom:2px}
 .docs{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
 .doc{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
 .doc:first-child{border-top:0}
-.ext{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.02em;background:var(--accent-soft);color:var(--accent)}
-.ext.pdf{background:var(--danger-soft);color:var(--danger)} .ext.ppt{background:var(--warm-soft);color:var(--warm)} .ext.xls,.ext.img{background:var(--good-soft);color:var(--good)}
+.ext{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--blue-soft);color:var(--blue)}
+.ext.pdf{background:var(--danger-soft);color:var(--danger)} .ext.ppt{background:var(--amber-soft);color:var(--ink)} .ext.xls,.ext.img{background:var(--good-soft);color:var(--good)} .ext.cad{background:var(--navy);color:var(--amber)}
 .doc .t{font-weight:600;overflow-wrap:anywhere}
 .doc .d{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
 .doc .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.empty{border:1.5px dashed var(--line);border-radius:var(--r);padding:32px 20px;text-align:center;color:var(--muted);margin-top:16px;background:var(--surface)}
+.empty{border:1.5px dashed var(--line);border-radius:var(--r);padding:36px 20px;text-align:center;color:var(--muted);background:var(--surface)}
 .empty h3{font-size:18px;font-weight:800;color:var(--ink);margin:0 0 4px}
-.empty p{margin:0 auto;max-width:52ch}
+.empty p{margin:0 auto 12px;max-width:52ch}
 .note{font-size:13px;color:var(--muted);margin-top:10px}
-
 .queue{margin-top:12px;display:flex;flex-direction:column;gap:8px}
 .q{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13.5px}
 .q-top{display:flex;justify-content:space-between;gap:10px}
 .q-top span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .prog{height:6px;border-radius:999px;background:var(--line);margin-top:8px;overflow:hidden}
-.prog i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.prog i{display:block;height:100%;background:var(--amber);width:0;transition:width .2s}
 .q.err{border-color:var(--danger);color:var(--danger)} .q.done .prog i{background:var(--good)}
 
-dialog{border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);padding:0;width:min(560px,calc(100% - 24px));max-height:calc(100% - 24px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
-dialog::backdrop{background:rgba(8,12,20,.55);backdrop-filter:blur(3px)}
+/* detail */
+.detail{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}
+.detail .pic{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--surface)}
+.detail .pic img{display:block;width:100%}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.spec{display:grid;grid-template-columns:110px minmax(0,1fr);font-size:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.spec>div{padding:7px 12px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.spec>div:nth-child(odd){background:var(--surface-2);color:var(--muted);font-size:13px}
+.spec>div:nth-last-child(-n+2){border-bottom:0}
+.desc{white-space:pre-wrap;margin:0 0 14px}
+
+/* dialog */
+dialog{border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);padding:0;width:min(620px,calc(100% - 24px));max-height:calc(100% - 24px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(8,14,30,.6);backdrop-filter:blur(3px)}
 .dh{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 8px}
 .dh h3{font-size:20px;font-weight:800;margin:0;flex:1;line-height:1.25}
 .x{appearance:none;border:0;background:var(--surface-2);width:34px;height:34px;border-radius:10px;font-size:20px;line-height:1;cursor:pointer;color:var(--muted);flex:none}
@@ -122,353 +209,506 @@ label.f .field{color:var(--ink);font-weight:400;font-size:14.5px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .msg{font-size:13.5px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
 .msg.err{background:var(--danger-soft);border-color:transparent;color:var(--danger)}
-ol.steps{margin:0;padding-left:20px;font-size:14px;color:var(--muted)} ol.steps b{color:var(--ink)}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:40;font-size:14px;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.owner-chip{font-size:12.5px;font-weight:600;color:var(--good);background:var(--good-soft);padding:4px 10px;border-radius:999px;white-space:nowrap}
-footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-@media (max-width:640px){
-  .top-in,.wrap{padding-inline:16px}
-  .hero{padding:20px;border-radius:16px}
+.picks{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.picks img{width:110px;aspect-ratio:16/10;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.chips{display:flex;flex-direction:column;gap:6px}
+.chipf{display:flex;gap:8px;align-items:center;justify-content:space-between;font-size:13.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.chipf span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 18px;border-radius:12px;z-index:60;font-size:14px;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.3);border-left:4px solid var(--amber)}
+
+footer{background:var(--navy-3);color:#C9D2E6;margin-top:64px;font-size:13.5px}
+footer .in{padding-block:26px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer b{color:#fff}
+
+@media (max-width:1000px){.feat{grid-template-columns:repeat(3,minmax(0,1fr))}.infos{display:none}}
+@media (max-width:760px){
+  .in{padding-inline:16px}
+  .hero .in{padding-block:44px 120px}
+  .hero canvas{opacity:.35;right:-120px}
+  .feat{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .fcard b{font-size:16px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .detail{grid-template-columns:1fr}
   .doc{grid-template-columns:40px minmax(0,1fr)}
   .doc .acts{grid-column:2;justify-content:flex-start}
   .ext{width:40px;height:40px}
   .two{grid-template-columns:1fr}
   .subhead .big{margin-left:0}
-  .owner-chip{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<div class="top"><div class="top-in">
-  <button class="brand" id="home"><span class="logo" id="logo">HT</span><span class="t">Tài liệu Ô tô 24OT113</span></button>
-  <span class="grow"></span>
-  <span class="owner-chip" id="owner-chip" hidden>Đang đăng nhập (chủ trang)</span>
-  <button class="btn" id="login-btn">Đăng nhập</button>
-</div></div>
-<div class="wrap">
-  <main id="main"></main>
-  <footer><span id="foot-l"></span><span id="foot-r"></span></footer>
-</div>
+<div class="strip"><div class="in"><span id="strip-l"></span><span id="strip-r"></span></div></div>
+<header class="head"><div class="in">
+  <button class="brand" data-go="home">
+    <span class="logo"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" stroke="#F2A413" stroke-width="2.4"/><g stroke="#F2A413" stroke-width="3.2" stroke-linecap="round"><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M6.8 25.2l2.8-2.8M22.4 9.6l2.8-2.8"/></g></svg></span>
+    <span><b id="brand-name">Hồ sơ Ô tô</b><span id="brand-sub">Công nghệ Kỹ thuật Ô tô</span></span>
+  </button>
+  <div class="infos" id="infos"></div>
+</div></header>
+<div class="navwrap"><div class="in"><nav class="nav" id="nav" aria-label="Các mục"></nav></div></div>
+<main id="main"></main>
+<footer><div class="in"><span id="foot-l"></span><span id="foot-r"></span></div></footer>
 <dialog id="dlg"></dialog>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 (function(){
 "use strict";
-/* ---------- where the site lives ---------- */
 const OWNER = "hautam0654-glitch", REPO = "hautam0654-glitch.github.io", BRANCH = "main";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
 const TOKEN_KEY = "tl-oto-token";
 const MAX_FILE = 40 * 1024 * 1024;
-const KINDS = ["Giáo trình","Bài giảng / Slide","Bài tập","Đề thi / Ôn tập","Báo cáo / Đồ án","Bản vẽ / CAD","Ghi chép","Khác"];
+const DOC_KINDS = ["Giáo trình","Bài giảng / Slide","Bài tập","Đề thi / Ôn tập","Báo cáo / Đồ án","Bản vẽ / CAD","Ghi chép","Khác"];
 
-/* ---------- state ---------- */
-let data = {profile:{}, settings:{showScores:true}, subjects:[], docs:[]};
-let dataSha = null;
-let token = null;
-const st = {view:"home", code:null, q:"", loaded:false, error:null, queue:[]};
+const IC = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>',
+  subjects:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>',
+  papers:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>',
+  slides:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M10 8l4 2-4 2z"/></svg>',
+  models:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>',
+  products:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.1-.7-.7-2.1z"/></svg>',
+  cap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'
+};
+/* the four item sections; "subjects" is handled separately */
+const SECS = {
+  papers:{label:"Bài báo", short:"Bài báo và báo cáo khoa học", slug:"bai-bao", one:"bài báo", blurb:"Bài báo, báo cáo khoa học, tiểu luận và các bài nghiên cứu.", f1:["authors","Tác giả","VD: Hầu N. M. Tâm, Nguyễn V. A."], f2:["venue","Nơi đăng / hội nghị","VD: Hội nghị Khoa học Sinh viên 2026"], layout:"cite"},
+  slides:{label:"Slide", short:"Slide thuyết trình, báo cáo", slug:"slide", one:"slide", blurb:"Slide thuyết trình, báo cáo tiến độ và bài trình bày trên lớp.", f1:["context","Môn học / dịp trình bày","VD: Báo cáo đồ án Thiết kế ô tô"], layout:"card"},
+  models:{label:"Thiết kế 3D", short:"Mô hình CAD và bản vẽ", slug:"thiet-ke-3d", one:"thiết kế", blurb:"Mô hình CAD, bản vẽ và các chi tiết thiết kế để in 3D.", f1:["software","Phần mềm","VD: SolidWorks, Fusion 360"], f2:["material","Vật liệu / cách chế tạo","VD: In 3D nhựa PLA"], layout:"card"},
+  products:{label:"Sản phẩm", short:"Mô hình và đồ án đã chế tạo", slug:"san-pham", one:"sản phẩm", blurb:"Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.", f1:["context","Môn học / cuộc thi","VD: Racing Car 2026"], layout:"card"}
+};
+const SLUG2SEC = Object.fromEntries(Object.entries(SECS).map(([k,v]) => [v.slug, k]));
+
+let data = {profile:{}, settings:{showScores:true}, subjects:[], docs:[], items:[]};
+let dataSha = null, token = null;
+const st = {view:"home", code:null, sec:null, id:null, q:"", error:null, queue:[]};
 try { token = localStorage.getItem(TOKEN_KEY) || null; } catch(e){}
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const safeUrl = u => /^https?:\/\//i.test(String(u||"").trim()) ? String(u).trim() : "";
-const uid = () => "d" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-const fmtSize = b => !b ? "" : b < 1024*1024 ? Math.max(1,Math.round(b/1024)) + " KB" : (b/1048576).toFixed(1).replace(".",",") + " MB";
+const uid = () => "x" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const fmtSize = b => !b ? "" : b < 1048576 ? Math.max(1,Math.round(b/1024)) + " KB" : (b/1048576).toFixed(1).replace(".",",") + " MB";
 const fmtScore = s => (s === null || s === undefined || s === "") ? "" : Number(s).toFixed(1).replace(".",",");
-const initials = n => { const w = String(n||"").trim().split(/\s+/).filter(Boolean); return ((w[0]||"?")[0] + (w.length>1 ? w[w.length-1][0] : "")).toUpperCase(); };
+const fmtDate = d => { if (!d) return ""; const t = new Date(d); return isNaN(t) ? "" : t.toLocaleDateString("vi-VN"); };
+const href = p => p.split("/").map(encodeURIComponent).join("/");
 function b64utf8(str){ const bytes = new TextEncoder().encode(str); let bin = ""; for (let i=0;i<bytes.length;i+=0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000)); return btoa(bin); }
 function utf8b64(b64){ const bin = atob(b64.replace(/\s/g,"")); const bytes = new Uint8Array(bin.length); for (let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
 function slugFile(name){
   const dot = name.lastIndexOf("."); const ext = dot > 0 ? name.slice(dot+1).toLowerCase().replace(/[^a-z0-9]/g,"") : "";
-  let base = (dot > 0 ? name.slice(0,dot) : name).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60) || "file";
-  return base + "-" + Date.now().toString(36) + (ext ? "." + ext : "");
+  const base = (dot > 0 ? name.slice(0,dot) : name).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60) || "file";
+  return base + "-" + Date.now().toString(36) + Math.random().toString(36).slice(2,4) + (ext ? "." + ext : "");
 }
-function extOf(d){ const n = d.name || d.path || ""; const m = /\.([a-z0-9]+)$/i.exec(n); return m ? m[1].toLowerCase() : (d.link ? "link" : "file"); }
-function extClass(e){ if (e==="pdf") return "pdf"; if (/^pptx?$/.test(e)) return "ppt"; if (/^(xlsx?|csv)$/.test(e)) return "xls"; if (/^(png|jpe?g|gif|webp)$/.test(e)) return "img"; return ""; }
-
+function extOfName(n){ const m = /\.([a-z0-9]+)$/i.exec(n || ""); return m ? m[1].toLowerCase() : ""; }
+function extClass(e){ if (e==="pdf") return "pdf"; if (/^pptx?$/.test(e)) return "ppt"; if (/^(xlsx?|csv)$/.test(e)) return "xls"; if (/^(png|jpe?g|gif|webp)$/.test(e)) return "img"; if (/^(stl|step|stp|sldprt|sldasm|f3d|iges|igs|obj|3mf|dwg|dxf)$/.test(e)) return "cad"; return ""; }
 let toastT;
 function toast(m){ const t=$("toast"); t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,4200); }
 
-/* ---------- GitHub API (only used when the owner is signed in) ---------- */
+/* ---------- GitHub API (owner only) ---------- */
 async function gh(path, opts){
   const r = await fetch(API + path, Object.assign({}, opts, {headers:Object.assign({"Accept":"application/vnd.github+json","Authorization":"Bearer "+token,"X-GitHub-Api-Version":"2022-11-28"}, (opts&&opts.headers)||{})}));
   if (r.status === 401){ const e = new Error("Mã truy cập hết hạn hoặc không đúng."); e.code = 401; throw e; }
   if (!r.ok){ const e = new Error("GitHub trả về lỗi " + r.status); e.code = r.status; throw e; }
   return r.status === 204 ? null : r.json();
 }
+function normalize(){
+  data.subjects = Array.isArray(data.subjects) ? data.subjects : [];
+  data.docs = Array.isArray(data.docs) ? data.docs : [];
+  data.items = Array.isArray(data.items) ? data.items : [];
+  data.settings = data.settings || {showScores:true};
+  data.profile = data.profile || {};
+}
 async function loadData(){
   st.error = null;
   try {
-    if (token){
-      const j = await gh(`/contents/data.json?ref=${BRANCH}&t=${Date.now()}`);
-      dataSha = j.sha; data = JSON.parse(utf8b64(j.content));
-    } else {
-      const r = await fetch("data.json?t=" + Date.now(), {cache:"no-store"});
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      data = await r.json();
-    }
+    if (token){ const j = await gh(`/contents/data.json?ref=${BRANCH}&t=${Date.now()}`); dataSha = j.sha; data = JSON.parse(utf8b64(j.content)); }
+    else { const r = await fetch("data.json?t=" + Date.now(), {cache:"no-store"}); if (!r.ok) throw new Error("HTTP " + r.status); data = await r.json(); }
   } catch(e){
     if (e.code === 401){ signOut(true); return loadData(); }
     st.error = "Chưa tải được dữ liệu. Kiểm tra mạng rồi tải lại trang.";
   }
-  data.subjects = Array.isArray(data.subjects) ? data.subjects : [];
-  data.docs = Array.isArray(data.docs) ? data.docs : [];
-  data.settings = data.settings || {showScores:true};
-  data.profile = data.profile || {};
-  st.loaded = true;
+  normalize();
 }
 async function saveData(message){
   const body = () => JSON.stringify({message, branch:BRANCH, sha:dataSha, content:b64utf8(JSON.stringify(data, null, 1))});
-  try {
-    const j = await gh("/contents/data.json", {method:"PUT", body:body()});
-    dataSha = j.content.sha;
-  } catch(e){
-    if (e.code === 409 || e.code === 422){
-      const cur = await gh(`/contents/data.json?ref=${BRANCH}&t=${Date.now()}`); dataSha = cur.sha;
-      const j = await gh("/contents/data.json", {method:"PUT", body:body()}); dataSha = j.content.sha;
-    } else throw e;
+  try { const j = await gh("/contents/data.json", {method:"PUT", body:body()}); dataSha = j.content.sha; }
+  catch(e){
+    if (e.code === 409 || e.code === 422){ const cur = await gh(`/contents/data.json?ref=${BRANCH}&t=${Date.now()}`); dataSha = cur.sha; const j = await gh("/contents/data.json", {method:"PUT", body:body()}); dataSha = j.content.sha; }
+    else throw e;
   }
 }
 function putFile(path, base64, message, onProgress){
   return new Promise((res, rej) => {
     const x = new XMLHttpRequest();
-    x.open("PUT", API + "/contents/" + path.split("/").map(encodeURIComponent).join("/"));
+    x.open("PUT", API + "/contents/" + href(path));
     x.setRequestHeader("Accept","application/vnd.github+json"); x.setRequestHeader("Authorization","Bearer "+token);
-    x.upload.onprogress = e => { if (e.lengthComputable) onProgress(e.loaded/e.total); };
+    x.upload.onprogress = e => { if (e.lengthComputable && onProgress) onProgress(e.loaded/e.total); };
     x.onload = () => x.status >= 200 && x.status < 300 ? res(JSON.parse(x.responseText)) : rej(Object.assign(new Error("GitHub trả về lỗi " + x.status), {code:x.status}));
     x.onerror = () => rej(new Error("Mất kết nối khi tải lên."));
     x.send(JSON.stringify({message, branch:BRANCH, content:base64}));
   });
 }
-function readBase64(file){ return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1] || ""); fr.onerror = () => rej(new Error("Không đọc được file.")); fr.readAsDataURL(file); }); }
+async function removeFile(path, why){
+  try { const f = await gh("/contents/" + href(path) + "?ref=" + BRANCH); await gh("/contents/" + href(path), {method:"DELETE", body:JSON.stringify({message:why, sha:f.sha, branch:BRANCH})}); }
+  catch(e){ if (e.code !== 404) throw e; }
+}
+function readBase64(blob){ return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1] || ""); fr.onerror = () => rej(new Error("Không đọc được file.")); fr.readAsDataURL(blob); }); }
+function compressImage(file, max){
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file); const img = new Image();
+    img.onload = () => {
+      let w = img.naturalWidth, h = img.naturalHeight; const s = Math.min(1, max/Math.max(w,h)); w = Math.round(w*s); h = Math.round(h*s);
+      const c = document.createElement("canvas"); c.width = w; c.height = h; const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0,0,w,h); g.drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url); c.toBlob(b => b ? res(b) : rej(new Error("Không nén được ảnh")), "image/jpeg", .82);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error("Không đọc được ảnh")); };
+    img.src = url;
+  });
+}
 
-/* ---------- rendering ---------- */
-function docsOf(code){ return data.docs.filter(d => d.subject === code); }
-function scoreHtml(s){ if (!data.settings.showScores || s.score === null || s.score === undefined || s.score === "") return ""; return `<span class="score${Number(s.score) >= 9 ? " top" : ""}" title="Điểm trung bình môn">${fmtScore(s.score)}</span>`; }
-
+/* ---------- chrome ---------- */
 function renderChrome(){
   const p = data.profile;
-  $("logo").textContent = initials(p.name || "HT");
-  $("login-btn").textContent = token ? "Đăng xuất" : "Đăng nhập";
-  $("owner-chip").hidden = !token;
-  $("foot-l").textContent = [p.name, p.truong].filter(Boolean).join(" · ");
-  $("foot-r").textContent = data.docs.length + " tài liệu · " + data.subjects.length + " môn";
+  $("strip-l").innerHTML = `Hồ sơ học tập của <b>${esc(p.name || "")}</b>`;
+  $("strip-r").innerHTML = token ? `Đang đăng nhập (chủ trang) · <button id="edit-profile">Sửa thông tin trang</button>` : esc(p.nganh || "");
+  $("brand-name").textContent = "Hồ sơ Ô tô " + (p.lop || "");
+  $("brand-sub").textContent = p.nganh || "Công nghệ Kỹ thuật Ô tô";
+  $("infos").innerHTML = [[IC.cap,"Lớp",p.lop],[IC.pin,"Trường",p.truong],[IC.cal,"Niên khóa",p.nienKhoa]].filter(x=>x[2]).map(([i,k,v]) => `<div class="info">${i}<div><b>${esc(k)}</b><span>${esc(v)}</span></div></div>`).join("");
+  const cur = st.view === "home" ? "home" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
+  const tabs = [["home","Trang chủ"],["subjects","Môn học"]].concat(Object.entries(SECS).map(([k,s]) => [k,s.label]));
+  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${l}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${token ? "Đăng xuất" : "Đăng nhập"}</button>`;
+  $("foot-l").innerHTML = `<b>${esc(p.name || "")}</b> · ${esc([p.lop,p.truong].filter(Boolean).join(" · "))}`;
+  const n = data.docs.length + data.items.length;
+  $("foot-r").textContent = n + " mục đã đăng";
 }
 
+/* ---------- home ---------- */
+function countOf(k){ return k === "subjects" ? data.subjects.length : data.items.filter(i => i.section === k).length; }
 function renderHome(){
-  const p = data.profile; const q = st.q.trim().toLowerCase();
-  let html = `<header class="hero">
-    <div class="eyebrow">${esc(p.nganh || "Công nghệ Kỹ thuật Ô tô")}${p.nienKhoa ? " · " + esc(p.nienKhoa) : ""}</div>
-    <h1>Tài liệu các môn chuyên ngành</h1>
-    <p class="intro">${esc(p.intro || "")}</p>
-    <div class="facts">${[["Sinh viên",p.name],["Lớp",p.lop],["Trường",p.truong]].filter(f=>f[1]).map(([k,v])=>`<span class="fact"><span>${esc(k)}</span><b>${esc(v)}</b></span>`).join("")}</div>
-  </header>`;
-  html += `<div class="bar"><input class="field" id="q" type="search" placeholder="Tìm môn học hoặc tài liệu…" value="${esc(st.q)}" aria-label="Tìm kiếm">
-    ${token ? `<button class="btn" id="edit-profile">Sửa thông tin</button><button class="btn primary" id="add-sub">+ Thêm môn</button>` : ""}</div>`;
-  if (st.error) html += `<div class="empty"><h3>Không tải được dữ liệu</h3><p>${esc(st.error)}</p></div>`;
-  html += `<div id="list">${homeList(q)}</div>`;
-  $("main").innerHTML = html;
+  const p = data.profile;
+  const feats = [["subjects","Môn học","Tài liệu các môn chuyên ngành", data.subjects.length + " môn"]].concat(Object.entries(SECS).map(([k,s]) => [k, s.label, s.short, countOf(k) + " " + s.one]));
+  const recent = [...data.items.map(i => ({t:i.title, when:i.added, kind:SECS[i.section] ? SECS[i.section].label : "", go:`data-item="${esc(i.id)}"`, ext:(i.files && i.files[0]) ? extOfName(i.files[0].name) : "mục"})),
+    ...data.docs.map(d => { const s = data.subjects.find(x => x.code === d.subject); return {t:d.title, when:d.added, kind:s ? s.name : "Môn học", go:`data-sub="${esc(d.subject)}"`, ext:extOfName(d.name) || (d.link ? "link" : "file")}; })]
+    .sort((a,b) => String(b.when||"").localeCompare(String(a.when||""))).slice(0,6);
+  $("main").innerHTML = `
+  <section class="hero"><div class="hero-bg" ${p.cover ? `style="background-image:url('${esc(href(p.cover))}')"` : ""}></div><canvas id="gear" width="900" height="900" aria-hidden="true" ${p.cover ? "hidden" : ""}></canvas>
+    <div class="in"><span class="eyebrow">${esc(p.truong || "Đại học Lạc Hồng")} · ${esc(p.nienKhoa || "")}</span>
+      <h1>Hồ sơ học tập <em>Kỹ thuật Ô tô</em></h1>
+      <p>${esc(p.intro || "")}</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="pillbtn" data-go="subjects">XEM MÔN HỌC</button><button class="pillbtn ghost" data-go="products">SẢN PHẨM</button></div>
+    </div></section>
+  <div class="in"><div class="feat">${feats.map(([k,l,b,c]) => `<button class="fcard" data-go="${k}"><span class="bump">${IC[k]}</span><b>${esc(l)}</b><span>${esc(b)}</span><i>${esc(c)}</i></button>`).join("")}</div></div>
+  ${st.error ? `<div class="in" style="margin-top:28px"><div class="empty"><h3>Không tải được dữ liệu</h3><p>${esc(st.error)}</p></div></div>` : ""}
+  <section class="sec"><div class="in"><div class="sec-title"><h2>Mới cập nhật</h2><p>Những tài liệu và sản phẩm vừa được đưa lên hồ sơ.</p></div>
+    ${recent.length ? `<div class="docs" style="margin-top:0">${recent.map(r => `<div class="doc"><span class="ext ${extClass(r.ext)}">${esc(String(r.ext).slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(r.t)}</div><div class="d">${esc([r.kind, fmtDate(r.when)].filter(Boolean).join(" · "))}</div></div><div class="acts"><button class="btn sm navy" ${r.go}>Xem</button></div></div>`).join("")}</div>`
+      : `<div class="empty"><h3>Chưa có mục nào</h3><p>${token ? "Chọn một mục ở trên rồi thêm tài liệu, bài báo, slide, thiết kế hoặc sản phẩm đầu tiên." : "Chủ trang chưa đăng nội dung."}</p></div>`}
+  </div></section>
+  <section class="band"><div class="in"><div class="sec-title"><h2>Hồ sơ bằng con số</h2></div>
+    <div class="stats"><div class="stat"><b>${data.subjects.length}</b><span>Môn chuyên ngành</span></div><div class="stat"><b>${data.docs.length}</b><span>Tài liệu môn học</span></div><div class="stat"><b>${countOf("papers") + countOf("slides")}</b><span>Bài báo và slide</span></div><div class="stat"><b>${countOf("models") + countOf("products")}</b><span>Thiết kế và sản phẩm</span></div></div>
+  </div></section>`;
+  drawGear();
 }
-function homeList(q){
-  if (q){
-    const subs = data.subjects.filter(s => (s.name + " " + s.code).toLowerCase().includes(q));
-    const docs = data.docs.filter(d => [d.title,d.kind,d.note,d.name].join(" ").toLowerCase().includes(q));
-    if (!subs.length && !docs.length) return `<div class="empty"><h3>Không tìm thấy</h3><p>Không có môn học hay tài liệu nào khớp “${esc(st.q)}”.</p></div>`;
-    let h = "";
-    if (subs.length) h += `<section class="sem"><div class="sem-head"><h2>Môn học</h2><span>${subs.length} kết quả</span></div><div class="grid">${subs.map(cardSub).join("")}</div></section>`;
-    if (docs.length) h += `<section class="sem"><div class="sem-head"><h2>Tài liệu</h2><span>${docs.length} kết quả</span></div><div class="docs">${docs.map(d => rowDoc(d, true)).join("")}</div></section>`;
-    return h;
+
+/* gear set drawn to scale: ring 72 teeth, sun 24, three planets 24 (module shared, centre distance = m(zs+zp)/2) */
+let gearRaf = 0;
+function drawGear(){
+  cancelAnimationFrame(gearRaf);
+  const c = $("gear"); if (!c || c.hidden) return; const g = c.getContext("2d"); const W = c.width, cx = W/2, cy = W/2;
+  const m = 10.5, zs = 24, zp = 24, zr = 72; const rs = m*zs/2, rp = m*zp/2, rr = m*zr/2, a = rs + rp;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function gear(x, y, r, z, rot, internal, col){
+    const ad = m, de = 1.25*m; const ro = internal ? r - ad : r + ad, ri = internal ? r + de : r - de; const p = Math.PI*2/z;
+    g.beginPath();
+    for (let i=0;i<z;i++){ const t = rot + i*p;
+      const pts = [[ri,-.25],[ro,-.11],[ro,.11],[ri,.25]];
+      pts.forEach(([rad,f],k) => { const ang = t + f*p; const X = x + rad*Math.cos(ang), Y = y + rad*Math.sin(ang); (i===0&&k===0) ? g.moveTo(X,Y) : g.lineTo(X,Y); });
+    }
+    g.closePath(); g.strokeStyle = col; g.lineWidth = 2; g.stroke();
+    if (!internal){ g.beginPath(); g.arc(x,y,r*.28,0,Math.PI*2); g.stroke(); g.beginPath(); g.arc(x,y,r*.62,0,Math.PI*2); g.globalAlpha = .35; g.stroke(); g.globalAlpha = 1; }
+    else { g.beginPath(); g.arc(x,y,r+de+26,0,Math.PI*2); g.stroke(); }
   }
-  if (!data.subjects.length) return st.error ? "" : `<div class="empty"><h3>Chưa có môn học nào</h3><p>${token ? "Bấm “+ Thêm môn” để tạo môn đầu tiên." : "Chủ trang chưa thêm môn học."}</p></div>`;
-  const sems = [...new Set(data.subjects.map(s => Number(s.sem)||0))].sort((a,b)=>a-b);
-  return sems.map(n => {
-    const subs = data.subjects.filter(s => (Number(s.sem)||0) === n).sort((a,b) => (Number(b.score)||0) - (Number(a.score)||0));
-    return `<section class="sem"><div class="sem-head"><h2>${n ? "Học kỳ " + n : "Khác"}</h2><span>${n ? "Năm " + Math.ceil(n/2) + " · " : ""}${subs.length} môn</span></div><div class="grid">${subs.map(cardSub).join("")}</div></section>`;
-  }).join("");
+  function frame(ts){
+    const th = reduce ? 0 : ts/9000;                 /* carrier angle, ring fixed */
+    const sun = th*(1 + zr/zs), pl = th*(1 - zr/zp);
+    g.clearRect(0,0,W,W);
+    gear(cx,cy,rr,zr,0,true,"rgba(242,164,19,.55)");
+    gear(cx,cy,rs,zs,sun,false,"rgba(242,164,19,.95)");
+    for (let k=0;k<3;k++){ const ang = th + k*Math.PI*2/3; const x = cx + a*Math.cos(ang), y = cy + a*Math.sin(ang);
+      gear(x,y,rp,zp,pl + Math.PI/zp,false,"rgba(255,255,255,.75)"); }
+    g.beginPath(); for (let k=0;k<3;k++){ const ang = th + k*Math.PI*2/3; const x = cx + a*Math.cos(ang), y = cy + a*Math.sin(ang); k ? g.lineTo(x,y) : g.moveTo(x,y); } g.closePath(); g.strokeStyle = "rgba(255,255,255,.25)"; g.lineWidth = 1.5; g.stroke();
+    if (!reduce && $("gear")) gearRaf = requestAnimationFrame(frame);
+  }
+  gearRaf = requestAnimationFrame(frame);
 }
-function cardSub(s){
-  const n = docsOf(s.code).length;
-  return `<button class="sub" data-sub="${esc(s.code)}">
-    <div class="sub-top"><div><div class="code">Mã ${esc(s.code)}</div><div class="sub-name">${esc(s.name)}</div></div>${scoreHtml(s)}</div>
-    <div class="sub-foot"><span class="pill${n ? " has" : ""}">${n ? n + " tài liệu" : "Chưa có tài liệu"}</span>${s.credits ? `<span>Hệ số ${esc(s.credits)}</span>` : ""}</div>
-  </button>`;
+
+/* ---------- subjects ---------- */
+function docsOf(code){ return data.docs.filter(d => d.subject === code); }
+function scoreHtml(s){ if (!data.settings.showScores || s.score === null || s.score === undefined || s.score === "") return ""; return `<span class="score${Number(s.score) >= 9 ? " top" : ""}" title="Điểm trung bình môn">${fmtScore(s.score)}</span>`; }
+function cardSub(s){ const n = docsOf(s.code).length;
+  return `<button class="sub" data-sub="${esc(s.code)}"><div class="sub-top"><div><div class="code">Mã ${esc(s.code)}</div><div class="sub-name">${esc(s.name)}</div></div>${scoreHtml(s)}</div>
+    <div class="sub-foot"><span class="pill${n ? " has" : ""}">${n ? n + " tài liệu" : "Chưa có tài liệu"}</span>${s.credits ? `<span>Hệ số ${esc(s.credits)}</span>` : ""}</div></button>`; }
+function pageHead(title, sub, crumb){ return `<div class="page-head"><div class="in"><div class="crumbs"><button data-go="home">Trang chủ</button>${crumb ? ` / <button ${crumb[1]}>${esc(crumb[0])}</button>` : ""} / ${esc(title)}</div><h1>${esc(title)}</h1>${sub ? `<p>${esc(sub)}</p>` : ""}</div></div>`; }
+function subjectList(q){
+  let subs = data.subjects; if (q) subs = subs.filter(s => (s.name + " " + s.code).toLowerCase().includes(q));
+  if (!subs.length) return `<div class="empty" style="margin-top:16px"><h3>${q ? "Không tìm thấy môn nào" : "Chưa có môn học nào"}</h3><p>${q ? "Thử từ khóa khác." : token ? "Bấm “+ Thêm môn” để tạo môn đầu tiên." : "Chủ trang chưa thêm môn học."}</p></div>`;
+  const sems = [...new Set(subs.map(s => Number(s.sem)||0))].sort((a,b)=>a-b);
+  return sems.map(n => { const ss = subs.filter(s => (Number(s.sem)||0) === n).sort((a,b) => (Number(b.score)||0) - (Number(a.score)||0));
+    return `<section class="sem"><div class="sem-head"><h3>${n ? "Học kỳ " + n : "Khác"}</h3><span>${n ? "Năm " + Math.ceil(n/2) + " · " : ""}${ss.length} môn</span></div><div class="grid">${ss.map(cardSub).join("")}</div></section>`; }).join("");
 }
-function rowDoc(d, withSubject){
-  const e = extOf(d); const href = d.path ? d.path.split("/").map(encodeURIComponent).join("/") : safeUrl(d.link);
-  const sub = withSubject ? data.subjects.find(s => s.code === d.subject) : null;
-  const meta = [sub ? sub.name : "", d.kind, fmtSize(d.size), d.added ? new Date(d.added).toLocaleDateString("vi-VN") : ""].filter(Boolean).join(" · ");
-  return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span>
-    <div style="min-width:0"><div class="t">${esc(d.title)}</div><div class="d">${esc(meta)}</div>${d.note ? `<div class="d">${esc(d.note)}</div>` : ""}</div>
-    <div class="acts">${href ? `<a class="btn sm primary" href="${esc(href)}" target="_blank" rel="noopener">${d.path ? "Mở / Tải" : "Mở link"}</a>` : ""}${token ? `<button class="btn sm" data-edit-doc="${esc(d.id)}">Sửa</button><button class="btn sm danger" data-del-doc="${esc(d.id)}">Xóa</button>` : ""}</div></div>`;
+function renderSubjects(){
+  $("main").innerHTML = pageHead("Môn học", "Tài liệu của các môn chuyên ngành, xếp theo học kỳ.") + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm môn học…" value="${esc(st.q)}" aria-label="Tìm môn học">${token ? `<button class="btn primary" id="add-sub">+ Thêm môn</button>` : ""}</div><div id="list">${subjectList(st.q.trim().toLowerCase())}</div></div>`;
+}
+function rowDoc(d){
+  const e = extOfName(d.name) || (d.link ? "link" : "file"); const h = d.path ? href(d.path) : safeUrl(d.link);
+  const meta = [d.kind, fmtSize(d.size), fmtDate(d.added)].filter(Boolean).join(" · ");
+  return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(d.title)}</div><div class="d">${esc(meta)}</div>${d.note ? `<div class="d">${esc(d.note)}</div>` : ""}</div>
+    <div class="acts">${h ? `<a class="btn sm primary" href="${esc(h)}" target="_blank" rel="noopener">${d.path ? "Mở / Tải" : "Mở link"}</a>` : ""}${token ? `<button class="btn sm" data-edit-doc="${esc(d.id)}">Sửa</button><button class="btn sm danger" data-del-doc="${esc(d.id)}">Xóa</button>` : ""}</div></div>`;
 }
 function renderSubject(){
-  const s = data.subjects.find(x => x.code === st.code);
-  if (!s){ st.view = "home"; return renderHome(); }
+  const s = data.subjects.find(x => x.code === st.code); if (!s){ st.view = "subjects"; return renderSubjects(); }
   const docs = docsOf(s.code).sort((a,b) => String(b.added||"").localeCompare(String(a.added||"")));
   const showScore = data.settings.showScores && s.score !== null && s.score !== undefined && s.score !== "";
-  let html = `<div class="crumb"><button class="btn sm" id="back">← Tất cả môn</button></div>
-  <div class="subhead"><div style="min-width:0;flex:1 1 300px"><div class="code">Mã môn ${esc(s.code)}</div><h2>${esc(s.name)}</h2>
-    <div class="meta">${s.sem ? `<span class="pill">Học kỳ ${esc(s.sem)}</span>` : ""}${s.credits ? `<span class="pill">Hệ số ${esc(s.credits)}</span>` : ""}<span class="pill${docs.length ? " has" : ""}">${docs.length} tài liệu</span></div>
-    ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}
-    ${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="btn sm" id="edit-sub">Sửa môn</button><button class="btn sm" id="add-link">+ Thêm link (Drive, YouTube…)</button></div>` : ""}</div>
+  let html = pageHead(s.name, "", ["Môn học", 'data-go="subjects"']) + `<div class="in page"><div class="subhead"><div style="min-width:0;flex:1 1 300px"><div class="code">Mã môn ${esc(s.code)}</div>
+    <div class="meta" style="margin-top:8px">${s.sem ? `<span class="pill">Học kỳ ${esc(s.sem)}</span>` : ""}${s.credits ? `<span class="pill">Hệ số ${esc(s.credits)}</span>` : ""}<span class="pill${docs.length ? " has" : ""}">${docs.length} tài liệu</span></div>
+    ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="btn sm" id="edit-sub">Sửa môn</button><button class="btn sm" id="add-link">+ Thêm link (Drive, YouTube…)</button></div>` : ""}</div>
     ${showScore ? `<div class="big"><b>${fmtScore(s.score)}</b><span>Điểm trung bình</span></div>` : ""}</div>`;
   if (token) html += `<div class="drop" id="drop" tabindex="0" role="button"><b>Kéo thả file vào đây</b>hoặc bấm để chọn file · PDF, Word, PowerPoint, Excel, ảnh, file nén… · tối đa 40 MB mỗi file<input type="file" id="file-in" multiple hidden></div><div class="queue" id="queue"></div>`;
-  html += docs.length ? `<div class="docs">${docs.map(d => rowDoc(d)).join("")}</div>` : `<div class="empty"><h3>Chưa có tài liệu</h3><p>${token ? "Kéo thả file vào khung phía trên để thêm tài liệu cho môn này." : "Môn này chưa có tài liệu nào được đăng."}</p></div>`;
+  html += docs.length ? `<div class="docs">${docs.map(rowDoc).join("")}</div>` : `<div class="empty" style="margin-top:16px"><h3>Chưa có tài liệu</h3><p>${token ? "Kéo thả file vào khung phía trên để thêm tài liệu cho môn này." : "Môn này chưa có tài liệu nào được đăng."}</p></div>`;
   if (token && docs.length) html += `<p class="note">File mới tải lên cần khoảng 1 phút để người xem bên ngoài mở được.</p>`;
-  $("main").innerHTML = html;
-  renderQueue();
+  $("main").innerHTML = html + `</div>`; renderQueue();
 }
-function renderQueue(){
-  const el = $("queue"); if (!el) return;
-  el.innerHTML = st.queue.map(q => `<div class="q ${q.state}"><div class="q-top"><span>${esc(q.name)}</span><span>${q.state==="err" ? esc(q.msg) : q.state==="done" ? "Xong" : Math.round(q.p*100) + "%"}</span></div>${q.state==="err" ? "" : `<div class="prog"><i style="width:${Math.round(q.p*100)}%"></i></div>`}</div>`).join("");
-}
-function render(){ renderChrome(); if (st.view === "subject") renderSubject(); else renderHome(); }
-function go(view, code){ st.view = view; st.code = code || null; const h = view === "subject" ? "#mon-" + code : "#"; if (location.hash !== h) history.pushState(null, "", h === "#" ? location.pathname : h); render(); window.scrollTo(0,0); }
-function fromHash(){ const m = /^#mon-(.+)$/.exec(location.hash); if (m && data.subjects.some(s => s.code === decodeURIComponent(m[1]))){ st.view = "subject"; st.code = decodeURIComponent(m[1]); } else { st.view = "home"; st.code = null; } }
+function renderQueue(){ const el = $("queue"); if (!el) return;
+  el.innerHTML = st.queue.map(q => `<div class="q ${q.state}"><div class="q-top"><span>${esc(q.name)}</span><span>${q.state==="err" ? esc(q.msg) : q.state==="done" ? "Xong" : Math.round(q.p*100) + "%"}</span></div>${q.state==="err" ? "" : `<div class="prog"><i style="width:${Math.round(q.p*100)}%"></i></div>`}</div>`).join(""); }
 
-/* ---------- uploads ---------- */
+/* ---------- item sections ---------- */
+function itemMeta(i){ const S = SECS[i.section]; const bits = []; if (S.f1 && i[S.f1[0]]) bits.push(i[S.f1[0]]); if (i.date) bits.push(fmtDate(i.date)); return bits; }
+function cardItem(i){
+  const n = (i.files||[]).length;
+  return `<button class="card" data-item="${esc(i.id)}">${i.cover ? `<img class="cover" src="${esc(href(i.cover))}" alt="${esc(i.title)}" loading="lazy">` : `<div class="cover ph">${IC[i.section]}</div>`}
+    <div class="card-b"><div class="t">${esc(i.title)}</div>${i.desc ? `<div class="d">${esc(i.desc)}</div>` : ""}<div class="m">${itemMeta(i).map(b => `<span>${esc(b)}</span>`).join("<span>·</span>")}${n ? `<span class="pill has">${n} file</span>` : ""}</div></div></button>`;
+}
+function citeItem(i){
+  const yr = i.date ? String(i.date).slice(0,4) : "";
+  return `<button class="cite" data-item="${esc(i.id)}"><div class="t">${esc(i.title)}</div><div class="a">${esc(i.authors || data.profile.name || "")}${yr ? " (" + esc(yr) + ")" : ""}${i.venue ? `. <span class="v">${esc(i.venue)}</span>` : ""}</div>
+    <div class="m">${(i.files||[]).map(f => `<span class="pill has">${esc((extOfName(f.name)||"file").toUpperCase())}</span>`).join("")}${(i.links||[]).length ? `<span class="pill">Link</span>` : ""}</div></button>`;
+}
+function itemList(sec, q){
+  const S = SECS[sec]; let items = data.items.filter(i => i.section === sec);
+  if (q) items = items.filter(i => [i.title,i.desc,i.authors,i.venue,i.context,i.software,i.material].join(" ").toLowerCase().includes(q));
+  items.sort((a,b) => String(b.date||b.added||"").localeCompare(String(a.date||a.added||"")));
+  if (!items.length) return `<div class="empty" style="margin-top:16px"><h3>${q ? "Không tìm thấy" : "Chưa có " + S.one + " nào"}</h3><p>${q ? "Thử từ khóa khác." : token ? "Bấm nút “+ Thêm” để đăng " + S.one + " đầu tiên." : "Chủ trang chưa đăng nội dung ở mục này."}</p></div>`;
+  return S.layout === "cite" ? `<div class="cites" style="margin-top:16px">${items.map(citeItem).join("")}</div>` : `<div class="cards" style="margin-top:16px">${items.map(cardItem).join("")}</div>`;
+}
+function renderSection(){
+  const S = SECS[st.sec];
+  $("main").innerHTML = pageHead(S.label, S.blurb) + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm trong mục ${esc(S.label)}…" value="${esc(st.q)}" aria-label="Tìm kiếm">${token ? `<button class="btn primary" id="add-item">+ Thêm ${esc(S.one)}</button>` : ""}</div><div id="list">${itemList(st.sec, st.q.trim().toLowerCase())}</div></div>`;
+}
+function fileRow(f){ const e = extOfName(f.name) || "file"; return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(f.name)}</div><div class="d">${esc(fmtSize(f.size))}</div></div><div class="acts"><a class="btn sm primary" href="${esc(href(f.path))}" target="_blank" rel="noopener">Mở / Tải</a></div></div>`; }
+function renderItem(){
+  const i = data.items.find(x => x.id === st.id); if (!i || !SECS[i.section]){ st.view = "home"; return renderHome(); }
+  const S = SECS[i.section]; const rows = [];
+  if (S.f1 && i[S.f1[0]]) rows.push([S.f1[1], i[S.f1[0]]]); if (S.f2 && i[S.f2[0]]) rows.push([S.f2[1], i[S.f2[0]]]); if (i.date) rows.push(["Ngày", fmtDate(i.date)]);
+  const links = (i.links||[]).filter(l => safeUrl(l.url)); const files = i.files || [];
+  const side = `<div class="panel">${rows.length ? `<div class="spec">${rows.map(([k,v]) => `<div>${esc(k)}</div><div>${esc(v)}</div>`).join("")}</div>` : ""}${i.desc ? `<p class="desc">${esc(i.desc)}</p>` : ""}
+    ${links.map(l => `<a class="btn" style="margin:0 6px 6px 0" href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${esc(l.label || "Mở link")} ↗</a>`).join("")}
+    ${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px"><button class="btn sm" id="edit-item">Sửa</button><button class="btn sm danger" id="del-item">Xóa</button></div>` : ""}</div>`;
+  const filesHtml = files.length ? `<div class="docs">${files.map(fileRow).join("")}</div>` : (links.length ? "" : `<p class="note">Mục này chưa đính kèm file.</p>`);
+  $("main").innerHTML = pageHead(i.title, "", [S.label, `data-go="${i.section}"`]) + `<div class="in page">${i.cover ? `<div class="detail"><div><div class="pic"><img src="${esc(href(i.cover))}" alt="${esc(i.title)}"></div>${filesHtml}</div>${side}</div>` : `<div class="detail"><div>${filesHtml || ""}</div>${side}</div>`}</div>`;
+}
+
+/* ---------- routing ---------- */
+function render(){ renderChrome(); ({home:renderHome, subjects:renderSubjects, subject:renderSubject, section:renderSection, item:renderItem}[st.view] || renderHome)(); }
+function hashOf(){ return st.view === "home" ? "" : st.view === "subjects" ? "#mon-hoc" : st.view === "subject" ? "#mon-" + st.code : st.view === "section" ? "#" + SECS[st.sec].slug : "#muc-" + st.id; }
+function go(view, arg){
+  st.q = ""; st.view = view; st.code = st.id = null;
+  if (view === "subject") st.code = arg; if (view === "section") st.sec = arg; if (view === "item"){ st.id = arg; const i = data.items.find(x => x.id === arg); st.sec = i ? i.section : null; }
+  if (view === "home" || view === "subjects" || view === "subject") st.sec = null;
+  const h = hashOf(); if (location.hash !== h) history.pushState(null, "", h || location.pathname);
+  render(); window.scrollTo(0,0);
+}
+function fromHash(){
+  const h = decodeURIComponent(location.hash.slice(1)); st.code = st.id = st.sec = null; st.view = "home";
+  if (h === "mon-hoc") st.view = "subjects";
+  else if (SLUG2SEC[h]){ st.view = "section"; st.sec = SLUG2SEC[h]; }
+  else if (h.startsWith("mon-") && data.subjects.some(s => s.code === h.slice(4))){ st.view = "subject"; st.code = h.slice(4); }
+  else if (h.startsWith("muc-")){ const i = data.items.find(x => x.id === h.slice(4)); if (i){ st.view = "item"; st.id = i.id; st.sec = i.section; } }
+}
+
+/* ---------- subject uploads ---------- */
 let uploading = false;
 async function addFiles(files){
-  if (!token || !st.code) return;
-  const code = st.code;
+  if (!token || !st.code) return; const code = st.code;
   for (const f of files){
     if (f.size > MAX_FILE){ st.queue.push({name:f.name, p:0, state:"err", msg:"Quá 40 MB – hãy để trên Drive rồi thêm link"}); continue; }
     if (f.size === 0){ st.queue.push({name:f.name, p:0, state:"err", msg:"File rỗng"}); continue; }
     st.queue.push({name:f.name, p:0, state:"wait", file:f, code});
   }
-  renderQueue();
-  if (uploading) return;
-  uploading = true;
-  let added = 0;
+  renderQueue(); if (uploading) return; uploading = true; let added = 0;
   try {
     for (const q of st.queue){
-      if (q.state !== "wait") continue;
-      q.state = "up"; renderQueue();
+      if (q.state !== "wait") continue; q.state = "up"; renderQueue();
       try {
-        const b64 = await readBase64(q.file);
-        const path = "files/" + q.code + "/" + slugFile(q.file.name);
+        const b64 = await readBase64(q.file); const path = "files/" + q.code + "/" + slugFile(q.file.name);
         await putFile(path, b64, "Thêm tài liệu: " + q.file.name, p => { q.p = p * .95; renderQueue(); });
         data.docs.push({id:uid(), subject:q.code, title:q.file.name.replace(/\.[^.]+$/,""), kind:"", note:"", path, name:q.file.name, size:q.file.size, added:new Date().toISOString()});
         q.p = 1; q.state = "done"; q.file = null; added++;
-      } catch(e){
-        q.state = "err"; q.file = null; q.msg = e.code === 401 ? "Cần đăng nhập lại" : e.code === 403 ? "Mã truy cập thiếu quyền ghi" : (e.message || "Lỗi tải lên");
-        if (e.code === 401){ signOut(true); break; }
-      }
+      } catch(e){ q.state = "err"; q.file = null; q.msg = e.code === 401 ? "Cần đăng nhập lại" : e.code === 403 ? "Mã truy cập thiếu quyền ghi" : (e.message || "Lỗi tải lên"); if (e.code === 401){ signOut(true); break; } }
       renderQueue();
     }
     if (added){ await saveData("Cập nhật danh sách tài liệu (+" + added + ")"); toast("Đã tải lên " + added + " file."); }
   } catch(e){ toast("Tải file xong nhưng chưa ghi được danh sách. Tải lại trang rồi thử lại."); }
-  uploading = false;
-  st.queue = st.queue.filter(q => q.state === "err");
-  render();
+  uploading = false; st.queue = st.queue.filter(q => q.state === "err"); render();
 }
 
 /* ---------- dialogs ---------- */
 const dlg = $("dlg");
-function openDlg(html){ dlg.innerHTML = html; if (!dlg.open){ try { dlg.showModal(); } catch(e){ dlg.setAttribute("open",""); } } }
-function closeDlg(){ try { dlg.close(); } catch(e){ dlg.removeAttribute("open"); } dlg.innerHTML = ""; }
+function openDlg(html){ dlg.innerHTML = html; if (!dlg.open){ try { dlg.showModal(); } catch(e){ dlg.setAttribute("open",""); } } dlg.scrollTop = 0; }
+function closeDlg(){ try { dlg.close(); } catch(e){ dlg.removeAttribute("open"); } dlg.innerHTML = ""; draft = null; }
+const dhead = t => `<div class="dh"><h3>${t}</h3><button type="button" class="x" data-close aria-label="Đóng">×</button></div>`;
 
 function loginDlg(){
-  openDlg(`<form id="login-form" novalidate><div class="dh"><h3>Đăng nhập chủ trang</h3><button type="button" class="x" data-close aria-label="Đóng">×</button></div>
-  <div class="db">
-    <div class="msg">Chỉ chủ trang mới cần đăng nhập để thêm, sửa, xóa tài liệu. Người xem không cần đăng nhập.</div>
-    <label class="f">Mã truy cập GitHub (bắt đầu bằng github_pat_…)<input class="field" id="tok" type="password" autocomplete="off" placeholder="Dán mã truy cập vào đây" required></label>
+  openDlg(`<form id="login-form" novalidate>${dhead("Đăng nhập chủ trang")}<div class="db">
+    <div class="msg">Chỉ chủ trang cần đăng nhập để thêm, sửa, xóa nội dung. Người xem không cần đăng nhập.</div>
+    <label class="f">Mã truy cập GitHub (bắt đầu bằng github_pat_…)<input class="field" id="tok" type="password" autocomplete="off" placeholder="Dán mã truy cập vào đây"></label>
     <div class="msg err" id="login-err" hidden></div>
-    <ol class="steps"><li>Mã truy cập do bạn tạo trong tài khoản GitHub, chỉ có quyền ghi vào kho của trang này.</li><li>Mã được lưu <b>chỉ trên trình duyệt này</b>. Không đăng nhập trên máy lạ.</li></ol>
-  </div>
+    <div class="note" style="margin:0">Mã được lưu chỉ trên trình duyệt này. Không đăng nhập trên máy lạ.</div></div>
   <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="login-go">Đăng nhập</button></div></form>`);
   $("tok").focus();
 }
 async function doLogin(){
-  const v = $("tok").value.trim(); const err = $("login-err"); err.hidden = true;
-  if (!v){ $("tok").focus(); return; }
+  const v = $("tok").value.trim(); const err = $("login-err"); err.hidden = true; if (!v){ $("tok").focus(); return; }
   $("login-go").disabled = true; $("login-go").textContent = "Đang kiểm tra…";
   try {
     const r = await fetch(API, {headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer " + v}});
     if (r.status === 401) throw new Error("Mã truy cập không đúng hoặc đã hết hạn.");
     if (!r.ok) throw new Error("Mã này không truy cập được kho của trang (lỗi " + r.status + ").");
-    const j = await r.json();
-    if (!j.permissions || !j.permissions.push) throw new Error("Mã này chưa có quyền ghi (Contents: Read and write) vào kho của trang.");
+    const j = await r.json(); if (!j.permissions || !j.permissions.push) throw new Error("Mã này chưa có quyền ghi (Contents: Read and write) vào kho của trang.");
     token = v; try { localStorage.setItem(TOKEN_KEY, v); } catch(e){}
-    closeDlg(); await loadData(); fromHash(); render(); toast("Đã đăng nhập. Bạn có thể thêm tài liệu.");
-  } catch(e){
-    err.textContent = e.message || "Không đăng nhập được. Kiểm tra mạng rồi thử lại."; err.hidden = false;
-    $("login-go").disabled = false; $("login-go").textContent = "Đăng nhập";
-  }
+    closeDlg(); await loadData(); fromHash(); render(); toast("Đã đăng nhập. Bạn có thể thêm nội dung.");
+  } catch(e){ err.textContent = e.message || "Không đăng nhập được. Kiểm tra mạng rồi thử lại."; err.hidden = false; $("login-go").disabled = false; $("login-go").textContent = "Đăng nhập"; }
 }
 function signOut(silent){ token = null; dataSha = null; try { localStorage.removeItem(TOKEN_KEY); } catch(e){} if (!silent){ render(); toast("Đã đăng xuất."); } }
 
 function subjectDlg(s){
   const isNew = !s; s = s || {code:"", name:"", sem:"", credits:"", score:"", note:""};
-  openDlg(`<form id="sub-form" novalidate data-orig="${esc(isNew ? "" : s.code)}"><div class="dh"><h3>${isNew ? "Thêm môn học" : "Sửa môn học"}</h3><button type="button" class="x" data-close aria-label="Đóng">×</button></div>
-  <div class="db"><label class="f">Tên môn học *<input class="field" id="s-name" value="${esc(s.name)}" placeholder="VD: Hệ thống điều khiển tự động trên ô tô"></label>
-    <div class="two"><label class="f">Mã môn *<input class="field" id="s-code" value="${esc(s.code)}" placeholder="VD: 148025" ${isNew ? "" : "readonly"}></label>
-    <label class="f">Học kỳ (1–8)<input class="field" id="s-sem" type="number" min="1" max="8" value="${esc(s.sem)}"></label></div>
-    <div class="two"><label class="f">Hệ số<input class="field" id="s-credits" type="number" min="0" max="20" value="${esc(s.credits)}"></label>
-    <label class="f">Điểm trung bình<input class="field" id="s-score" type="number" min="0" max="10" step="0.01" value="${esc(s.score ?? "")}" placeholder="Để trống nếu chưa có"></label></div>
-    <label class="f">Ghi chú<input class="field" id="s-note" value="${esc(s.note||"")}" placeholder="Nội dung chính của môn (không bắt buộc)"></label>
-    <div class="msg err" id="sub-err" hidden></div></div>
+  openDlg(`<form id="sub-form" novalidate data-orig="${esc(isNew ? "" : s.code)}">${dhead(isNew ? "Thêm môn học" : "Sửa môn học")}<div class="db">
+    <label class="f">Tên môn học *<input class="field" id="s-name" value="${esc(s.name)}" placeholder="VD: Hệ thống điều khiển tự động trên ô tô"></label>
+    <div class="two"><label class="f">Mã môn *<input class="field" id="s-code" value="${esc(s.code)}" placeholder="VD: 148025" ${isNew ? "" : "readonly"}></label><label class="f">Học kỳ (1–8)<input class="field" id="s-sem" type="number" min="1" max="8" value="${esc(s.sem)}"></label></div>
+    <div class="two"><label class="f">Hệ số<input class="field" id="s-credits" type="number" min="0" max="20" value="${esc(s.credits)}"></label><label class="f">Điểm trung bình<input class="field" id="s-score" type="number" min="0" max="10" step="0.01" value="${esc(s.score ?? "")}" placeholder="Để trống nếu chưa có"></label></div>
+    <label class="f">Ghi chú<input class="field" id="s-note" value="${esc(s.note||"")}"></label><div class="msg err" id="sub-err" hidden></div></div>
   <div class="df">${isNew ? "" : `<button type="button" class="btn danger" id="del-sub" style="margin-right:auto">Xóa môn</button>`}<button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit">Lưu</button></div></form>`);
   $("s-name").focus();
 }
 function docDlg(d){
   const isNew = !d; d = d || {title:"", kind:"", note:"", link:""};
-  openDlg(`<form id="doc-form" novalidate data-id="${esc(d.id||"")}"><div class="dh"><h3>${isNew ? "Thêm link tài liệu" : "Sửa tài liệu"}</h3><button type="button" class="x" data-close aria-label="Đóng">×</button></div>
-  <div class="db"><label class="f">Tên hiển thị *<input class="field" id="d-title" value="${esc(d.title)}"></label>
-    <label class="f">Loại<select class="field" id="d-kind"><option value="">— Không chọn —</option>${KINDS.map(k => `<option ${d.kind===k ? "selected" : ""}>${esc(k)}</option>`).join("")}</select></label>
+  openDlg(`<form id="doc-form" novalidate data-id="${esc(d.id||"")}">${dhead(isNew ? "Thêm link tài liệu" : "Sửa tài liệu")}<div class="db">
+    <label class="f">Tên hiển thị *<input class="field" id="d-title" value="${esc(d.title)}"></label>
+    <label class="f">Loại<select class="field" id="d-kind"><option value="">— Không chọn —</option>${DOC_KINDS.map(k => `<option ${d.kind===k ? "selected" : ""}>${esc(k)}</option>`).join("")}</select></label>
     ${isNew || d.link ? `<label class="f">Link (Google Drive, YouTube…) *<input class="field" id="d-link" type="url" value="${esc(d.link||"")}" placeholder="https://"></label>` : ""}
-    <label class="f">Ghi chú<input class="field" id="d-note" value="${esc(d.note||"")}" placeholder="VD: Chương 1–5, bản có lời giải"></label>
-    <div class="msg err" id="doc-err" hidden></div></div>
+    <label class="f">Ghi chú<input class="field" id="d-note" value="${esc(d.note||"")}"></label><div class="msg err" id="doc-err" hidden></div></div>
   <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit">Lưu</button></div></form>`);
   $("d-title").focus();
 }
 function profileDlg(){
   const p = data.profile; const f = [["name","Họ tên"],["lop","Lớp"],["truong","Trường"],["nganh","Ngành"],["nienKhoa","Niên khóa"]];
-  openDlg(`<form id="prof-form" novalidate><div class="dh"><h3>Thông tin trang</h3><button type="button" class="x" data-close aria-label="Đóng">×</button></div>
-  <div class="db">${f.map(([k,l]) => `<label class="f">${l}<input class="field" id="p-${k}" value="${esc(p[k]||"")}"></label>`).join("")}
+  draft = {cover:p.cover || null, newCover:null, files:[], newFiles:[], removed:[]};
+  openDlg(`<form id="prof-form" novalidate>${dhead("Thông tin trang")}<div class="db">${f.map(([k,l]) => `<label class="f">${l}<input class="field" id="p-${k}" value="${esc(p[k]||"")}"></label>`).join("")}
     <label class="f">Lời giới thiệu<textarea class="field" id="p-intro" rows="3">${esc(p.intro||"")}</textarea></label>
-    <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" id="p-scores" ${data.settings.showScores ? "checked" : ""}> Hiện điểm trung bình của từng môn cho người xem</label></div>
-  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit">Lưu</button></div></form>`);
+    <div><label class="f" style="margin-bottom:6px">Ảnh bìa trang chủ (không bắt buộc)</label><div class="picks" id="cover-box"></div></div>
+    <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" id="p-scores" ${data.settings.showScores ? "checked" : ""}> Hiện điểm trung bình của từng môn cho người xem</label>
+    <div class="msg" id="busy" hidden></div></div>
+  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="save-go">Lưu</button></div></form>`);
+  drawCoverBox();
+}
+
+/* item editor: cover + files are staged in `draft` and uploaded on save */
+let draft = null;
+function drawCoverBox(){
+  const el = $("cover-box"); if (!el || !draft) return;
+  const src = draft.newCover ? draft.newCover.url : (draft.cover ? href(draft.cover) : "");
+  el.innerHTML = (src ? `<img src="${esc(src)}" alt="Ảnh đại diện"><button type="button" class="btn sm" id="rm-cover">Bỏ ảnh</button>` : "") + `<label class="btn sm" style="cursor:pointer">${src ? "Đổi ảnh" : "Chọn ảnh"}<input type="file" id="cover-in" accept="image/*" hidden></label>`;
+}
+function drawFileBox(){
+  const el = $("files-box"); if (!el || !draft) return;
+  el.innerHTML = draft.files.map((f,k) => `<div class="chipf"><span>${esc(f.name)} · ${esc(fmtSize(f.size))}</span><button type="button" class="btn sm danger" data-rm-old="${k}">Bỏ</button></div>`).join("")
+    + draft.newFiles.map((f,k) => `<div class="chipf"><span>${esc(f.name)} · ${esc(fmtSize(f.size))} · mới</span><button type="button" class="btn sm danger" data-rm-new="${k}">Bỏ</button></div>`).join("")
+    + `<label class="btn sm" style="cursor:pointer;align-self:flex-start">+ Chọn file<input type="file" id="item-files" multiple hidden></label>`;
+}
+function itemDlg(i){
+  const isNew = !i; const sec = isNew ? st.sec : i.section; const S = SECS[sec]; i = i || {title:"", desc:"", date:"", links:[]};
+  draft = {cover:i.cover || null, newCover:null, files:(i.files||[]).slice(), newFiles:[], removed:[]};
+  const link = (i.links && i.links[0]) || {label:"", url:""};
+  openDlg(`<form id="item-form" novalidate data-id="${esc(i.id||"")}" data-sec="${sec}">${dhead((isNew ? "Thêm " : "Sửa ") + S.one)}<div class="db">
+    <label class="f">Tên / tiêu đề *<input class="field" id="i-title" value="${esc(i.title)}"></label>
+    ${S.f1 ? `<label class="f">${S.f1[1]}<input class="field" id="i-f1" value="${esc(i[S.f1[0]]||"")}" placeholder="${esc(S.f1[2])}"></label>` : ""}
+    ${S.f2 ? `<label class="f">${S.f2[1]}<input class="field" id="i-f2" value="${esc(i[S.f2[0]]||"")}" placeholder="${esc(S.f2[2])}"></label>` : ""}
+    <div class="two"><label class="f">Ngày<input class="field" id="i-date" type="date" value="${esc(i.date||"")}"></label><label class="f">Link ngoài (Drive, YouTube…)<input class="field" id="i-link" type="url" value="${esc(link.url||"")}" placeholder="https://"></label></div>
+    <label class="f">Mô tả<textarea class="field" id="i-desc" rows="4" placeholder="Nội dung chính, thông số, kết quả…">${esc(i.desc||"")}</textarea></label>
+    <div><label class="f" style="margin-bottom:6px">Ảnh đại diện${S.layout === "card" ? " (nên có)" : " (không bắt buộc)"}</label><div class="picks" id="cover-box"></div></div>
+    <div><label class="f" style="margin-bottom:6px">File đính kèm · tối đa 40 MB mỗi file</label><div class="chips" id="files-box"></div></div>
+    <div class="msg err" id="item-err" hidden></div><div class="msg" id="busy" hidden></div></div>
+  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="save-go">${isNew ? "Đăng" : "Lưu"}</button></div></form>`);
+  drawCoverBox(); drawFileBox(); $("i-title").focus();
+}
+async function uploadDraft(dir, busy){
+  /* returns {cover, files}; uploads the staged cover and files, deletes replaced ones */
+  let cover = draft.cover; const olds = [];
+  if (draft.newCover){ busy("Đang tải ảnh…"); const path = "files/" + dir + "/" + slugFile("anh.jpg"); await putFile(path, await readBase64(draft.newCover.blob), "Thêm ảnh", null); if (cover) olds.push(cover); cover = path; }
+  const files = draft.files.slice();
+  for (let k=0;k<draft.newFiles.length;k++){ const f = draft.newFiles[k]; const path = "files/" + dir + "/" + slugFile(f.name);
+    await putFile(path, await readBase64(f), "Thêm file: " + f.name, p => busy(`Đang tải file ${k+1}/${draft.newFiles.length}: ${Math.round(p*100)}%`)); files.push({path, name:f.name, size:f.size}); }
+  return {cover, files, olds:olds.concat(draft.removed)};
 }
 async function commit(message, okMsg){
-  try { await saveData(message); render(); toast(okMsg); }
-  catch(e){ if (e.code === 401){ signOut(true); render(); toast("Phiên đăng nhập hết hạn. Hãy đăng nhập lại."); } else { toast("Chưa lưu được. Kiểm tra mạng rồi thử lại."); await loadData(); render(); } }
+  try { await saveData(message); render(); toast(okMsg); return true; }
+  catch(e){ if (e.code === 401){ signOut(true); render(); toast("Phiên đăng nhập hết hạn. Hãy đăng nhập lại."); } else { toast("Chưa lưu được. Kiểm tra mạng rồi thử lại."); await loadData(); render(); } return false; }
 }
 
 /* ---------- events ---------- */
 document.addEventListener("click", async e => {
-  if (e.target.id === "file-in") return;
-  const t = e.target.closest("button, a, [data-close], .drop"); if (!t) return;
+  if (e.target.matches('input[type="file"]')) return;
+  const t = e.target.closest("button, [data-close], .drop"); if (!t) return;
   if (t.hasAttribute("data-close")){ closeDlg(); return; }
+  if (t.dataset.go){ const k = t.dataset.go; if (k === "home") go("home"); else if (k === "subjects") go("subjects"); else go("section", k); return; }
   if (t.dataset.sub){ go("subject", t.dataset.sub); return; }
+  if (t.dataset.item){ go("item", t.dataset.item); return; }
   if (t.dataset.editDoc){ docDlg(data.docs.find(d => d.id === t.dataset.editDoc)); return; }
+  if (t.dataset.rmOld !== undefined){ const f = draft.files.splice(Number(t.dataset.rmOld),1)[0]; if (f) draft.removed.push(f.path); drawFileBox(); return; }
+  if (t.dataset.rmNew !== undefined){ draft.newFiles.splice(Number(t.dataset.rmNew),1); drawFileBox(); return; }
   if (t.dataset.delDoc){
     if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa"; return; }
-    const d = data.docs.find(x => x.id === t.dataset.delDoc); if (!d) return;
-    t.disabled = true;
-    try {
-      if (d.path){ try { const f = await gh("/contents/" + d.path.split("/").map(encodeURIComponent).join("/") + "?ref=" + BRANCH); await gh("/contents/" + d.path.split("/").map(encodeURIComponent).join("/"), {method:"DELETE", body:JSON.stringify({message:"Xóa tài liệu: " + d.title, sha:f.sha, branch:BRANCH})}); } catch(err){ if (err.code !== 404) throw err; } }
-      data.docs = data.docs.filter(x => x.id !== d.id);
-      await commit("Xóa tài liệu: " + d.title, "Đã xóa tài liệu.");
-    } catch(err){ toast("Chưa xóa được. Thử lại sau."); render(); }
+    const d = data.docs.find(x => x.id === t.dataset.delDoc); if (!d) return; t.disabled = true;
+    try { if (d.path) await removeFile(d.path, "Xóa tài liệu: " + d.title); data.docs = data.docs.filter(x => x.id !== d.id); await commit("Xóa tài liệu: " + d.title, "Đã xóa tài liệu."); }
+    catch(err){ toast("Chưa xóa được. Thử lại sau."); render(); }
     return;
   }
   switch (t.id){
-    case "home": case "back": go("home"); break;
     case "login-btn": token ? signOut() : loginDlg(); break;
+    case "edit-profile": profileDlg(); break;
     case "add-sub": subjectDlg(null); break;
     case "edit-sub": subjectDlg(data.subjects.find(s => s.code === st.code)); break;
     case "add-link": docDlg(null); break;
-    case "edit-profile": profileDlg(); break;
+    case "add-item": itemDlg(null); break;
+    case "edit-item": itemDlg(data.items.find(i => i.id === st.id)); break;
     case "drop": $("file-in").click(); break;
+    case "rm-cover": if (draft){ if (draft.cover && !draft.newCover){ draft.removed.push(draft.cover); draft.cover = null; } draft.newCover = null; drawCoverBox(); } break;
+    case "del-item": {
+      if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa để xóa"; return; }
+      const i = data.items.find(x => x.id === st.id); if (!i) return; t.disabled = true;
+      try { for (const p of [i.cover].concat((i.files||[]).map(f => f.path)).filter(Boolean)) await removeFile(p, "Xóa: " + i.title);
+        data.items = data.items.filter(x => x.id !== i.id); const sec = i.section; st.view = "section"; st.sec = sec; st.id = null; history.replaceState(null, "", "#" + SECS[sec].slug);
+        await commit("Xóa: " + i.title, "Đã xóa."); }
+      catch(err){ toast("Chưa xóa được. Thử lại sau."); render(); }
+      break; }
     case "del-sub": {
       const code = $("sub-form").dataset.orig;
       if (docsOf(code).length){ const er = $("sub-err"); er.textContent = "Môn này còn tài liệu. Hãy xóa hết tài liệu trước khi xóa môn."; er.hidden = false; return; }
       if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa để xóa"; return; }
-      data.subjects = data.subjects.filter(s => s.code !== code); closeDlg(); st.view = "home"; st.code = null; history.replaceState(null,"",location.pathname);
-      await commit("Xóa môn " + code, "Đã xóa môn học."); break;
-    }
+      data.subjects = data.subjects.filter(s => s.code !== code); closeDlg(); st.view = "subjects"; st.code = null; history.replaceState(null, "", "#mon-hoc");
+      await commit("Xóa môn " + code, "Đã xóa môn học."); break; }
   }
 });
 document.addEventListener("submit", async e => {
@@ -477,40 +717,64 @@ document.addEventListener("submit", async e => {
   if (f.id === "sub-form"){
     const er = $("sub-err"); const name = $("s-name").value.trim(); const code = $("s-code").value.trim().replace(/[^A-Za-z0-9_-]/g,"");
     if (!name || !code){ er.textContent = "Cần nhập tên môn và mã môn (mã chỉ gồm chữ, số)."; er.hidden = false; return; }
-    const orig = f.dataset.orig;
-    if (!orig && data.subjects.some(s => s.code === code)){ er.textContent = "Mã môn này đã có trên trang."; er.hidden = false; return; }
+    const orig = f.dataset.orig; if (!orig && data.subjects.some(s => s.code === code)){ er.textContent = "Mã môn này đã có trên trang."; er.hidden = false; return; }
     const sc = $("s-score").value.trim();
     const obj = {code, name, sem:Number($("s-sem").value)||"", credits:$("s-credits").value.trim()==="" ? "" : Number($("s-credits").value), score:sc==="" ? null : Number(sc), note:$("s-note").value.trim()};
-    const i = data.subjects.findIndex(s => s.code === orig);
-    if (i >= 0) data.subjects[i] = obj; else data.subjects.push(obj);
-    closeDlg(); await commit((i>=0 ? "Sửa môn " : "Thêm môn ") + name, "Đã lưu môn học.");
+    const k = data.subjects.findIndex(s => s.code === orig); if (k >= 0) data.subjects[k] = obj; else data.subjects.push(obj);
+    closeDlg(); await commit((k>=0 ? "Sửa môn " : "Thêm môn ") + name, "Đã lưu môn học.");
   }
   if (f.id === "doc-form"){
     const er = $("doc-err"); const title = $("d-title").value.trim(); const linkEl = $("d-link");
     if (!title){ er.textContent = "Cần nhập tên hiển thị."; er.hidden = false; return; }
     if (linkEl && !safeUrl(linkEl.value)){ er.textContent = "Link phải bắt đầu bằng http:// hoặc https://"; er.hidden = false; return; }
-    const id = f.dataset.id; let d = data.docs.find(x => x.id === id);
-    if (!d){ d = {id:uid(), subject:st.code, added:new Date().toISOString()}; data.docs.push(d); }
+    let d = data.docs.find(x => x.id === f.dataset.id); if (!d){ d = {id:uid(), subject:st.code, added:new Date().toISOString()}; data.docs.push(d); }
     d.title = title; d.kind = $("d-kind").value; d.note = $("d-note").value.trim(); if (linkEl) d.link = safeUrl(linkEl.value);
     closeDlg(); await commit("Cập nhật tài liệu: " + title, "Đã lưu.");
   }
+  if (f.id === "item-form"){
+    const er = $("item-err"); er.hidden = true; const sec = f.dataset.sec; const S = SECS[sec]; const title = $("i-title").value.trim(); const link = $("i-link").value.trim();
+    if (!title){ er.textContent = "Cần nhập tên / tiêu đề."; er.hidden = false; return; }
+    if (link && !safeUrl(link)){ er.textContent = "Link phải bắt đầu bằng http:// hoặc https://"; er.hidden = false; return; }
+    const busyEl = $("busy"); const busy = m => { busyEl.textContent = m; busyEl.hidden = false; }; $("save-go").disabled = true;
+    try {
+      const up = await uploadDraft(S.slug, busy); busy("Đang lưu…");
+      let i = data.items.find(x => x.id === f.dataset.id); if (!i){ i = {id:uid(), section:sec, added:new Date().toISOString()}; data.items.push(i); }
+      i.title = title; i.desc = $("i-desc").value.trim(); i.date = $("i-date").value; i.cover = up.cover || null; i.files = up.files; i.links = link ? [{label:"Mở link", url:safeUrl(link)}] : [];
+      if (S.f1) i[S.f1[0]] = $("i-f1").value.trim(); if (S.f2) i[S.f2[0]] = $("i-f2").value.trim();
+      const olds = up.olds; closeDlg(); st.view = "item"; st.id = i.id; st.sec = sec; history.replaceState(null, "", "#muc-" + i.id);
+      if (await commit("Cập nhật: " + title, "Đã lưu. Người xem bên ngoài sẽ thấy sau khoảng 1 phút.")){ for (const p of olds){ try { await removeFile(p, "Dọn file cũ"); } catch(_){} } }
+    } catch(err){
+      $("save-go").disabled = false; busyEl.hidden = true;
+      if (err.code === 401){ closeDlg(); signOut(true); render(); toast("Phiên đăng nhập hết hạn. Hãy đăng nhập lại."); }
+      else { er.textContent = err.code === 403 ? "Mã truy cập thiếu quyền ghi (Contents: Read and write)." : "Chưa tải lên được: " + (err.message || "lỗi mạng") + ". Thử lại."; er.hidden = false; }
+    }
+  }
   if (f.id === "prof-form"){
-    ["name","lop","truong","nganh","nienKhoa"].forEach(k => data.profile[k] = $("p-"+k).value.trim());
-    data.profile.intro = $("p-intro").value.trim(); data.settings.showScores = $("p-scores").checked;
-    closeDlg(); await commit("Cập nhật thông tin trang", "Đã lưu thông tin.");
+    const busyEl = $("busy"); const busy = m => { busyEl.textContent = m; busyEl.hidden = false; }; $("save-go").disabled = true;
+    try {
+      const up = await uploadDraft("trang", busy);
+      ["name","lop","truong","nganh","nienKhoa"].forEach(k => data.profile[k] = $("p-"+k).value.trim());
+      data.profile.intro = $("p-intro").value.trim(); data.profile.cover = up.cover || null; data.settings.showScores = $("p-scores").checked;
+      const olds = up.olds; closeDlg(); if (await commit("Cập nhật thông tin trang", "Đã lưu thông tin.")){ for (const p of olds){ try { await removeFile(p, "Dọn ảnh cũ"); } catch(_){} } }
+    } catch(err){ $("save-go").disabled = false; busy("Chưa lưu được. Thử lại."); }
   }
 });
-document.addEventListener("input", e => { if (e.target.id === "q"){ st.q = e.target.value; $("list").innerHTML = homeList(st.q.trim().toLowerCase()); } });
-document.addEventListener("change", e => { if (e.target.id === "file-in" && e.target.files.length){ addFiles([...e.target.files]); e.target.value = ""; } });
+document.addEventListener("input", e => { if (e.target.id === "q"){ st.q = e.target.value; const q = st.q.trim().toLowerCase(); $("list").innerHTML = st.view === "subjects" ? subjectList(q) : itemList(st.sec, q); } });
+document.addEventListener("change", async e => {
+  const t = e.target;
+  if (t.id === "file-in" && t.files.length){ addFiles([...t.files]); t.value = ""; }
+  if (t.id === "cover-in" && t.files[0] && draft){ try { const blob = await compressImage(t.files[0], 1600); draft.newCover = {blob, url:URL.createObjectURL(blob)}; drawCoverBox(); } catch(err){ toast("Không đọc được ảnh này. Thử ảnh JPG hoặc PNG khác."); } }
+  if (t.id === "item-files" && t.files.length && draft){ for (const f of t.files){ if (f.size > MAX_FILE) toast("“" + f.name + "” quá 40 MB – hãy để trên Drive rồi dán link."); else if (f.size > 0) draft.newFiles.push(f); } drawFileBox(); }
+});
 document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.id === "drop"){ e.preventDefault(); $("file-in").click(); } });
 ["dragenter","dragover"].forEach(ev => document.addEventListener(ev, e => { const d = e.target.closest && e.target.closest("#drop"); if (d){ e.preventDefault(); d.classList.add("over"); } }));
 document.addEventListener("dragleave", e => { const d = e.target.closest && e.target.closest("#drop"); if (d && !d.contains(e.relatedTarget)) d.classList.remove("over"); });
 document.addEventListener("drop", e => { const d = e.target.closest && e.target.closest("#drop"); if (d){ e.preventDefault(); d.classList.remove("over"); if (e.dataTransfer && e.dataTransfer.files.length) addFiles([...e.dataTransfer.files]); } });
-dlg.addEventListener("cancel", () => { dlg.innerHTML = ""; });
+dlg.addEventListener("cancel", () => { dlg.innerHTML = ""; draft = null; });
 window.addEventListener("popstate", () => { fromHash(); render(); });
 
-/* ---------- boot ---------- */
-$("main").innerHTML = `<div class="empty"><h3>Đang tải…</h3><p>Đang lấy danh sách môn học và tài liệu.</p></div>`;
+
+$("main").innerHTML = `<div class="in page"><div class="empty"><h3>Đang tải…</h3><p>Đang lấy nội dung hồ sơ.</p></div></div>`;
 loadData().then(() => { fromHash(); render(); });
 })();
 </script>
