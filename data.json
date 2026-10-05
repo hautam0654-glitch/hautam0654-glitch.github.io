@@ -1,0 +1,104 @@
+{
+ "profile": {
+  "name": "Hầu Ngọc Minh Tâm",
+  "lop": "24OT113",
+  "truong": "Đại học Lạc Hồng",
+  "nganh": "Công nghệ Kỹ thuật Ô tô",
+  "nienKhoa": "2024–2028",
+  "intro": "Tài liệu của những môn chuyên ngành mình học tốt nhất trong chương trình Công nghệ Kỹ thuật Ô tô: giáo trình, slide, bài tập, báo cáo và đồ án, xếp theo từng môn."
+ },
+ "settings": {
+  "showScores": true
+ },
+ "subjects": [
+  {
+   "code": "148069",
+   "name": "Kỹ thuật nhiệt",
+   "sem": 1,
+   "credits": 3,
+   "score": 8.9,
+   "note": ""
+  },
+  {
+   "code": "148059",
+   "name": "Nhập môn Công nghệ kỹ thuật Ô tô",
+   "sem": 1,
+   "credits": 2,
+   "score": 8.6,
+   "note": ""
+  },
+  {
+   "code": "148003",
+   "name": "Nguyên lý Động cơ đốt trong",
+   "sem": 2,
+   "credits": 4,
+   "score": 8.9,
+   "note": ""
+  },
+  {
+   "code": "148048",
+   "name": "Thực tập Nguội",
+   "sem": 2,
+   "credits": 1,
+   "score": 8.7,
+   "note": ""
+  },
+  {
+   "code": "148077",
+   "name": "Cơ kỹ thuật",
+   "sem": 2,
+   "credits": 4,
+   "score": 8.2,
+   "note": ""
+  },
+  {
+   "code": "148065",
+   "name": "Thực tập động cơ đốt trong",
+   "sem": 3,
+   "credits": 3,
+   "score": 9.3,
+   "note": ""
+  },
+  {
+   "code": "148049",
+   "name": "Anh văn chuyên ngành công nghệ ô tô",
+   "sem": 3,
+   "credits": 2,
+   "score": 8.3,
+   "note": ""
+  },
+  {
+   "code": "148041",
+   "name": "Lý thuyết Ô tô",
+   "sem": 3,
+   "credits": 3,
+   "score": 8.1,
+   "note": ""
+  },
+  {
+   "code": "148024",
+   "name": "Thiết kế ô tô",
+   "sem": 4,
+   "credits": 3,
+   "score": 10,
+   "note": ""
+  },
+  {
+   "code": "148070",
+   "name": "Thực tập hệ thống truyền lực Ôtô",
+   "sem": 4,
+   "credits": 3,
+   "score": 9.6,
+   "note": ""
+  },
+  {
+   "code": "148061",
+   "name": "Cơ sở công nghệ chế tạo máy",
+   "sem": 4,
+   "credits": 2,
+   "score": 8.0,
+   "note": ""
+  }
+ ],
+ "docs": []
+}
