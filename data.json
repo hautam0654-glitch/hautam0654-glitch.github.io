@@ -8,7 +8,7 @@
   "intro": "Tài liệu của những môn chuyên ngành mình học tốt nhất trong chương trình Công nghệ Kỹ thuật Ô tô: giáo trình, slide, bài tập, báo cáo và đồ án, xếp theo từng môn."
  },
  "settings": {
-  "showScores": true
+  "showScores": false
  },
  "subjects": [
   {
@@ -96,7 +96,7 @@
    "name": "Cơ sở công nghệ chế tạo máy",
    "sem": 4,
    "credits": 2,
-   "score": 8.0,
+   "score": 8,
    "note": ""
   }
  ],
