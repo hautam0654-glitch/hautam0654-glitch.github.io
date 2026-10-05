@@ -114,7 +114,26 @@
    "added": "2026-10-05T13:37:27.628Z"
   }
  ],
- "items": [],
+ "items": [
+  {
+   "id": "xmuvasp3k5x2h",
+   "section": "slides",
+   "added": "2026-10-05T13:41:06.704Z",
+   "title": "NGUYÊN LÝ CHI TIẾT MÁY",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "files/slide/NGUYEN-LY-CHI-TIET-MAY-muvasl1ktp.pptx",
+     "name": "NGUYÊN LÝ CHI TIẾT MÁY.pptx",
+     "size": 5103653
+    }
+   ],
+   "links": [],
+   "context": ""
+  }
+ ],
  "site": {
   "hero": {
    "eyebrow": "Công nghệ Kỹ thuật Ô tô · 2024–2028",
