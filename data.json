@@ -153,8 +153,8 @@
   },
   "footer": "",
   "theme": {
-   "navy": "",
-   "accent": ""
+   "navy": "#3f5278",
+   "accent": "#f0bc5c"
   }
  }
 }
