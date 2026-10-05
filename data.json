@@ -2,10 +2,11 @@
  "profile": {
   "name": "Hầu Ngọc Minh Tâm",
   "lop": "24OT113",
-  "truong": "Đại học Lạc Hồng",
+  "truong": "Đại học Đụng Gì Cũng Học",
   "nganh": "Công nghệ Kỹ thuật Ô tô",
   "nienKhoa": "2024–2028",
-  "intro": "Tài liệu của những môn chuyên ngành mình học tốt nhất trong chương trình Công nghệ Kỹ thuật Ô tô: giáo trình, slide, bài tập, báo cáo và đồ án, xếp theo từng môn."
+  "intro": "Tài liệu của những môn chuyên ngành mình học tốt nhất trong chương trình Công nghệ Kỹ thuật Ô tô: giáo trình, slide, bài tập, báo cáo và đồ án, xếp theo từng môn.",
+  "cover": "files/trang/anh-muvae3j48d.jpg"
  },
  "settings": {
   "showScores": true
@@ -100,5 +101,6 @@
    "note": ""
   }
  ],
- "docs": []
+ "docs": [],
+ "items": []
 }
