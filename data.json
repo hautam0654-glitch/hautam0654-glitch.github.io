@@ -454,6 +454,25 @@
    ],
    "links": [],
    "context": ""
+  },
+  {
+   "id": "xmuvbtujet0ya",
+   "section": "models",
+   "added": "2026-10-05T14:10:00.026Z",
+   "title": "Engine Toyota 1NZ",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "files/thiet-ke-3d/Engine-Toyota-1NZ-muvbtn1rva.stp",
+     "name": "Engine Toyota 1NZ.stp",
+     "size": 26532012
+    }
+   ],
+   "links": [],
+   "software": "",
+   "material": ""
   }
  ],
  "site": {
