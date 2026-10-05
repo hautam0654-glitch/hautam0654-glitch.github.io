@@ -459,7 +459,7 @@
  "site": {
   "hero": {
    "eyebrow": "Công nghệ Kỹ thuật Ô tô · 2024–2028",
-   "t1": "Hồ sơ học tập",
+   "t1": "Tài liệu môn học",
    "t2": "Kỹ thuật Ô tô",
    "b1": "XEM MÔN HỌC",
    "b2": "SẢN PHẨM",
@@ -504,7 +504,7 @@
     "hidden": false
    }
   },
-  "footer": "",
+  "footer": "hautam0654@gmail.com",
   "theme": {
    "navy": "#0f2757",
    "accent": "#bd7b00"
