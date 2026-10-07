@@ -608,6 +608,32 @@
    ],
    "links": [],
    "context": ""
+  },
+  {
+   "id": "svin3d",
+   "section": "services",
+   "added": "2026-10-07T15:26:11.000Z",
+   "title": "In 3D kỹ thuật (FDM)",
+   "desc": "Nhận in chi tiết kỹ thuật, mô hình và đồ gá từ file STL hoặc STEP.\nMáy in: Creality Ender 3 V3 SE. Vật liệu chính: nhựa PLA.\nGửi file kèm kích thước, số lượng và thời hạn để nhận báo giá.",
+   "date": "",
+   "cover": null,
+   "files": [],
+   "links": [],
+   "price": "Báo giá theo từng chi tiết",
+   "time": "Báo trước khi nhận in"
+  },
+  {
+   "id": "svdoan",
+   "section": "services",
+   "added": "2026-10-07T15:26:11.000Z",
+   "title": "Hỗ trợ và hướng dẫn đồ án",
+   "desc": "Hỗ trợ lên ý tưởng, hướng dẫn dựng mô hình CAD, tính toán và góp ý báo cáo cho đồ án ngành ô tô.\nMình hướng dẫn và góp ý để bạn tự hoàn thành đồ án của mình.",
+   "date": "",
+   "cover": null,
+   "files": [],
+   "links": [],
+   "price": "Trao đổi theo nội dung",
+   "time": "Theo tiến độ đồ án"
   }
  ],
  "site": {
@@ -662,6 +688,11 @@
   "theme": {
    "navy": "#0f2757",
    "accent": "#bd7b00"
+  },
+  "contact": {
+   "email": "hautam0654@gmail.com",
+   "address": "Xem vị trí trên bản đồ",
+   "map": "https://maps.app.goo.gl/ZzkwCMRU9aU7ssX67"
   }
  }
 }

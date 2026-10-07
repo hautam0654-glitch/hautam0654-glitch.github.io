@@ -360,6 +360,20 @@ footer .in{display:block;padding-block:40px 22px}
 .foot-end{margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12.5px;color:#93A0BA}
 .totop{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:15px;border:0;background:var(--grad);color:var(--amber-ink);cursor:pointer;box-shadow:0 10px 24px var(--ring);z-index:30;font-size:20px;font-weight:800}
 .skel{border-radius:18px;background:linear-gradient(100deg,var(--surface) 30%,var(--surface-2) 50%,var(--surface) 70%);background-size:300% 100%;animation:shim 1.3s linear infinite}
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:22px;margin-top:34px;align-items:start}
+.contact h3{font-size:22px;font-weight:800;margin:0 0 6px}
+.contact .lead{color:var(--muted);margin:0 0 16px}
+.clist{display:flex;flex-direction:column;gap:10px}
+.crow{display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-decoration:none;color:var(--ink);min-width:0;transition:border-color .15s,transform .15s}
+a.crow:hover{border-color:var(--amber);transform:translateX(3px)}
+.crow .ci{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--grad);color:var(--amber-ink);flex:none}
+.crow .ci svg{width:20px;height:20px}
+.crow b{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.crow span{display:block;font-weight:600;overflow-wrap:anywhere}
+.fab{position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:30;border:0;border-radius:999px;padding:12px 18px;background:var(--grad);color:var(--amber-ink);font-weight:700;cursor:pointer;box-shadow:0 12px 28px var(--ring);display:inline-flex;gap:8px;align-items:center}
+.fab svg{width:18px;height:18px}
+.st.new{background:var(--blue-soft);color:var(--blue)}
+@media (max-width:760px){.contact{grid-template-columns:1fr}.fab span{display:none}.fab{padding:13px}}
 @keyframes shim{from{background-position:120% 0}to{background-position:-120% 0}}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 main.enter .hero .in>*,main.enter .page-head .in>*,main.enter :is(.fcard,.sub,.card,.cite,.stat){animation:rise .55s cubic-bezier(.2,.7,.2,1) backwards}
@@ -393,6 +407,7 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 <main id="main"></main>
 <footer><div class="in" id="foot"></div></footer>
 <button class="totop" id="totop" aria-label="Lên đầu trang" hidden>↑</button>
+<button class="fab" id="fab-contact" hidden></button>
 <dialog id="dlg"></dialog>
 <div class="toast" id="toast" hidden></div>
 
@@ -431,9 +446,15 @@ const DEFAULT_SECS = {
   papers:{label:"Bài báo", short:"Bài báo và báo cáo khoa học", slug:"bai-bao", one:"bài báo", blurb:"Bài báo, báo cáo khoa học, tiểu luận và các bài nghiên cứu.", f1:["authors","Tác giả","VD: Hầu N. M. Tâm, Nguyễn V. A."], f2:["venue","Nơi đăng / hội nghị","VD: Hội nghị Khoa học Sinh viên 2026"], layout:"cite"},
   slides:{label:"Slide", short:"Slide thuyết trình, báo cáo", slug:"slide", one:"slide", blurb:"Slide thuyết trình, báo cáo tiến độ và bài trình bày trên lớp.", f1:["context","Môn học / dịp trình bày","VD: Báo cáo đồ án Thiết kế ô tô"], layout:"card"},
   models:{label:"Thiết kế 3D", short:"Mô hình CAD và bản vẽ", slug:"thiet-ke-3d", one:"thiết kế", blurb:"Mô hình CAD, bản vẽ và các chi tiết thiết kế để in 3D.", f1:["software","Phần mềm","VD: SolidWorks, Fusion 360"], f2:["material","Vật liệu / cách chế tạo","VD: In 3D nhựa PLA"], layout:"card"},
-  products:{label:"Sản phẩm", short:"Mô hình và đồ án đã chế tạo", slug:"san-pham", one:"sản phẩm", blurb:"Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.", f1:["context","Môn học / cuộc thi","VD: Racing Car 2026"], layout:"card"}
+  products:{label:"Sản phẩm", short:"Mô hình và đồ án đã chế tạo", slug:"san-pham", one:"sản phẩm", blurb:"Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.", f1:["context","Môn học / cuộc thi","VD: Racing Car 2026"], layout:"card"},
+  services:{label:"Dịch vụ", short:"In 3D kỹ thuật, hỗ trợ đồ án", slug:"dich-vu", one:"dịch vụ", blurb:"Các dịch vụ kỹ thuật mình nhận làm. Gửi yêu cầu, mình sẽ liên hệ lại.", f1:["price","Giá tham khảo","VD: báo giá theo từng chi tiết"], f2:["time","Thời gian thực hiện","VD: 1–3 ngày"], layout:"card"}
 };
 let SECS = {}, SUBJ = {}, SLUG2SEC = {};
+IC.services = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="2.5" y="13" width="4.5" height="7" rx="1.5"/><rect x="17" y="13" width="4.5" height="7" rx="1.5"/><path d="M19.5 20c0 1.5-2 2.5-5.5 2.5"/></svg>';
+IC.phone = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>';
+IC.mail = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+IC.chat = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>';
+IC.link = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
 IC.folder = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
 const icon = k => IC[k] || IC.folder;
 IC.sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
@@ -629,6 +650,7 @@ function renderChrome(){
   const cur = st.view === "home" ? "home" : st.view === "admin" ? "admin" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
   const tabs = [["home","Trang chủ"]].concat(SUBJ.hidden ? [] : [["subjects",SUBJ.label]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k,s.label])).concat((token || sbAdmin()) ? [["admin","Quản trị"]] : []);
   $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${SB_ON ? (me ? "Tài khoản" : "Đăng nhập") : (token ? "Đăng xuất" : "Đăng nhập")}</button>`;
+  const fab = $("fab-contact"); fab.hidden = !SB_ON || st.view === "admin" || !!token; fab.innerHTML = IC.chat + "<span>Liên hệ</span>";
   const n = data.docs.length + data.items.length;
   $("foot").innerHTML = `<div class="foot">
     <div><div class="fb"><span class="logo">${$("logo-svg").innerHTML}</span><b>Hồ sơ Ô tô ${esc(p.lop || "")}</b></div><p>${esc(p.intro || "")}</p></div>
@@ -762,9 +784,46 @@ function itemList(sec, q){
   if (!items.length) return `<div class="empty" style="margin-top:16px"><h3>${q ? "Không tìm thấy" : "Chưa có " + S.one + " nào"}</h3><p>${q ? "Thử từ khóa khác." : token ? "Bấm nút “+ Thêm” để đăng " + S.one + " đầu tiên." : "Chủ trang chưa đăng nội dung ở mục này."}</p></div>`;
   return S.layout === "cite" ? `<div class="cites" style="margin-top:16px">${items.map(citeItem).join("")}</div>` : `<div class="cards" style="margin-top:16px">${items.map(cardItem).join("")}</div>`;
 }
+const contact = () => site().contact || {};
+function contactRows(){
+  const c = contact(); const rows = []; const digits = String(c.phone || "").replace(/[^0-9+]/g, "");
+  if (c.phone) rows.push([IC.phone, "Điện thoại", c.phone, "tel:" + digits]);
+  if (c.zalo || c.phone){ const z = String(c.zalo || c.phone).replace(/[^0-9]/g, ""); if (z) rows.push([IC.chat, "Zalo", c.zalo || c.phone, "https://zalo.me/" + z]); }
+  if (c.email) rows.push([IC.mail, "Email", c.email, "mailto:" + c.email]);
+  if (safeUrl(c.facebook)) rows.push([IC.link, "Facebook", c.facebook.replace(/^https?:\/\/(www\.)?/, ""), safeUrl(c.facebook)]);
+  if (c.address) rows.push([IC.pin, "Địa chỉ", c.address, safeUrl(c.map) || ""]);
+  return rows.map(([ic,k,v,h]) => h ? `<a class="crow" href="${esc(h)}" ${/^https?:/.test(h) ? 'target="_blank" rel="noopener noreferrer"' : ""}><span class="ci">${ic}</span><span style="min-width:0"><b>${esc(k)}</b><span>${esc(v)}</span></span></a>` : `<div class="crow"><span class="ci">${ic}</span><span style="min-width:0"><b>${esc(k)}</b><span>${esc(v)}</span></span></div>`).join("");
+}
+function contactBlock(){
+  const rows = contactRows(); const c = contact();
+  return `<section class="contact"><div><h3>${esc(c.title || "Liên hệ và hỗ trợ")}</h3><p class="lead">${esc(c.lead || "Cần in 3D, cần hỗ trợ đồ án hoặc muốn hỏi về tài liệu? Gửi yêu cầu, mình sẽ phản hồi sớm.")}</p>
+    ${SB_ON ? `<button class="btn primary" data-request="">Gửi yêu cầu</button>` : ""}</div>
+    <div class="clist">${rows || `<div class="empty" style="padding:22px"><p style="margin:0">${token ? "Vào Quản trị, mục “Liên hệ” để thêm số điện thoại, Zalo, email." : "Chủ trang chưa thêm thông tin liên hệ."}</p></div>`}</div></section>`;
+}
+function requestDlg(service){
+  const list = data.items.filter(i => i.section === "services").map(i => i.title);
+  openDlg(`<form id="req-form" novalidate>${dhead("Gửi yêu cầu")}<div class="db">
+    <div class="two"><label class="f">Họ tên *<input class="field" id="r-name" autocomplete="name" value="${esc((me && me.profile && me.profile.full_name) || "")}"></label><label class="f">Số điện thoại / Zalo / email *<input class="field" id="r-contact" placeholder="Để mình liên hệ lại"></label></div>
+    <label class="f">Bạn cần gì<select class="field" id="r-service">${list.map(t => `<option ${t === service ? "selected" : ""}>${esc(t)}</option>`).join("")}<option ${service ? "" : (list.length ? "" : "selected")}>Hỏi về tài liệu</option><option>Khác</option></select></label>
+    <label class="f">Nội dung *<textarea class="field" id="r-msg" rows="5" placeholder="Mô tả ngắn: chi tiết cần in (kích thước, số lượng, vật liệu), đề tài đồ án, thời hạn…"></textarea></label>
+    <input id="r-web" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+    <div class="msg err" id="req-err" hidden></div></div>
+  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="req-go">Gửi</button></div></form>`);
+  $("r-name").focus();
+}
+async function doRequest(){
+  const er = $("req-err"); const fail = m => { er.textContent = m; er.hidden = false; }; er.hidden = true;
+  const name = $("r-name").value.trim(), ct = $("r-contact").value.trim(), msg = $("r-msg").value.trim(), svc = $("r-service").value;
+  if (name.length < 2) return fail("Cần nhập họ tên."); if (ct.length < 6) return fail("Cần nhập số điện thoại, Zalo hoặc email để mình liên hệ lại."); if (msg.length < 5) return fail("Cần nhập nội dung yêu cầu.");
+  if ($("r-web").value){ closeDlg(); return; }
+  if (!sb) return fail("Chưa gửi được lúc này. Tải lại trang rồi thử lại.");
+  $("req-go").disabled = true; const r = await sb.rpc("send_request", {p_name:name, p_contact:ct, p_service:svc, p_message:msg});
+  if (r.error){ $("req-go").disabled = false; return fail(/busy/.test(r.error.message || "") ? "Đang có quá nhiều yêu cầu. Thử lại sau ít phút hoặc liên hệ trực tiếp." : "Chưa gửi được. Thử lại hoặc liên hệ trực tiếp."); }
+  closeDlg(); toast("Đã gửi yêu cầu. Mình sẽ liên hệ lại sớm.");
+}
 function renderSection(){
   const S = SECS[st.sec];
-  $("main").innerHTML = pageHead(S.label, S.blurb) + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm trong mục ${esc(S.label)}…" value="${esc(st.q)}" aria-label="Tìm kiếm">${token ? `<button class="btn primary" id="add-item">+ Thêm ${esc(S.one)}</button>` : ""}</div><div id="list">${itemList(st.sec, st.q.trim().toLowerCase())}</div></div>`;
+  $("main").innerHTML = pageHead(S.label, S.blurb) + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm trong mục ${esc(S.label)}…" value="${esc(st.q)}" aria-label="Tìm kiếm">${token ? `<button class="btn primary" id="add-item">+ Thêm ${esc(S.one)}</button>` : ""}</div><div id="list">${itemList(st.sec, st.q.trim().toLowerCase())}</div>${st.sec === "services" ? contactBlock() : ""}</div>`;
 }
 function fileRow(f, k){ const e = extOfName(f.name) || "file"; return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(f.name)}</div><div class="d">${esc([isLocked(f.path) ? "Cần đăng nhập để tải" : "", fmtSize(f.size)].filter(Boolean).join(" · "))}</div></div><div class="acts">${cntPill(f.path)}${dlBtn(f)}${canLock() && !isLocked(f.path) ? `<button class="btn sm" data-lock-file="${k}">Khóa</button>` : ""}</div></div>`; }
 function renderItem(){
@@ -774,6 +833,7 @@ function renderItem(){
   const links = (i.links||[]).filter(l => safeUrl(l.url)); const files = i.files || [];
   const side = `<div class="panel">${rows.length ? `<div class="spec">${rows.map(([k,v]) => `<div>${esc(k)}</div><div>${esc(v)}</div>`).join("")}</div>` : ""}${i.desc ? `<p class="desc">${esc(i.desc)}</p>` : ""}
     ${links.map(l => `<a class="btn" style="margin:0 6px 6px 0" href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${esc(l.label || "Mở link")} ↗</a>`).join("")}
+    ${i.section === "services" && SB_ON ? `<button class="btn primary" style="width:100%;justify-content:center;margin-top:6px" data-request="${esc(i.title)}">Gửi yêu cầu dịch vụ này</button>` : ""}
     ${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px"><button class="btn sm" id="edit-item">Sửa</button><button class="btn sm danger" id="del-item">Xóa</button></div>` : ""}</div>`;
   const filesHtml = files.length ? `<div class="docs">${files.map((f,k) => fileRow(f,k)).join("")}</div>` : (links.length ? "" : `<p class="note">Mục này chưa đính kèm file.</p>`);
   $("main").innerHTML = pageHead(i.title, "", [S.label, `data-go="${i.section}"`]) + `<div class="in page">${i.cover ? `<div class="detail"><div><div class="pic"><img src="${esc(href(i.cover))}" alt="${esc(i.title)}"></div>${filesHtml}</div>${side}</div>` : `<div class="detail"><div>${filesHtml || ""}</div>${side}</div>`}</div>`;
@@ -946,6 +1006,9 @@ async function loadAdminPanels(){
   const wait = people.filter(x => !x.approved && !x.is_admin).length;
   mb.innerHTML = pr.error ? `<div class="msg err">Chưa tải được danh sách thành viên.</div>` : !people.length ? `<p class="note">Chưa có ai đăng ký.</p>` :
     `<p class="note" style="margin:0 0 10px">${people.length} tài khoản${wait ? ` · <b>${wait} đang chờ duyệt</b>` : ""}</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>MSSV · Lớp</th><th>Email</th><th>Đăng ký</th><th>Trạng thái</th><th></th></tr></thead><tbody>${people.map(x => `<tr><td><b>${esc(x.full_name || "—")}</b></td><td>${esc([x.student_id,x.class].filter(Boolean).join(" · ") || "—")}</td><td>${esc(x.email || "")}</td><td>${esc(fmtDate(x.created_at))}</td><td>${x.is_admin ? `<span class="st adm">Quản trị</span>` : x.approved ? `<span class="st ok">Đã duyệt</span>` : `<span class="st wait">Chờ duyệt</span>`}</td><td>${x.is_admin ? "" : x.approved ? `<button type="button" class="btn sm danger" data-member="${esc(x.id)}" data-set="0">Khóa lại</button>` : `<button type="button" class="btn sm primary" data-member="${esc(x.id)}" data-set="1">Duyệt</button>`}</td></tr>`).join("")}</tbody></table></div>`;
+  const rq = await sb.from("requests").select("*").order("created_at", {ascending:false}).limit(200); const reqs = rq.data || []; const rb = $("adm-requests");
+  if (rb) rb.innerHTML = rq.error ? `<div class="msg err">Chưa tải được danh sách yêu cầu.</div>` : !reqs.length ? `<p class="note">Chưa có yêu cầu nào.</p>` :
+    `<p class="note" style="margin:0 0 10px">${reqs.filter(x => x.status === "new").length} yêu cầu mới · ${reqs.length} tổng cộng</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Thời gian</th><th>Người gửi</th><th>Liên hệ</th><th>Cần gì</th><th>Nội dung</th><th></th></tr></thead><tbody>${reqs.map(x => `<tr><td>${esc(new Date(x.created_at).toLocaleString("vi-VN"))}<br>${x.status === "new" ? `<span class="st new">Mới</span>` : `<span class="st ok">Đã xử lý</span>`}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.contact)}</td><td>${esc(x.service || "")}</td><td style="white-space:pre-wrap;min-width:200px">${esc(x.message)}</td><td><div style="display:flex;gap:6px;flex-direction:column">${x.status === "new" ? `<button type="button" class="btn sm primary" data-req="${esc(x.id)}" data-set="done">Đã xử lý</button>` : `<button type="button" class="btn sm" data-req="${esc(x.id)}" data-set="new">Mở lại</button>`}<button type="button" class="btn sm danger" data-req-del="${esc(x.id)}">Xóa</button></div></td></tr>`).join("")}</tbody></table></div>`;
   const top = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,15); const log = lg.data || [];
   dl.innerHTML = (top.length ? `<div class="tblwrap"><table class="tbl"><thead><tr><th>File</th><th>Lượt tải</th></tr></thead><tbody>${top.map(([p,n]) => `<tr><td>${isLocked(p) ? LOCK + " " : ""}${esc(titles[p] || p)}</td><td><b>${n}</b></td></tr>`).join("")}</tbody></table></div>` : `<p class="note">Chưa có lượt tải nào.</p>`)
     + (log.length ? `<p class="note" style="margin:16px 0 8px">Nhật ký tải file khóa (mới nhất trước). Bấm “Mở lại” để cho người đó tải thêm 1 lần.</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Thời gian</th><th>Người tải</th><th>File</th><th></th></tr></thead><tbody>${log.map(r => { const u = byId[r.user_id] || {}; return `<tr><td>${esc(new Date(r.created_at).toLocaleString("vi-VN"))}</td><td>${esc(u.full_name || u.email || "—")}${u.student_id ? " · " + esc(u.student_id) : ""}</td><td>${esc(titles[r.path] || r.path)}</td><td><button type="button" class="btn sm" data-reopen="${esc(r.id)}">Mở lại</button></td></tr>`; }).join("")}</tbody></table></div>` : "");
@@ -953,7 +1016,8 @@ async function loadAdminPanels(){
 function renderAdmin(){
   const p = data.profile; const th = site().theme || {};
   const sbPanels = !SB_ON ? "" : sbAdmin() ? `<div class="panel"><h3>Thành viên</h3><p>Người đăng ký phải được bạn duyệt mới tải được file khóa.</p><div id="adm-members"><p class="note">Đang tải…</p></div></div>
-    <div class="panel"><h3>Lượt tải</h3><p>Số lượt tải của từng file. File công khai được đếm theo số lần bấm nút, file khóa được đếm theo từng tài khoản.</p><div id="adm-downloads"><p class="note">Đang tải…</p></div></div>`
+    <div class="panel"><h3>Lượt tải</h3><p>Số lượt tải của từng file. File công khai được đếm theo số lần bấm nút, file khóa được đếm theo từng tài khoản.</p><div id="adm-downloads"><p class="note">Đang tải…</p></div></div>
+    <div class="panel"><h3>Yêu cầu liên hệ</h3><p>Yêu cầu gửi từ nút “Liên hệ” và trang Dịch vụ.</p><div id="adm-requests"><p class="note">Đang tải…</p></div></div>`
     : `<div class="panel"><h3>Thành viên và lượt tải</h3><p>Đăng nhập bằng tài khoản quản trị (email và mật khẩu) để duyệt thành viên, khóa file và xem lượt tải.</p><button type="button" class="btn primary" id="login-btn2">Đăng nhập tài khoản quản trị</button></div>`;
   if (!token){ $("main").innerHTML = pageHead("Quản trị", "Duyệt thành viên, xem lượt tải và sửa nội dung trang.") + `<div class="in page"><div class="adm">${sbPanels}<div class="panel"><h3>Sửa nội dung trang</h3><p>Để thêm, sửa, xóa nội dung, trình duyệt này cần có mã GitHub của chủ trang.</p><button type="button" class="btn primary" id="owner-login">Nhập mã GitHub</button></div></div></div>`; loadAdminPanels(); return; }
   adm = [{key:"subjects", label:SUBJ.label, short:SUBJ.short, blurb:SUBJ.blurb, hidden:SUBJ.hidden}].concat(Object.entries(SECS).map(([k,s]) => ({key:k, label:s.label, short:s.short, blurb:s.blurb, hidden:!!s.hidden, layout:s.layout, custom:!!s.custom})));
@@ -974,6 +1038,9 @@ function renderAdmin(){
         <div class="secrow-f"><label class="ck"><input type="checkbox" id="o-showRecent" ${txt("home","showRecent",true) !== false ? "checked" : ""}> Hiện phần “Mới cập nhật”</label><label class="ck"><input type="checkbox" id="o-showStats" ${txt("home","showStats",true) !== false ? "checked" : ""}> Hiện phần con số</label></div></div></div>
     <div class="panel"><h3>Các mục của trang</h3><p>Đổi tên, mô tả, ẩn hoặc hiện từng mục. Bạn cũng có thể tạo mục mới, ví dụ Chứng chỉ hay Cuộc thi.</p>
       <div class="stack" id="sec-rows">${admRows()}</div><button type="button" class="btn" id="add-sec" style="margin-top:12px">+ Thêm mục mới</button></div>
+    <div class="panel"><h3>Liên hệ</h3><p>Hiện ở trang Dịch vụ. Để trống ô nào thì ô đó không hiện.</p>
+      <div class="stack"><div class="two">${inp("c-phone","Số điện thoại",contact().phone)}${inp("c-zalo","Số Zalo (nếu khác số điện thoại)",contact().zalo)}</div><div class="two">${inp("c-email","Email liên hệ",contact().email)}${inp("c-facebook","Link Facebook",contact().facebook,"https://facebook.com/…")}</div><div class="two">${inp("c-address","Địa chỉ",contact().address)}${inp("c-map","Link bản đồ",contact().map,"https://maps.app.goo.gl/…")}</div>
+        ${inp("c-title","Tiêu đề khối liên hệ",contact().title || "Liên hệ và hỗ trợ")}${inp("c-lead","Dòng mô tả",contact().lead || "Cần in 3D, cần hỗ trợ đồ án hoặc muốn hỏi về tài liệu? Gửi yêu cầu, mình sẽ phản hồi sớm.")}</div></div>
     <div class="panel"><h3>Giao diện</h3><p>Màu của menu, phần mở đầu, nút bấm và bánh răng.</p>
       <div class="colors"><label class="f">Màu nền chính<input type="color" id="t-navy" value="${esc(hexRgb(th.navy) ? th.navy : "#0F1E3D")}"></label><label class="f">Màu nhấn<input type="color" id="t-accent" value="${esc(hexRgb(th.accent) ? th.accent : "#F2A413")}"></label><button type="button" class="btn sm" id="t-reset">Về màu mặc định</button></div>
       <label class="ck" style="margin-top:14px"><input type="checkbox" id="p-scores" ${data.settings.showScores ? "checked" : ""}> Hiện điểm trung bình của từng môn cho người xem</label></div>
@@ -1038,6 +1105,9 @@ document.addEventListener("click", async e => {
   if (t.dataset.sub){ go("subject", t.dataset.sub); return; }
   if (t.dataset.item){ go("item", t.dataset.item); return; }
   if (t.dataset.dl){ downloadLocked(t); return; }
+  if (t.dataset.request !== undefined){ requestDlg(t.dataset.request); return; }
+  if (t.dataset.req){ t.disabled = true; const r = await sb.from("requests").update({status:t.dataset.set}).eq("id", t.dataset.req); if (r.error) toast("Chưa cập nhật được."); loadAdminPanels(); return; }
+  if (t.dataset.reqDel){ if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa"; return; } t.disabled = true; const r = await sb.from("requests").delete().eq("id", t.dataset.reqDel); toast(r.error ? "Chưa xóa được." : "Đã xóa yêu cầu."); loadAdminPanels(); return; }
   if (t.dataset.authTab){ accountDlg(t.dataset.authTab); return; }
   if (t.dataset.member){ t.disabled = true; const r = await sb.from("profiles").update({approved:t.dataset.set === "1"}).eq("id", t.dataset.member); if (r.error) toast("Chưa cập nhật được."); else toast(t.dataset.set === "1" ? "Đã duyệt tài khoản." : "Đã khóa tài khoản."); loadAdminPanels(); return; }
   if (t.dataset.reopen){ t.disabled = true; const r = await sb.from("downloads").delete().eq("id", t.dataset.reopen); toast(r.error ? "Chưa mở lại được." : "Đã mở lại 1 lượt tải cho người này."); loadAdminPanels(); return; }
@@ -1065,6 +1135,7 @@ document.addEventListener("click", async e => {
   switch (t.id){
     case "login-btn": case "login-btn2": if (SB_ON) accountDlg("login"); else token ? signOut() : loginDlg(); break;
     case "theme-btn": { const nx = isDark() ? "light" : "dark"; document.documentElement.dataset.theme = nx; try { localStorage.setItem("tl-theme", nx); } catch(_){} renderChrome(); if (st.view === "home") drawGear(); break; }
+    case "fab-contact": requestDlg(""); break;
     case "totop": window.scrollTo({top:0, behavior:REDUCE ? "auto" : "smooth"}); break;
     case "owner-login": closeDlg(); loginDlg(); break;
     case "pw-open": passwordDlg(); break;
@@ -1100,6 +1171,7 @@ document.addEventListener("submit", async e => {
   if (f.id === "login-form") return doLogin();
   if (f.id === "auth-form") return doAuth(f);
   if (f.id === "pw-form") return doPassword();
+  if (f.id === "req-form") return doRequest();
   if (f.id === "sub-form"){
     const er = $("sub-err"); const name = $("s-name").value.trim(); const code = $("s-code").value.trim().replace(/[^A-Za-z0-9_-]/g,"");
     if (!name || !code){ er.textContent = "Cần nhập tên môn và mã môn (mã chỉ gồm chữ, số)."; er.hidden = false; return; }
@@ -1147,6 +1219,7 @@ document.addEventListener("submit", async e => {
         hero:{eyebrow:$("h-eyebrow").value.trim(), t1:$("h-t1").value.trim(), t2:$("h-t2").value.trim(), b1:$("h-b1").value.trim(), b2:$("h-b2").value.trim(), gear:$("h-gear").checked},
         home:{recentTitle:$("o-recentTitle").value.trim(), recentSub:$("o-recentSub").value.trim(), statsTitle:$("o-statsTitle").value.trim(), showRecent:$("o-showRecent").checked, showStats:$("o-showStats").checked},
         sections:secs, footer:$("s-footer").value.trim(),
+        contact:{phone:$("c-phone").value.trim(), zalo:$("c-zalo").value.trim(), email:$("c-email").value.trim(), facebook:$("c-facebook").value.trim(), address:$("c-address").value.trim(), map:$("c-map").value.trim(), title:$("c-title").value.trim(), lead:$("c-lead").value.trim()},
         theme:{navy:navy.toUpperCase() === "#0F1E3D" ? "" : navy, accent:accent.toUpperCase() === "#F2A413" ? "" : accent}
       };
       const olds = up.olds; buildSecs(); applyTheme();
