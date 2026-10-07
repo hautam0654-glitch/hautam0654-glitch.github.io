@@ -219,6 +219,17 @@ label.f .field{color:var(--ink);font-weight:400;font-size:14.5px}
 footer{background:var(--navy-3);color:#C9D2E6;margin-top:64px;font-size:13.5px}
 footer .in{padding-block:26px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer b{color:#fff}
+.tabs{display:flex;gap:6px;background:var(--surface-2);padding:4px;border-radius:12px}
+.tabs button{flex:1;appearance:none;border:0;background:none;padding:8px;border-radius:9px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.lockline{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:14px;background:var(--amber-soft);border-radius:10px;padding:10px 12px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{text-align:left;font-size:12.5px;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.st{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap;display:inline-block}
+.st.ok{background:var(--good-soft);color:var(--good)} .st.wait{background:var(--amber-soft);color:var(--ink)} .st.adm{background:var(--navy);color:#fff}
 /* admin */
 .adm{display:flex;flex-direction:column;gap:18px}
 .adm .panel h3{font-size:18px;font-weight:800;margin:0 0 4px}
@@ -270,6 +281,14 @@ footer b{color:#fff}
 const OWNER = "hautam0654-glitch", REPO = "hautam0654-glitch.github.io", BRANCH = "main";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
 const TOKEN_KEY = "tl-oto-token";
+/* member accounts, locked files and download counts live in Supabase; empty = feature off */
+const SB_URL = "https://kkoqupqpoinhcpqswfjb.supabase.co", SB_KEY = "sb_publishable_xZ5p32i7eUYOLcmBainnFw_jU_et8wA";
+const SB_ON = !!(SB_URL && SB_KEY);
+let sb = null, me = null, counts = {};
+const LOCK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+const sbAdmin = () => !!(me && me.profile && me.profile.is_admin);
+const sbApproved = () => !!(me && me.profile && (me.profile.approved || me.profile.is_admin));
+const isLocked = p => typeof p === "string" && p.startsWith("L/");
 const MAX_FILE = 40 * 1024 * 1024;
 const DOC_KINDS = ["Giáo trình","Bài giảng / Slide","Bài tập","Đề thi / Ôn tập","Báo cáo / Đồ án","Bản vẽ / CAD","Ghi chép","Khác"];
 
@@ -390,6 +409,63 @@ async function removeFile(path, why){
   catch(e){ if (e.code !== 404) throw e; }
 }
 function readBase64(blob){ return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1] || ""); fr.onerror = () => rej(new Error("Không đọc được file.")); fr.readAsDataURL(blob); }); }
+function loadScript(src){ return new Promise((res, rej) => { const el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = () => rej(new Error("Không tải được thư viện")); document.head.appendChild(el); }); }
+async function loadMe(){
+  const r = await sb.auth.getSession(); const u = r.data && r.data.session ? r.data.session.user : null;
+  if (!u){ me = null; return; }
+  const q = await sb.from("profiles").select("*").eq("id", u.id).maybeSingle();
+  me = {user:u, profile:q.data || null};
+}
+async function loadCounts(){ if (!sb) return; try { const r = await sb.rpc("file_counts"); if (!r.error && Array.isArray(r.data)){ counts = {}; r.data.forEach(x => counts[x.path] = (counts[x.path]||0) + Number(x.n)); } } catch(e){} }
+async function sbInit(){
+  if (!SB_ON) return;
+  try {
+    await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js");
+    sb = window.supabase.createClient(SB_URL, SB_KEY);
+    await Promise.all([loadMe(), loadCounts()]); render();
+  } catch(e){ sb = null; }
+}
+async function sbUpload(path, file){
+  if (!sbAdmin()) throw Object.assign(new Error("Cần đăng nhập tài khoản quản trị để khóa file"), {code:"sb"});
+  const r = await sb.storage.from("locked").upload(path, file, {contentType:file.type || "application/octet-stream", upsert:false});
+  if (r.error) throw Object.assign(new Error(r.error.message || "Lỗi tải lên kho khóa"), {code:"sb"});
+}
+async function removeAny(path, why){
+  if (!isLocked(path)) return removeFile(path, why);
+  if (!sbAdmin()) throw Object.assign(new Error("Cần đăng nhập tài khoản quản trị để xóa file đã khóa"), {code:"sb"});
+  const r = await sb.storage.from("locked").remove([path]); if (r.error) throw Object.assign(new Error(r.error.message), {code:"sb"});
+}
+const cntPill = p => counts[p] ? `<span class="pill">${counts[p]} lượt tải</span>` : "";
+function dlBtn(f){
+  return isLocked(f.path) ? `<button class="btn sm primary" data-dl="${esc(f.path)}" data-name="${esc(f.name || "file")}">${LOCK} Tải về</button>`
+    : `<a class="btn sm primary" href="${esc(href(f.path))}" target="_blank" rel="noopener" data-hit="${esc(f.path)}">Mở / Tải</a>`;
+}
+const canLock = () => SB_ON && token && sbAdmin();
+async function downloadLocked(btn){
+  const path = btn.dataset.dl, name = btn.dataset.name || "file";
+  if (!sb){ toast("Chức năng tải file khóa chưa sẵn sàng. Tải lại trang rồi thử lại."); return; }
+  if (!me){ accountDlg("login", "Đăng nhập để tải file này."); return; }
+  if (!sbApproved()){ toast("Tài khoản của bạn đang chờ chủ trang duyệt."); return; }
+  if (!sbAdmin() && !btn.classList.contains("armed")){ btn.classList.add("armed"); btn.dataset.html = btn.innerHTML; btn.textContent = "Chỉ tải được 1 lần – bấm lần nữa"; return; }
+  btn.disabled = true; btn.textContent = "Đang tải…";
+  try {
+    const g = await sb.rpc("request_download", {p_path:path});
+    if (g.error){ const m = g.error.message || "";
+      throw new Error(m.includes("already_downloaded") ? "Bạn đã tải file này rồi. Nhắn chủ trang nếu cần tải lại." : m.includes("not_approved") ? "Tài khoản của bạn đang chờ chủ trang duyệt." : m.includes("not_found") ? "File này không còn trên trang." : "Chưa tải được. Thử lại sau."); }
+    const d = await sb.storage.from("locked").download(path); if (d.error) throw new Error("Chưa tải được file. Thử lại ngay trong vài phút tới.");
+    const url = URL.createObjectURL(d.data); const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 60000);
+    toast("Đã tải “" + name + "”."); await loadCounts();
+  } catch(e){ toast(e.message || "Chưa tải được."); }
+  render();
+}
+async function lockExisting(fileObj, title){
+  /* move a public file from the repo into the locked store */
+  const old = fileObj.path; const r = await fetch(href(old) + "?t=" + Date.now()); if (!r.ok) throw new Error("Không đọc được file gốc");
+  const blob = await r.blob(); const np = "L/" + old.replace(/^files\//, "");
+  await sbUpload(np, new File([blob], fileObj.name || "file", {type:blob.type}));
+  fileObj.path = np; fileObj.locked = true;
+  await saveData("Khóa file: " + title); try { await removeFile(old, "Chuyển file sang kho khóa"); } catch(_){}
+}
 function compressImage(file, max){
   return new Promise((res, rej) => {
     const url = URL.createObjectURL(file); const img = new Image();
@@ -407,13 +483,13 @@ function compressImage(file, max){
 function renderChrome(){
   const p = data.profile;
   $("strip-l").innerHTML = `Hồ sơ học tập của <b>${esc(p.name || "")}</b>`;
-  $("strip-r").innerHTML = token ? `Đang đăng nhập (quản trị) · <button data-go="admin">Mở trang quản trị</button>` : esc(p.nganh || "");
+  $("strip-r").innerHTML = (token || sbAdmin()) ? `Đang đăng nhập (quản trị) · <button data-go="admin">Mở trang quản trị</button>` : me ? `Xin chào <b>${esc((me.profile && me.profile.full_name) || me.user.email)}</b>${sbApproved() ? "" : " · đang chờ duyệt"}` : esc(p.nganh || "");
   $("brand-name").textContent = "Hồ sơ Ô tô " + (p.lop || "");
   $("brand-sub").textContent = p.nganh || "Công nghệ Kỹ thuật Ô tô";
   $("infos").innerHTML = [[IC.cap,"Lớp",p.lop],[IC.pin,"Trường",p.truong],[IC.cal,"Niên khóa",p.nienKhoa]].filter(x=>x[2]).map(([i,k,v]) => `<div class="info">${i}<div><b>${esc(k)}</b><span>${esc(v)}</span></div></div>`).join("");
   const cur = st.view === "home" ? "home" : st.view === "admin" ? "admin" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
-  const tabs = [["home","Trang chủ"]].concat(SUBJ.hidden ? [] : [["subjects",SUBJ.label]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k,s.label])).concat(token ? [["admin","Quản trị"]] : []);
-  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${token ? "Đăng xuất" : "Đăng nhập"}</button>`;
+  const tabs = [["home","Trang chủ"]].concat(SUBJ.hidden ? [] : [["subjects",SUBJ.label]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k,s.label])).concat((token || sbAdmin()) ? [["admin","Quản trị"]] : []);
+  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${SB_ON ? (me ? "Tài khoản" : "Đăng nhập") : (token ? "Đăng xuất" : "Đăng nhập")}</button>`;
   $("foot-l").innerHTML = `<b>${esc(p.name || "")}</b>${[p.lop,p.truong].filter(Boolean).length ? " · " + esc([p.lop,p.truong].filter(Boolean).join(" · ")) : ""}${site().footer ? "<br>" + esc(site().footer) : ""}`;
   const n = data.docs.length + data.items.length;
   $("foot-r").textContent = n + " mục đã đăng";
@@ -502,9 +578,9 @@ function renderSubjects(){
 }
 function rowDoc(d){
   const e = extOfName(d.name) || (d.link ? "link" : "file"); const h = d.path ? href(d.path) : safeUrl(d.link);
-  const meta = [d.kind, fmtSize(d.size), fmtDate(d.added)].filter(Boolean).join(" · ");
+  const meta = [isLocked(d.path) ? "Cần đăng nhập để tải" : "", d.kind, fmtSize(d.size), fmtDate(d.added)].filter(Boolean).join(" · ");
   return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(d.title)}</div><div class="d">${esc(meta)}</div>${d.note ? `<div class="d">${esc(d.note)}</div>` : ""}</div>
-    <div class="acts">${h ? `<a class="btn sm primary" href="${esc(h)}" target="_blank" rel="noopener">${d.path ? "Mở / Tải" : "Mở link"}</a>` : ""}${token ? `<button class="btn sm" data-edit-doc="${esc(d.id)}">Sửa</button><button class="btn sm danger" data-del-doc="${esc(d.id)}">Xóa</button>` : ""}</div></div>`;
+    <div class="acts">${cntPill(d.path)}${d.path ? dlBtn(d) : h ? `<a class="btn sm primary" href="${esc(h)}" target="_blank" rel="noopener">Mở link</a>` : ""}${token ? `${canLock() && d.path && !isLocked(d.path) ? `<button class="btn sm" data-lock-doc="${esc(d.id)}">Khóa</button>` : ""}<button class="btn sm" data-edit-doc="${esc(d.id)}">Sửa</button><button class="btn sm danger" data-del-doc="${esc(d.id)}">Xóa</button>` : ""}</div></div>`;
 }
 function renderSubject(){
   const s = data.subjects.find(x => x.code === st.code); if (!s){ st.view = "subjects"; return renderSubjects(); }
@@ -514,6 +590,7 @@ function renderSubject(){
     <div class="meta" style="margin-top:8px">${s.sem ? `<span class="pill">Học kỳ ${esc(s.sem)}</span>` : ""}${s.credits ? `<span class="pill">Hệ số ${esc(s.credits)}</span>` : ""}<span class="pill${docs.length ? " has" : ""}">${docs.length} tài liệu</span></div>
     ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="btn sm" id="edit-sub">Sửa môn</button><button class="btn sm" id="add-link">+ Thêm link (Drive, YouTube…)</button></div>` : ""}</div>
     ${showScore ? `<div class="big"><b>${fmtScore(s.score)}</b><span>Điểm trung bình</span></div>` : ""}</div>`;
+  if (token && SB_ON) html += `<label class="lockline"><input type="checkbox" id="lock-new" ${sbAdmin() ? "checked" : "disabled"}> ${LOCK} Khóa file sắp tải lên: phải đăng nhập, mỗi tài khoản tải 1 lần${sbAdmin() ? "" : " (cần đăng nhập tài khoản quản trị bằng email)"}</label>`;
   if (token) html += `<div class="drop" id="drop" tabindex="0" role="button"><b>Kéo thả file vào đây</b>hoặc bấm để chọn file · PDF, Word, PowerPoint, Excel, ảnh, file nén… · tối đa 40 MB mỗi file<input type="file" id="file-in" multiple hidden></div><div class="queue" id="queue"></div>`;
   html += docs.length ? `<div class="docs">${docs.map(rowDoc).join("")}</div>` : `<div class="empty" style="margin-top:16px"><h3>Chưa có tài liệu</h3><p>${token ? "Kéo thả file vào khung phía trên để thêm tài liệu cho môn này." : "Môn này chưa có tài liệu nào được đăng."}</p></div>`;
   if (token && docs.length) html += `<p class="note">File mới tải lên cần khoảng 1 phút để người xem bên ngoài mở được.</p>`;
@@ -545,7 +622,7 @@ function renderSection(){
   const S = SECS[st.sec];
   $("main").innerHTML = pageHead(S.label, S.blurb) + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm trong mục ${esc(S.label)}…" value="${esc(st.q)}" aria-label="Tìm kiếm">${token ? `<button class="btn primary" id="add-item">+ Thêm ${esc(S.one)}</button>` : ""}</div><div id="list">${itemList(st.sec, st.q.trim().toLowerCase())}</div></div>`;
 }
-function fileRow(f){ const e = extOfName(f.name) || "file"; return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(f.name)}</div><div class="d">${esc(fmtSize(f.size))}</div></div><div class="acts"><a class="btn sm primary" href="${esc(href(f.path))}" target="_blank" rel="noopener">Mở / Tải</a></div></div>`; }
+function fileRow(f, k){ const e = extOfName(f.name) || "file"; return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(f.name)}</div><div class="d">${esc([isLocked(f.path) ? "Cần đăng nhập để tải" : "", fmtSize(f.size)].filter(Boolean).join(" · "))}</div></div><div class="acts">${cntPill(f.path)}${dlBtn(f)}${canLock() && !isLocked(f.path) ? `<button class="btn sm" data-lock-file="${k}">Khóa</button>` : ""}</div></div>`; }
 function renderItem(){
   const i = data.items.find(x => x.id === st.id); if (!i || !SECS[i.section]){ st.view = "home"; return renderHome(); }
   const S = SECS[i.section]; const rows = [];
@@ -554,12 +631,12 @@ function renderItem(){
   const side = `<div class="panel">${rows.length ? `<div class="spec">${rows.map(([k,v]) => `<div>${esc(k)}</div><div>${esc(v)}</div>`).join("")}</div>` : ""}${i.desc ? `<p class="desc">${esc(i.desc)}</p>` : ""}
     ${links.map(l => `<a class="btn" style="margin:0 6px 6px 0" href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${esc(l.label || "Mở link")} ↗</a>`).join("")}
     ${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px"><button class="btn sm" id="edit-item">Sửa</button><button class="btn sm danger" id="del-item">Xóa</button></div>` : ""}</div>`;
-  const filesHtml = files.length ? `<div class="docs">${files.map(fileRow).join("")}</div>` : (links.length ? "" : `<p class="note">Mục này chưa đính kèm file.</p>`);
+  const filesHtml = files.length ? `<div class="docs">${files.map((f,k) => fileRow(f,k)).join("")}</div>` : (links.length ? "" : `<p class="note">Mục này chưa đính kèm file.</p>`);
   $("main").innerHTML = pageHead(i.title, "", [S.label, `data-go="${i.section}"`]) + `<div class="in page">${i.cover ? `<div class="detail"><div><div class="pic"><img src="${esc(href(i.cover))}" alt="${esc(i.title)}"></div>${filesHtml}</div>${side}</div>` : `<div class="detail"><div>${filesHtml || ""}</div>${side}</div>`}</div>`;
 }
 
 /* ---------- routing ---------- */
-function render(){ renderChrome(); if (st.view === "admin" && !token) st.view = "home"; if (st.view === "section" && !SECS[st.sec]) st.view = "home";
+function render(){ renderChrome(); if (st.view === "admin" && !token && !sbAdmin()) st.view = "home"; if (st.view === "section" && !SECS[st.sec]) st.view = "home";
   ({home:renderHome, subjects:renderSubjects, subject:renderSubject, section:renderSection, item:renderItem, admin:renderAdmin}[st.view] || renderHome)(); }
 function hashOf(){ return st.view === "home" ? "" : st.view === "admin" ? "#quan-tri" : st.view === "subjects" ? "#mon-hoc" : st.view === "subject" ? "#mon-" + st.code : st.view === "section" ? "#" + SECS[st.sec].slug : "#muc-" + st.id; }
 function go(view, arg){
@@ -585,15 +662,17 @@ async function addFiles(files){
   for (const f of files){
     if (f.size > MAX_FILE){ st.queue.push({name:f.name, p:0, state:"err", msg:"Quá 40 MB – hãy để trên Drive rồi thêm link"}); continue; }
     if (f.size === 0){ st.queue.push({name:f.name, p:0, state:"err", msg:"File rỗng"}); continue; }
-    st.queue.push({name:f.name, p:0, state:"wait", file:f, code});
+    st.queue.push({name:f.name, p:0, state:"wait", file:f, code, lock:!!($("lock-new") && $("lock-new").checked && sbAdmin())});
   }
   renderQueue(); if (uploading) return; uploading = true; let added = 0;
   try {
     for (const q of st.queue){
       if (q.state !== "wait") continue; q.state = "up"; renderQueue();
       try {
-        const b64 = await readBase64(q.file); const path = "files/" + q.code + "/" + slugFile(q.file.name);
-        await putFile(path, b64, "Thêm tài liệu: " + q.file.name, p => { q.p = p * .95; renderQueue(); });
+        let path;
+        if (q.lock){ path = "L/" + q.code + "/" + slugFile(q.file.name); q.p = .5; renderQueue(); await sbUpload(path, q.file); }
+        else { const b64 = await readBase64(q.file); path = "files/" + q.code + "/" + slugFile(q.file.name);
+          await putFile(path, b64, "Thêm tài liệu: " + q.file.name, p => { q.p = p * .95; renderQueue(); }); }
         data.docs.push({id:uid(), subject:q.code, title:q.file.name.replace(/\.[^.]+$/,""), kind:"", note:"", path, name:q.file.name, size:q.file.size, added:new Date().toISOString()});
         q.p = 1; q.state = "done"; q.file = null; added++;
       } catch(e){ q.state = "err"; q.file = null; q.msg = e.code === 401 ? "Cần đăng nhập lại" : e.code === 403 ? "Mã truy cập thiếu quyền ghi" : (e.message || "Lỗi tải lên"); if (e.code === 401){ signOut(true); break; } }
@@ -631,6 +710,41 @@ async function doLogin(){
     closeDlg(); await loadData(); fromHash(); render(); toast("Đã đăng nhập. Bạn có thể thêm nội dung.");
   } catch(e){ err.textContent = e.message || "Không đăng nhập được. Kiểm tra mạng rồi thử lại."; err.hidden = false; $("login-go").disabled = false; $("login-go").textContent = "Đăng nhập"; }
 }
+function accountDlg(tab, hint){
+  const owner = `<div class="msg" style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span>${token ? "Chủ trang: mã GitHub đã lưu trên trình duyệt này." : "Bạn là chủ trang?"}</span>${token ? `<button type="button" class="btn sm" id="owner-out">Gỡ mã</button>` : `<button type="button" class="btn sm" id="owner-login">Nhập mã GitHub</button>`}</div>`;
+  if (me){ const p = me.profile || {};
+    openDlg(`${dhead("Tài khoản")}<div class="db"><div class="spec" style="margin:0"><div>Họ tên</div><div>${esc(p.full_name || "—")}</div><div>Email</div><div>${esc(me.user.email || "")}</div><div>MSSV · Lớp</div><div>${esc([p.student_id,p.class].filter(Boolean).join(" · ") || "—")}</div><div>Trạng thái</div><div>${p.is_admin ? `<span class="st adm">Quản trị</span>` : p.approved ? `<span class="st ok">Đã duyệt</span>` : `<span class="st wait">Chờ duyệt</span>`}</div></div>
+      ${sbApproved() ? "" : `<div class="msg">Tài khoản của bạn đang chờ chủ trang duyệt. Sau khi được duyệt, bạn tải được mỗi file khóa 1 lần.</div>`}${p.is_admin || token ? owner : ""}</div>
+      <div class="df"><button type="button" class="btn" data-close>Đóng</button><button type="button" class="btn danger" id="sb-out">Đăng xuất</button></div>`); return; }
+  const up = tab === "signup";
+  openDlg(`<form id="auth-form" novalidate data-mode="${up ? "signup" : "login"}">${dhead(up ? "Đăng ký tài khoản" : "Đăng nhập")}<div class="db">
+    <div class="tabs" role="tablist"><button type="button" data-auth-tab="login" aria-selected="${!up}">Đăng nhập</button><button type="button" data-auth-tab="signup" aria-selected="${up}">Đăng ký</button></div>
+    ${hint ? `<div class="msg">${esc(hint)}</div>` : ""}
+    ${up ? `<label class="f">Họ tên *<input class="field" id="a-name" autocomplete="name"></label><div class="two"><label class="f">MSSV<input class="field" id="a-sid"></label><label class="f">Lớp<input class="field" id="a-class"></label></div>` : ""}
+    <label class="f">Email *<input class="field" id="a-email" type="email" autocomplete="email"></label>
+    <label class="f">Mật khẩu *${up ? " (ít nhất 8 ký tự)" : ""}<input class="field" id="a-pass" type="password" autocomplete="${up ? "new-password" : "current-password"}"></label>
+    ${up ? `<div class="note" style="margin:0">Sau khi đăng ký, chủ trang sẽ duyệt tài khoản. Khi được duyệt, bạn tải được mỗi file khóa 1 lần.</div>` : ""}
+    <div class="msg err" id="auth-err" hidden></div>${owner}</div>
+  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="auth-go">${up ? "Đăng ký" : "Đăng nhập"}</button></div></form>`);
+  $(up ? "a-name" : "a-email").focus();
+}
+async function doAuth(f){
+  const up = f.dataset.mode === "signup"; const er = $("auth-err"); er.hidden = true;
+  const email = $("a-email").value.trim(), pass = $("a-pass").value;
+  const fail = m => { er.textContent = m; er.hidden = false; };
+  if (!sb) return fail("Chức năng tài khoản chưa sẵn sàng. Tải lại trang rồi thử lại.");
+  if (!/^\S+@\S+\.\S+$/.test(email)) return fail("Email chưa đúng.");
+  if (up && !$("a-name").value.trim()) return fail("Cần nhập họ tên.");
+  if (up && pass.length < 8) return fail("Mật khẩu cần ít nhất 8 ký tự.");
+  if (!pass) return fail("Cần nhập mật khẩu.");
+  $("auth-go").disabled = true;
+  const r = up ? await sb.auth.signUp({email, password:pass, options:{data:{full_name:$("a-name").value.trim(), student_id:$("a-sid").value.trim(), class:$("a-class").value.trim()}}})
+               : await sb.auth.signInWithPassword({email, password:pass});
+  if (r.error){ $("auth-go").disabled = false; const m = r.error.message || "";
+    return fail(/invalid login/i.test(m) ? "Email hoặc mật khẩu không đúng." : /already registered/i.test(m) ? "Email này đã đăng ký. Hãy chuyển sang Đăng nhập." : /rate limit/i.test(m) ? "Thao tác quá nhanh. Đợi một lúc rồi thử lại." : "Chưa thực hiện được: " + m); }
+  await loadMe(); closeDlg(); render();
+  toast(!me ? "Đã đăng ký. Mở email để bấm link xác nhận, sau đó quay lại đăng nhập." : sbAdmin() ? "Đã đăng nhập tài khoản quản trị." : sbApproved() ? "Đã đăng nhập." : "Đã đăng ký. Tài khoản đang chờ chủ trang duyệt.");
+}
 function signOut(silent){ token = null; dataSha = null; try { localStorage.removeItem(TOKEN_KEY); } catch(e){} if (!silent){ render(); toast("Đã đăng xuất."); } }
 
 function subjectDlg(s){
@@ -667,12 +781,30 @@ function admRead(){
     s.label = r.querySelector('[data-a="label"]').value.trim(); s.short = r.querySelector('[data-a="short"]').value.trim(); s.blurb = r.querySelector('[data-a="blurb"]').value.trim();
     s.hidden = !r.querySelector('[data-a="show"]').checked; const l = r.querySelector('[data-a="layout"]'); if (l) s.layout = l.value; });
 }
+function fileTitles(){ const m = {}; data.docs.forEach(d => { if (d.path) m[d.path] = d.title; }); data.items.forEach(i => (i.files||[]).forEach(f => m[f.path] = i.title + " – " + f.name)); return m; }
+async function loadAdminPanels(){
+  const mb = $("adm-members"), dl = $("adm-downloads"); if (!mb || !sb || !sbAdmin()) return;
+  const [pr, lg] = await Promise.all([sb.from("profiles").select("*").order("created_at", {ascending:false}), sb.from("downloads").select("id,user_id,path,created_at").order("created_at", {ascending:false}).limit(300)]);
+  await loadCounts();
+  if (!$("adm-members")) return;
+  const people = pr.data || []; const byId = Object.fromEntries(people.map(x => [x.id, x])); const titles = fileTitles();
+  const wait = people.filter(x => !x.approved && !x.is_admin).length;
+  mb.innerHTML = pr.error ? `<div class="msg err">Chưa tải được danh sách thành viên.</div>` : !people.length ? `<p class="note">Chưa có ai đăng ký.</p>` :
+    `<p class="note" style="margin:0 0 10px">${people.length} tài khoản${wait ? ` · <b>${wait} đang chờ duyệt</b>` : ""}</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Họ tên</th><th>MSSV · Lớp</th><th>Email</th><th>Đăng ký</th><th>Trạng thái</th><th></th></tr></thead><tbody>${people.map(x => `<tr><td><b>${esc(x.full_name || "—")}</b></td><td>${esc([x.student_id,x.class].filter(Boolean).join(" · ") || "—")}</td><td>${esc(x.email || "")}</td><td>${esc(fmtDate(x.created_at))}</td><td>${x.is_admin ? `<span class="st adm">Quản trị</span>` : x.approved ? `<span class="st ok">Đã duyệt</span>` : `<span class="st wait">Chờ duyệt</span>`}</td><td>${x.is_admin ? "" : x.approved ? `<button type="button" class="btn sm danger" data-member="${esc(x.id)}" data-set="0">Khóa lại</button>` : `<button type="button" class="btn sm primary" data-member="${esc(x.id)}" data-set="1">Duyệt</button>`}</td></tr>`).join("")}</tbody></table></div>`;
+  const top = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,15); const log = lg.data || [];
+  dl.innerHTML = (top.length ? `<div class="tblwrap"><table class="tbl"><thead><tr><th>File</th><th>Lượt tải</th></tr></thead><tbody>${top.map(([p,n]) => `<tr><td>${isLocked(p) ? LOCK + " " : ""}${esc(titles[p] || p)}</td><td><b>${n}</b></td></tr>`).join("")}</tbody></table></div>` : `<p class="note">Chưa có lượt tải nào.</p>`)
+    + (log.length ? `<p class="note" style="margin:16px 0 8px">Nhật ký tải file khóa (mới nhất trước). Bấm “Mở lại” để cho người đó tải thêm 1 lần.</p><div class="tblwrap"><table class="tbl"><thead><tr><th>Thời gian</th><th>Người tải</th><th>File</th><th></th></tr></thead><tbody>${log.map(r => { const u = byId[r.user_id] || {}; return `<tr><td>${esc(new Date(r.created_at).toLocaleString("vi-VN"))}</td><td>${esc(u.full_name || u.email || "—")}${u.student_id ? " · " + esc(u.student_id) : ""}</td><td>${esc(titles[r.path] || r.path)}</td><td><button type="button" class="btn sm" data-reopen="${esc(r.id)}">Mở lại</button></td></tr>`; }).join("")}</tbody></table></div>` : "");
+}
 function renderAdmin(){
   const p = data.profile; const th = site().theme || {};
+  const sbPanels = !SB_ON ? "" : sbAdmin() ? `<div class="panel"><h3>Thành viên</h3><p>Người đăng ký phải được bạn duyệt mới tải được file khóa.</p><div id="adm-members"><p class="note">Đang tải…</p></div></div>
+    <div class="panel"><h3>Lượt tải</h3><p>Số lượt tải của từng file. File công khai được đếm theo số lần bấm nút, file khóa được đếm theo từng tài khoản.</p><div id="adm-downloads"><p class="note">Đang tải…</p></div></div>`
+    : `<div class="panel"><h3>Thành viên và lượt tải</h3><p>Đăng nhập bằng tài khoản quản trị (email và mật khẩu) để duyệt thành viên, khóa file và xem lượt tải.</p><button type="button" class="btn primary" id="login-btn2">Đăng nhập tài khoản quản trị</button></div>`;
+  if (!token){ $("main").innerHTML = pageHead("Quản trị", "Duyệt thành viên, xem lượt tải và sửa nội dung trang.") + `<div class="in page"><div class="adm">${sbPanels}<div class="panel"><h3>Sửa nội dung trang</h3><p>Để thêm, sửa, xóa nội dung, trình duyệt này cần có mã GitHub của chủ trang.</p><button type="button" class="btn primary" id="owner-login">Nhập mã GitHub</button></div></div></div>`; loadAdminPanels(); return; }
   adm = [{key:"subjects", label:SUBJ.label, short:SUBJ.short, blurb:SUBJ.blurb, hidden:SUBJ.hidden}].concat(Object.entries(SECS).map(([k,s]) => ({key:k, label:s.label, short:s.short, blurb:s.blurb, hidden:!!s.hidden, layout:s.layout, custom:!!s.custom})));
   draft = {cover:p.cover || null, newCover:null, files:[], newFiles:[], removed:[]};
   const inp = (id, label, val, ph) => `<label class="f">${label}<input class="field" id="${id}" value="${esc(val ?? "")}" ${ph ? `placeholder="${esc(ph)}"` : ""}></label>`;
-  $("main").innerHTML = pageHead("Quản trị", "Sửa mọi nội dung của trang: chữ, các mục, màu sắc. Bấm “Lưu thay đổi” ở cuối trang để áp dụng.") + `<div class="in page"><form id="adm-form" class="adm" novalidate>
+  $("main").innerHTML = pageHead("Quản trị", "Sửa mọi nội dung của trang: chữ, các mục, màu sắc. Bấm “Lưu thay đổi” ở cuối trang để áp dụng.") + `<div class="in page"><div class="adm" style="margin-bottom:18px">${sbPanels}</div><form id="adm-form" class="adm" novalidate>
     <div class="panel"><h3>Thông tin chung</h3><p>Hiện ở đầu trang và chân trang. Để trống ô nào thì ô đó không hiện.</p>
       <div class="stack"><div class="two">${inp("p-name","Họ tên",p.name)}${inp("p-lop","Lớp",p.lop)}</div><div class="two">${inp("p-truong","Trường",p.truong)}${inp("p-nganh","Ngành",p.nganh)}</div><div class="two">${inp("p-nienKhoa","Niên khóa",p.nienKhoa)}${inp("s-footer","Dòng chữ thêm ở chân trang",site().footer,"VD: Liên hệ: email của bạn")}</div></div></div>
     <div class="panel"><h3>Trang chủ</h3><p>Phần mở đầu có bánh răng và các tiêu đề bên dưới.</p>
@@ -692,7 +824,7 @@ function renderAdmin(){
       <label class="ck" style="margin-top:14px"><input type="checkbox" id="p-scores" ${data.settings.showScores ? "checked" : ""}> Hiện điểm trung bình của từng môn cho người xem</label></div>
     <div class="savebar"><span id="busy">Thay đổi chỉ có hiệu lực sau khi lưu.</span><button class="btn primary" type="submit" id="save-go">Lưu thay đổi</button></div>
   </form></div>`;
-  drawCoverBox();
+  drawCoverBox(); loadAdminPanels();
 }
 /* item editor: cover + files are staged in `draft` and uploaded on save */
 let draft = null;
@@ -718,7 +850,8 @@ function itemDlg(i){
     <div class="two"><label class="f">Ngày<input class="field" id="i-date" type="date" value="${esc(i.date||"")}"></label><label class="f">Link ngoài (Drive, YouTube…)<input class="field" id="i-link" type="url" value="${esc(link.url||"")}" placeholder="https://"></label></div>
     <label class="f">Mô tả<textarea class="field" id="i-desc" rows="4" placeholder="Nội dung chính, thông số, kết quả…">${esc(i.desc||"")}</textarea></label>
     <div><label class="f" style="margin-bottom:6px">Ảnh đại diện${S.layout === "card" ? " (nên có)" : " (không bắt buộc)"}</label><div class="picks" id="cover-box"></div></div>
-    <div><label class="f" style="margin-bottom:6px">File đính kèm · tối đa 40 MB mỗi file</label><div class="chips" id="files-box"></div></div>
+    <div><label class="f" style="margin-bottom:6px">File đính kèm · tối đa 40 MB mỗi file</label><div class="chips" id="files-box"></div>
+      ${SB_ON ? `<label class="lockline" style="margin-top:8px"><input type="checkbox" id="i-lock" ${sbAdmin() ? "checked" : "disabled"}> ${LOCK} Khóa các file mới chọn (phải đăng nhập, mỗi tài khoản tải 1 lần)</label>` : ""}</div>
     <div class="msg err" id="item-err" hidden></div><div class="msg" id="busy" hidden></div></div>
   <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="save-go">${isNew ? "Đăng" : "Lưu"}</button></div></form>`);
   drawCoverBox(); drawFileBox(); $("i-title").focus();
@@ -728,8 +861,11 @@ async function uploadDraft(dir, busy){
   let cover = draft.cover; const olds = [];
   if (draft.newCover){ busy("Đang tải ảnh…"); const path = "files/" + dir + "/" + slugFile("anh.jpg"); await putFile(path, await readBase64(draft.newCover.blob), "Thêm ảnh", null); if (cover) olds.push(cover); cover = path; }
   const files = draft.files.slice();
-  for (let k=0;k<draft.newFiles.length;k++){ const f = draft.newFiles[k]; const path = "files/" + dir + "/" + slugFile(f.name);
-    await putFile(path, await readBase64(f), "Thêm file: " + f.name, p => busy(`Đang tải file ${k+1}/${draft.newFiles.length}: ${Math.round(p*100)}%`)); files.push({path, name:f.name, size:f.size}); }
+  const lock = !!($("i-lock") && $("i-lock").checked && sbAdmin());
+  for (let k=0;k<draft.newFiles.length;k++){ const f = draft.newFiles[k];
+    if (lock){ const path = "L/" + dir + "/" + slugFile(f.name); busy(`Đang tải file ${k+1}/${draft.newFiles.length} vào kho khóa…`); await sbUpload(path, f); files.push({path, name:f.name, size:f.size, locked:true}); }
+    else { const path = "files/" + dir + "/" + slugFile(f.name);
+      await putFile(path, await readBase64(f), "Thêm file: " + f.name, p => busy(`Đang tải file ${k+1}/${draft.newFiles.length}: ${Math.round(p*100)}%`)); files.push({path, name:f.name, size:f.size}); } }
   return {cover, files, olds:olds.concat(draft.removed)};
 }
 async function commit(message, okMsg){
@@ -738,6 +874,7 @@ async function commit(message, okMsg){
 }
 
 /* ---------- events ---------- */
+document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-hit]"); if (a && sb){ const p = a.dataset.hit; sb.rpc("bump_hit", {p_path:p}).then(() => { counts[p] = (counts[p]||0) + 1; }, () => {}); } });
 document.addEventListener("click", async e => {
   if (e.target.matches('input[type="file"]')) return;
   const t = e.target.closest("button, [data-close], .drop"); if (!t) return;
@@ -745,6 +882,18 @@ document.addEventListener("click", async e => {
   if (t.dataset.go){ const k = t.dataset.go; if (k === "home") go("home"); else if (k === "subjects") go("subjects"); else if (k === "admin") go("admin"); else go("section", k); return; }
   if (t.dataset.sub){ go("subject", t.dataset.sub); return; }
   if (t.dataset.item){ go("item", t.dataset.item); return; }
+  if (t.dataset.dl){ downloadLocked(t); return; }
+  if (t.dataset.authTab){ accountDlg(t.dataset.authTab); return; }
+  if (t.dataset.member){ t.disabled = true; const r = await sb.from("profiles").update({approved:t.dataset.set === "1"}).eq("id", t.dataset.member); if (r.error) toast("Chưa cập nhật được."); else toast(t.dataset.set === "1" ? "Đã duyệt tài khoản." : "Đã khóa tài khoản."); loadAdminPanels(); return; }
+  if (t.dataset.reopen){ t.disabled = true; const r = await sb.from("downloads").delete().eq("id", t.dataset.reopen); toast(r.error ? "Chưa mở lại được." : "Đã mở lại 1 lượt tải cho người này."); loadAdminPanels(); return; }
+  if (t.dataset.lockDoc || t.dataset.lockFile !== undefined){
+    if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa để khóa"; return; }
+    t.disabled = true; t.textContent = "Đang khóa…";
+    try { if (t.dataset.lockDoc){ const d = data.docs.find(x => x.id === t.dataset.lockDoc); await lockExisting(d, d.title); }
+      else { const it = data.items.find(x => x.id === st.id); await lockExisting(it.files[Number(t.dataset.lockFile)], it.title); }
+      toast("Đã khóa file. Từ giờ phải đăng nhập mới tải được."); }
+    catch(err){ toast("Chưa khóa được: " + (err.message || "lỗi") + "."); await loadData(); }
+    render(); return; }
   if (t.dataset.editDoc){ docDlg(data.docs.find(d => d.id === t.dataset.editDoc)); return; }
   if (t.dataset.rmSec !== undefined){ admRead(); const k = Number(t.dataset.rmSec); const sdel = adm[k]; if (!sdel) return;
     if (data.items.some(i => i.section === sdel.key)){ toast("Mục này còn bài đăng. Hãy xóa hết bài trong mục trước."); return; }
@@ -754,12 +903,15 @@ document.addEventListener("click", async e => {
   if (t.dataset.delDoc){
     if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa"; return; }
     const d = data.docs.find(x => x.id === t.dataset.delDoc); if (!d) return; t.disabled = true;
-    try { if (d.path) await removeFile(d.path, "Xóa tài liệu: " + d.title); data.docs = data.docs.filter(x => x.id !== d.id); await commit("Xóa tài liệu: " + d.title, "Đã xóa tài liệu."); }
+    try { if (d.path) await removeAny(d.path, "Xóa tài liệu: " + d.title); data.docs = data.docs.filter(x => x.id !== d.id); await commit("Xóa tài liệu: " + d.title, "Đã xóa tài liệu."); }
     catch(err){ toast("Chưa xóa được. Thử lại sau."); render(); }
     return;
   }
   switch (t.id){
-    case "login-btn": token ? signOut() : loginDlg(); break;
+    case "login-btn": case "login-btn2": if (SB_ON) accountDlg("login"); else token ? signOut() : loginDlg(); break;
+    case "owner-login": closeDlg(); loginDlg(); break;
+    case "owner-out": closeDlg(); signOut(); break;
+    case "sb-out": await sb.auth.signOut(); me = null; closeDlg(); render(); toast("Đã đăng xuất."); break;
     case "add-sec": admRead(); adm.push({key:"c-" + Date.now().toString(36), label:"Mục mới", short:"", blurb:"", hidden:false, layout:"card", custom:true}); $("sec-rows").innerHTML = admRows(); { const rows = document.querySelectorAll(".secrow"); const last = rows[rows.length-1]; if (last){ const f = last.querySelector('[data-a="label"]'); f.focus(); f.select(); } } break;
     case "t-reset": $("t-navy").value = "#0F1E3D"; $("t-accent").value = "#F2A413"; break;
     case "add-sub": subjectDlg(null); break;
@@ -772,7 +924,7 @@ document.addEventListener("click", async e => {
     case "del-item": {
       if (!t.classList.contains("armed")){ t.classList.add("armed"); t.textContent = "Bấm lần nữa để xóa"; return; }
       const i = data.items.find(x => x.id === st.id); if (!i) return; t.disabled = true;
-      try { for (const p of [i.cover].concat((i.files||[]).map(f => f.path)).filter(Boolean)) await removeFile(p, "Xóa: " + i.title);
+      try { for (const p of [i.cover].concat((i.files||[]).map(f => f.path)).filter(Boolean)) await removeAny(p, "Xóa: " + i.title);
         data.items = data.items.filter(x => x.id !== i.id); const sec = i.section; st.view = "section"; st.sec = sec; st.id = null; history.replaceState(null, "", "#" + SECS[sec].slug);
         await commit("Xóa: " + i.title, "Đã xóa."); }
       catch(err){ toast("Chưa xóa được. Thử lại sau."); render(); }
@@ -788,6 +940,7 @@ document.addEventListener("click", async e => {
 document.addEventListener("submit", async e => {
   e.preventDefault(); const f = e.target;
   if (f.id === "login-form") return doLogin();
+  if (f.id === "auth-form") return doAuth(f);
   if (f.id === "sub-form"){
     const er = $("sub-err"); const name = $("s-name").value.trim(); const code = $("s-code").value.trim().replace(/[^A-Za-z0-9_-]/g,"");
     if (!name || !code){ er.textContent = "Cần nhập tên môn và mã môn (mã chỉ gồm chữ, số)."; er.hidden = false; return; }
@@ -816,7 +969,7 @@ document.addEventListener("submit", async e => {
       i.title = title; i.desc = $("i-desc").value.trim(); i.date = $("i-date").value; i.cover = up.cover || null; i.files = up.files; i.links = link ? [{label:"Mở link", url:safeUrl(link)}] : [];
       if (S.f1) i[S.f1[0]] = $("i-f1").value.trim(); if (S.f2) i[S.f2[0]] = $("i-f2").value.trim();
       const olds = up.olds; closeDlg(); st.view = "item"; st.id = i.id; st.sec = sec; history.replaceState(null, "", "#muc-" + i.id);
-      if (await commit("Cập nhật: " + title, "Đã lưu. Người xem bên ngoài sẽ thấy sau khoảng 1 phút.")){ for (const p of olds){ try { await removeFile(p, "Dọn file cũ"); } catch(_){} } }
+      if (await commit("Cập nhật: " + title, "Đã lưu. Người xem bên ngoài sẽ thấy sau khoảng 1 phút.")){ for (const p of olds){ try { await removeAny(p, "Dọn file cũ"); } catch(_){} } }
     } catch(err){
       $("save-go").disabled = false; busyEl.hidden = true;
       if (err.code === 401){ closeDlg(); signOut(true); render(); toast("Phiên đăng nhập hết hạn. Hãy đăng nhập lại."); }
@@ -838,7 +991,7 @@ document.addEventListener("submit", async e => {
         theme:{navy:navy.toUpperCase() === "#0F1E3D" ? "" : navy, accent:accent.toUpperCase() === "#F2A413" ? "" : accent}
       };
       const olds = up.olds; buildSecs(); applyTheme();
-      if (await commit("Cập nhật nội dung trang", "Đã lưu. Người xem bên ngoài sẽ thấy sau khoảng 1 phút.")){ for (const pth of olds){ try { await removeFile(pth, "Dọn ảnh cũ"); } catch(_){} } }
+      if (await commit("Cập nhật nội dung trang", "Đã lưu. Người xem bên ngoài sẽ thấy sau khoảng 1 phút.")){ for (const pth of olds){ try { await removeAny(pth, "Dọn ảnh cũ"); } catch(_){} } }
     } catch(err){ $("save-go").disabled = false; busy(err.code === 401 ? "Phiên đăng nhập hết hạn. Hãy đăng nhập lại." : "Chưa lưu được. Kiểm tra mạng rồi thử lại."); }
   }
 });
@@ -858,7 +1011,7 @@ window.addEventListener("popstate", () => { fromHash(); render(); });
 
 
 $("main").innerHTML = `<div class="in page"><div class="empty"><h3>Đang tải…</h3><p>Đang lấy nội dung hồ sơ.</p></div></div>`;
-loadData().then(() => { fromHash(); render(); });
+loadData().then(() => { fromHash(); render(); sbInit(); });
 })();
 </script>
 </body>
