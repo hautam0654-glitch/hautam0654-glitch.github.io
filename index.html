@@ -436,6 +436,16 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 .parts button.on{background:var(--navy);border-color:var(--navy);color:#fff}
 :root[data-theme="dark"] .parts button.on{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .parts button.on{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}}
+.lk-g{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.lk-g>label{display:flex;gap:10px;align-items:center;padding:10px 12px;background:var(--surface-2);font-weight:700;font-size:14px;cursor:pointer}
+.lk-g>label span{margin-left:auto;font-weight:500;font-size:12.5px;color:var(--muted)}
+.lk-r{display:flex;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid var(--line);font-size:13.5px;cursor:pointer}
+.lk-r .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lk-r .sz{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.lk-r.done{cursor:default;color:var(--muted)}
+.lk-g input,.lk-r input{width:17px;height:17px;flex:none;accent-color:var(--amber)}
+.lk-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 0}
+.lk-bar .note{margin:0;flex:1 1 200px}
 .detail>*{min-width:0}
 .detail.solo{grid-template-columns:minmax(0,1fr);max-width:860px}
 .detail .pic img[data-view]{cursor:zoom-in}
@@ -619,7 +629,6 @@ async function removeFile(path, why){
   catch(e){ if (e.code !== 404) throw e; }
 }
 function readBase64(blob){ return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1] || ""); fr.onerror = () => rej(new Error("Không đọc được file.")); fr.readAsDataURL(blob); }); }
-function loadScript(src){ return new Promise((res, rej) => { const el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = () => rej(new Error("Không tải được thư viện")); document.head.appendChild(el); }); }
 async function loadMe(){
   const r = await sb.auth.getSession(); const u = r.data && r.data.session ? r.data.session.user : null;
   if (!u){ me = null; return; }
@@ -1132,7 +1141,39 @@ function admRead(){
     s.hidden = !r.querySelector('[data-a="show"]').checked; const l = r.querySelector('[data-a="layout"]'); if (l) s.layout = l.value; });
 }
 function fileTitles(){ const m = {}; data.docs.forEach(d => { if (d.path) m[d.path] = d.title; }); data.items.forEach(i => (i.files||[]).forEach(f => m[f.path] = i.title + " – " + f.name)); return m; }
+/* bulk lock: every attached file, grouped by subject / section */
+let lkBusy = false;
+function lockGroups(){
+  const g = new Map(); const add = (name, obj, label, title) => { if (!obj.path) return; if (!g.has(name)) g.set(name, []); g.get(name).push({obj, label, title}); };
+  data.docs.forEach(d => { const sj = data.subjects.find(x => x.code === d.subject); add(sj ? sj.name : "Môn khác", d, d.title || d.name, d.title || d.name); });
+  data.items.forEach(i => (i.files || []).forEach(f => add(SECS[i.section] ? SECS[i.section].label : "Mục khác", f, i.title + " – " + f.name, i.title)));
+  return [...g.entries()];
+}
+function drawLockPanel(){
+  const el = $("adm-lock"); if (!el) return; const gs = lockGroups(); let open = 0, n = 0;
+  const html = gs.map(([name, rows], gi) => { const free = rows.filter(r => !isLocked(r.obj.path)).length; open += free;
+    return `<div class="lk-g"><label><input type="checkbox" data-lk-g="${gi}" ${free ? "" : "disabled"}>${esc(name)}<span>${free ? free + " file công khai" : "đã khóa hết"}</span></label>${rows.map(r => { const k = n++; const L = isLocked(r.obj.path);
+      return `<label class="lk-r${L ? " done" : ""}">${L ? `<span style="width:17px;text-align:center">${LOCK}</span>` : `<input type="checkbox" data-lk="${k}" data-g="${gi}">`}<span class="nm">${esc(r.label)}</span><span class="sz">${esc(L ? "Đã khóa" : fmtSize(r.obj.size))}</span></label>`; }).join("")}</div>`; }).join("");
+  el.innerHTML = gs.length ? html + `<div class="lk-bar"><button type="button" class="btn sm" id="lk-all" ${open ? "" : "disabled"}>Chọn tất cả file công khai</button><button type="button" class="btn primary" id="lk-go" disabled>Khóa file đã chọn</button><p class="note" id="lk-msg">${open ? "Chưa chọn file nào." : "Tất cả file đã được khóa."}</p></div>` : `<p class="note">Chưa có file nào.</p>`;
+}
+function lockSync(){ const n = document.querySelectorAll("[data-lk]:checked").length; const b = $("lk-go"); if (!b || lkBusy) return; b.disabled = !n; b.textContent = n ? `Khóa ${n} file đã chọn` : "Khóa file đã chọn"; $("lk-msg").textContent = n ? "Giữ nguyên tab này cho đến khi khóa xong." : "Chưa chọn file nào."; }
+async function lockBulk(){
+  if (lkBusy) return; const flat = lockGroups().flatMap(([, rows]) => rows); const picks = [...document.querySelectorAll("[data-lk]:checked")].map(c => flat[+c.dataset.lk]).filter(Boolean); if (!picks.length) return;
+  lkBusy = true; document.querySelectorAll("#adm-lock input, #adm-lock button").forEach(x => x.disabled = true); const fails = []; let ok = 0;
+  for (let k = 0; k < picks.length; k++){ const r = picks[k]; $("lk-msg").textContent = `Đang khóa ${k + 1}/${picks.length}: ${r.label}`;
+    try { await lockExisting(r.obj, r.title); ok++; } catch(e){ fails.push(r.label + (e && e.message ? " (" + e.message + ")" : "")); if (e && e.code === 401) break; } }
+  lkBusy = false; drawLockPanel();
+  if (fails.length){ $("lk-msg").textContent = `Đã khóa ${ok} file. Chưa khóa được ${fails.length}: ${fails.join("; ")}`; toast(`Đã khóa ${ok} file, ${fails.length} file lỗi.`); } else toast(`Đã khóa ${ok} file.`);
+}
+document.addEventListener("change", e => { const t = e.target; if (!t.closest || !t.closest("#adm-lock")) return;
+  if (t.dataset.lkG !== undefined) document.querySelectorAll(`[data-lk][data-g="${t.dataset.lkG}"]`).forEach(c => c.checked = t.checked);
+  else if (t.dataset.lk !== undefined){ const all = [...document.querySelectorAll(`[data-lk][data-g="${t.dataset.g}"]`)]; const g = document.querySelector(`[data-lk-g="${t.dataset.g}"]`); if (g) g.checked = all.every(c => c.checked); }
+  lockSync(); });
+document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("#lk-all,#lk-go"); if (!t) return;
+  if (t.id === "lk-go"){ lockBulk(); return; }
+  const boxes = [...document.querySelectorAll("[data-lk],[data-lk-g]:not(:disabled)")]; const on = !boxes.every(c => c.checked); boxes.forEach(c => c.checked = on); lockSync(); });
 async function loadAdminPanels(){
+  drawLockPanel();
   const mb = $("adm-members"), dl = $("adm-downloads"); if (!mb || !sb || !sbAdmin()) return;
   const [pr, lg] = await Promise.all([sb.from("profiles").select("*").order("created_at", {ascending:false}), sb.from("downloads").select("id,user_id,path,created_at").order("created_at", {ascending:false}).limit(300)]);
   await loadCounts();
@@ -1151,6 +1192,7 @@ async function loadAdminPanels(){
 function renderAdmin(){
   const p = data.profile; const th = site().theme || {};
   const sbPanels = !SB_ON ? "" : sbAdmin() ? `<div class="panel"><h3>Thành viên</h3><p>Người đăng ký phải được bạn duyệt mới tải được file khóa.</p><div id="adm-members"><p class="note">Đang tải…</p></div></div>
+    ${token ? `<div class="panel"><h3>Khóa file</h3><p>Tích các file muốn khóa rồi bấm nút bên dưới. File đã khóa phải đăng nhập bằng tài khoản được duyệt mới tải được, mỗi tài khoản 1 lần, và không còn nút Xem trực tiếp.</p><div id="adm-lock"></div></div>` : ""}
     <div class="panel"><h3>Lượt tải</h3><p>Số lượt tải của từng file. File công khai được đếm theo số lần bấm nút, file khóa được đếm theo từng tài khoản.</p><div id="adm-downloads"><p class="note">Đang tải…</p></div></div>
     <div class="panel"><h3>Yêu cầu liên hệ</h3><p>Yêu cầu gửi từ nút “Liên hệ” và trang Dịch vụ.</p><div id="adm-requests"><p class="note">Đang tải…</p></div></div>`
     : `<div class="panel"><h3>Thành viên và lượt tải</h3><p>Đăng nhập bằng tài khoản quản trị (email và mật khẩu) để duyệt thành viên, khóa file và xem lượt tải.</p><button type="button" class="btn primary" id="login-btn2">Đăng nhập tài khoản quản trị</button></div>`;
