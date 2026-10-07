@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Hồ sơ Ô tô 24OT113</title>
 <meta name="description" content="Hồ sơ học tập ngành Công nghệ Kỹ thuật Ô tô của Hầu Ngọc Minh Tâm – Đại học Lạc Hồng: môn học, bài báo, slide, thiết kế 3D và sản phẩm.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hồ sơ Ô tô 24OT113">
+<meta property="og:title" content="Hồ sơ Ô tô 24OT113 – Hầu Ngọc Minh Tâm">
+<meta property="og:description" content="Môn học, bài báo, slide, thiết kế 3D, sản phẩm và dịch vụ in 3D kỹ thuật của sinh viên Công nghệ Kỹ thuật Ô tô.">
+<meta property="og:url" content="https://hautam0654-glitch.github.io/">
+<meta property="og:image" content="https://hautam0654-glitch.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0F1E3D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap">
@@ -390,6 +401,45 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
   .feat{margin-top:-96px}
 }
 @media (prefers-reduced-motion:reduce){main.enter *{animation:none!important}.skel{animation:none}}
+/* viewer: PDF, ảnh và mô hình 3D mở ngay trên trang */
+.vw{position:fixed;inset:0;z-index:90;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);background:#070C18;color:#E9EDF6}
+.vw[hidden]{display:none}
+.vw-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#0F1E3D;border-bottom:1px solid rgba(255,255,255,.1)}
+.vw-bar .t{flex:1;min-width:0;font-weight:700;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vw-bar .n{font-size:13px;color:#93A0BA;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vw-b{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:38px;height:38px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#E9EDF6;font:600 13.5px var(--font);cursor:pointer;text-decoration:none}
+.vw-b:hover{background:rgba(255,255,255,.14)}
+.vw-b.on{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
+.vw-b:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.vw-stage{position:relative;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
+.vw-stage.img{display:grid;place-items:center;overflow:hidden;padding:12px}
+.vw-stage.img img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+.vw-stage.pdf{padding:14px 10px 40px}
+.vw-page{display:block;margin:0 auto 12px;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.vw-page canvas{display:block;width:100%;height:100%}
+.vw-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:#93A0BA;font-size:14.5px;pointer-events:none}
+.vw-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;border-radius:12px;border:0;background:rgba(15,30,61,.7);color:#fff;font-size:24px;cursor:pointer}
+.vw-nav:hover{background:rgba(15,30,61,.95)}
+.vw-nav.p{left:10px}.vw-nav.x{right:10px}
+.m3d{position:relative;aspect-ratio:16/11;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:radial-gradient(circle at 30% 20%,#1B2B52,#0A1226 70%);touch-action:none}
+.vw-stage .m3d{position:absolute;inset:0;aspect-ratio:auto;border:0;border-radius:0;box-shadow:none}
+.m3d canvas{display:block;width:100%;height:100%;cursor:grab}
+.m3d canvas:active{cursor:grabbing}
+.m3d .vw-msg{color:#B7C2D8}
+.m3d-info{position:absolute;left:12px;bottom:10px;right:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:space-between;pointer-events:none;font-size:12.5px;color:#B7C2D8}
+.m3d-info b{color:#fff;font-weight:600}
+.m3d-info .acts{display:flex;gap:6px;pointer-events:auto}
+.m3d-info .vw-b{height:32px;min-width:32px;padding:0 10px;font-size:12.5px}
+.m3d-wrap{margin-bottom:16px}
+.parts{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px}
+.parts button{flex:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 13px var(--font);cursor:pointer;white-space:nowrap}
+.parts button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] .parts button.on{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .parts button.on{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}}
+.detail>*{min-width:0}
+.detail.solo{grid-template-columns:minmax(0,1fr);max-width:860px}
+.detail .pic img[data-view]{cursor:zoom-in}
+@media (max-width:640px){.vw-bar{padding:8px 10px}.vw-b span.lbl{display:none}.m3d{aspect-ratio:1/1}}
 </style>
 <script>try{var t=localStorage.getItem("tl-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
@@ -408,6 +458,7 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 <footer><div class="in" id="foot"></div></footer>
 <button class="totop" id="totop" aria-label="Lên đầu trang" hidden>↑</button>
 <button class="fab" id="fab-contact" hidden></button>
+<div class="vw" id="vw" hidden role="dialog" aria-modal="true" aria-label="Xem file"></div>
 <dialog id="dlg"></dialog>
 <div class="toast" id="toast" hidden></div>
 
@@ -595,9 +646,11 @@ async function removeAny(path, why){
   const r = await sb.storage.from("locked").remove([path]); if (r.error) throw Object.assign(new Error(r.error.message), {code:"sb"});
 }
 const cntPill = p => counts[p] ? `<span class="pill">${counts[p]} lượt tải</span>` : "";
+function viewKind(n){ const e = extOfName(n); return e === "pdf" ? "pdf" : /^(png|jpe?g|gif|webp)$/.test(e) ? "img" : e === "stl" ? "m3d" : ""; }
+function viewBtn(f){ const k = f.path && !isLocked(f.path) ? viewKind(f.name || f.path) : ""; return k ? `<button class="btn sm" data-view="${esc(f.path)}" data-kind="${k}" data-name="${esc(f.title || f.name || "file")}">${k === "m3d" ? "Xem 3D" : "Xem"}</button>` : ""; }
 function dlBtn(f){
   return isLocked(f.path) ? `<button class="btn sm primary" data-dl="${esc(f.path)}" data-name="${esc(f.name || "file")}">${LOCK} Tải về</button>`
-    : `<a class="btn sm primary" href="${esc(href(f.path))}" target="_blank" rel="noopener" data-hit="${esc(f.path)}">Mở / Tải</a>`;
+    : `<a class="btn sm primary" href="${esc(href(f.path))}" target="_blank" rel="noopener" data-hit="${esc(f.path)}">${viewKind(f.name || f.path) ? "Tải về" : "Mở / Tải"}</a>`;
 }
 const canLock = () => SB_ON && token && sbAdmin();
 async function downloadLocked(btn){
@@ -746,7 +799,7 @@ function rowDoc(d){
   const e = extOfName(d.name) || (d.link ? "link" : "file"); const h = d.path ? href(d.path) : safeUrl(d.link);
   const meta = [isLocked(d.path) ? "Cần đăng nhập để tải" : "", d.kind, fmtSize(d.size), fmtDate(d.added)].filter(Boolean).join(" · ");
   return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(d.title)}</div><div class="d">${esc(meta)}</div>${d.note ? `<div class="d">${esc(d.note)}</div>` : ""}</div>
-    <div class="acts">${cntPill(d.path)}${d.path ? dlBtn(d) : h ? `<a class="btn sm primary" href="${esc(h)}" target="_blank" rel="noopener">Mở link</a>` : ""}${token ? `${canLock() && d.path && !isLocked(d.path) ? `<button class="btn sm" data-lock-doc="${esc(d.id)}">Khóa</button>` : ""}<button class="btn sm" data-edit-doc="${esc(d.id)}">Sửa</button><button class="btn sm danger" data-del-doc="${esc(d.id)}">Xóa</button>` : ""}</div></div>`;
+    <div class="acts">${cntPill(d.path)}${d.path ? viewBtn(d) + dlBtn(d) : h ? `<a class="btn sm primary" href="${esc(h)}" target="_blank" rel="noopener">Mở link</a>` : ""}${token ? `${canLock() && d.path && !isLocked(d.path) ? `<button class="btn sm" data-lock-doc="${esc(d.id)}">Khóa</button>` : ""}<button class="btn sm" data-edit-doc="${esc(d.id)}">Sửa</button><button class="btn sm danger" data-del-doc="${esc(d.id)}">Xóa</button>` : ""}</div></div>`;
 }
 function renderSubject(){
   const s = data.subjects.find(x => x.code === st.code); if (!s){ st.view = "subjects"; return renderSubjects(); }
@@ -825,7 +878,7 @@ function renderSection(){
   const S = SECS[st.sec];
   $("main").innerHTML = pageHead(S.label, S.blurb) + `<div class="in page"><div class="bar"><input class="field" id="q" type="search" placeholder="Tìm trong mục ${esc(S.label)}…" value="${esc(st.q)}" aria-label="Tìm kiếm">${token ? `<button class="btn primary" id="add-item">+ Thêm ${esc(S.one)}</button>` : ""}</div><div id="list">${itemList(st.sec, st.q.trim().toLowerCase())}</div>${st.sec === "services" ? contactBlock() : ""}</div>`;
 }
-function fileRow(f, k){ const e = extOfName(f.name) || "file"; return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(f.name)}</div><div class="d">${esc([isLocked(f.path) ? "Cần đăng nhập để tải" : "", fmtSize(f.size)].filter(Boolean).join(" · "))}</div></div><div class="acts">${cntPill(f.path)}${dlBtn(f)}${canLock() && !isLocked(f.path) ? `<button class="btn sm" data-lock-file="${k}">Khóa</button>` : ""}</div></div>`; }
+function fileRow(f, k){ const e = extOfName(f.name) || "file"; return `<div class="doc"><span class="ext ${extClass(e)}">${esc(e.slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(f.name)}</div><div class="d">${esc([isLocked(f.path) ? "Cần đăng nhập để tải" : "", fmtSize(f.size)].filter(Boolean).join(" · "))}</div></div><div class="acts">${cntPill(f.path)}${viewBtn(f)}${dlBtn(f)}${canLock() && !isLocked(f.path) ? `<button class="btn sm" data-lock-file="${k}">Khóa</button>` : ""}</div></div>`; }
 function renderItem(){
   const i = data.items.find(x => x.id === st.id); if (!i || !SECS[i.section]){ st.view = "home"; return renderHome(); }
   const S = SECS[i.section]; const rows = [];
@@ -836,8 +889,90 @@ function renderItem(){
     ${i.section === "services" && SB_ON ? `<button class="btn primary" style="width:100%;justify-content:center;margin-top:6px" data-request="${esc(i.title)}">Gửi yêu cầu dịch vụ này</button>` : ""}
     ${token ? `<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px"><button class="btn sm" id="edit-item">Sửa</button><button class="btn sm danger" id="del-item">Xóa</button></div>` : ""}</div>`;
   const filesHtml = files.length ? `<div class="docs">${files.map((f,k) => fileRow(f,k)).join("")}</div>` : (links.length ? "" : `<p class="note">Mục này chưa đính kèm file.</p>`);
-  $("main").innerHTML = pageHead(i.title, "", [S.label, `data-go="${i.section}"`]) + `<div class="in page">${i.cover ? `<div class="detail"><div><div class="pic"><img src="${esc(href(i.cover))}" alt="${esc(i.title)}"></div>${filesHtml}</div>${side}</div>` : `<div class="detail"><div>${filesHtml || ""}</div>${side}</div>`}</div>`;
+  const bare = !rows.length && !i.desc && !links.length && !token && !(i.section === "services" && SB_ON);
+  const m3 = files.filter(f => f.path && !isLocked(f.path) && viewKind(f.name) === "m3d" && (f.size || 0) <= 30e6);
+  const m3Html = m3.length ? `<div class="m3d-wrap"><div class="m3d" id="m3d-in"></div>${m3.length > 1 ? `<div class="parts" id="m3d-parts">${m3.map((f,k) => `<button type="button" data-part="${esc(f.path)}"${k ? "" : ' class="on"'}>${esc(f.name.replace(/\.stl$/i, ""))}</button>`).join("")}</div>` : ""}</div>` : "";
+  $("main").innerHTML = pageHead(i.title, "", [S.label, `data-go="${i.section}"`]) + `<div class="in page"><div class="detail${bare ? " solo" : ""}"><div>${i.cover ? `<div class="pic" style="margin-bottom:16px"><img src="${esc(href(i.cover))}" alt="${esc(i.title)}" data-view="${esc(i.cover)}" data-kind="img" data-name="${esc(i.title)}"></div>` : ""}${m3Html}${filesHtml || ""}</div>${bare ? "" : side}</div></div>`;
+  if (m3.length) mount3d($("m3d-in"), href(m3[0].path));
 }
+
+/* ---------- viewer ---------- */
+const libs = {};
+function loadScript(u){ return libs[u] || (libs[u] = new Promise((ok, no) => { const s = document.createElement("script"); s.src = u; s.onload = ok; s.onerror = () => { delete libs[u]; no(new Error("Không tải được thư viện")); }; document.head.appendChild(s); })); }
+const load3 = () => loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js").then(() => Promise.all([loadScript("https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"), loadScript("https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js")]));
+const PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+const fmtNum = v => (Math.round(v * 10) / 10).toLocaleString("vi-VN");
+/* draws one STL into `el`; stops by itself once `el` leaves the page */
+function mount3d(el, url){
+  if (el._kill) el._kill();
+  let dead = false; el._kill = () => { dead = true; };
+  el.innerHTML = `<div class="vw-msg">Đang tải mô hình…</div>`;
+  load3().then(() => new Promise((ok, no) => new THREE.STLLoader().load(url, ok, undefined, no))).then(geo => {
+    if (dead || !el.isConnected) return;
+    const T = THREE; geo.rotateX(-Math.PI / 2); geo.computeBoundingBox(); geo.center(); geo.computeVertexNormals();
+    const size = new T.Vector3(); geo.boundingBox.getSize(size); const R = Math.max(size.x, size.y, size.z) || 1;
+    const scene = new T.Scene(); const cam = new T.PerspectiveCamera(38, 1, R / 100, R * 40);
+    const rdr = new T.WebGLRenderer({antialias:true, alpha:true}); rdr.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    const mesh = new T.Mesh(geo, new T.MeshStandardMaterial({color:0xAEBBD0, metalness:.35, roughness:.5})); scene.add(mesh);
+    const grid = new T.GridHelper(R * 3, 24, 0xF2A413, 0x33456E); grid.position.y = -size.y / 2; grid.material.transparent = true; grid.material.opacity = .45; scene.add(grid);
+    scene.add(new T.HemisphereLight(0xffffff, 0x1B2B52, .75));
+    const key = new T.DirectionalLight(0xffffff, .9); cam.add(key); key.position.set(.6, .8, 1); const rim = new T.DirectionalLight(0xF2A413, .35); rim.position.set(-1, .4, -1); scene.add(rim); scene.add(cam);
+    const home = () => { cam.position.set(R * .9, R * .62, R * 1.1); ctl.target.set(0, 0, 0); ctl.update(); };
+    const ctl = new T.OrbitControls(cam, rdr.domElement); ctl.enableDamping = true; ctl.dampingFactor = .08; ctl.autoRotate = true; ctl.autoRotateSpeed = 1.6; ctl.minDistance = R * .3; ctl.maxDistance = R * 12; home();
+    ctl.addEventListener("start", () => { ctl.autoRotate = false; sync(); });
+    el.innerHTML = ""; el.appendChild(rdr.domElement);
+    el.insertAdjacentHTML("beforeend", `<div class="m3d-info"><span>Kích thước bao: <b>${fmtNum(size.x)} × ${fmtNum(size.z)} × ${fmtNum(size.y)}</b> (đơn vị của file, thường là mm) · ${(geo.attributes.position.count / 3).toLocaleString("vi-VN")} tam giác</span><span class="acts"><button type="button" class="vw-b on" data-m3="spin">Tự xoay</button><button type="button" class="vw-b" data-m3="wire">Khung lưới</button><button type="button" class="vw-b" data-m3="home">Góc ban đầu</button></span></div>`);
+    const sync = () => { const b = el.querySelector('[data-m3="spin"]'); if (b) b.classList.toggle("on", ctl.autoRotate); };
+    el.onclick = e => { const b = e.target.closest("[data-m3]"); if (!b) return; e.stopPropagation();
+      if (b.dataset.m3 === "spin"){ ctl.autoRotate = !ctl.autoRotate; sync(); }
+      if (b.dataset.m3 === "wire"){ mesh.material.wireframe = !mesh.material.wireframe; b.classList.toggle("on", mesh.material.wireframe); }
+      if (b.dataset.m3 === "home") home(); };
+    let w = 0, h = 0;
+    const tick = () => {
+      if (dead || !el.isConnected){ ctl.dispose(); geo.dispose(); mesh.material.dispose(); rdr.dispose(); rdr.forceContextLoss(); return; }
+      const cw = el.clientWidth, ch = el.clientHeight;
+      if (cw && ch && (cw !== w || ch !== h)){ w = cw; h = ch; rdr.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+      ctl.update(); rdr.render(scene, cam); requestAnimationFrame(tick);
+    }; tick();
+  }).catch(() => { if (!dead && el.isConnected) el.innerHTML = `<div class="vw-msg">Không hiển thị được mô hình này. Bạn vẫn có thể tải file về.</div>`; });
+}
+const vw = $("vw"); let vwList = [], vwAt = 0, vwJob = 0;
+function closeViewer(){ if (vw.hidden) return; vwJob++; const m = vw.querySelector(".m3d"); if (m && m._kill) m._kill(); vw.hidden = true; vw.innerHTML = ""; document.documentElement.style.overflow = ""; }
+function openViewer(list, at){
+  vwList = list; vwAt = at; const f = list[at], job = ++vwJob, url = href(f.path), many = f.kind === "img" && list.length > 1;
+  const old = vw.querySelector(".m3d"); if (old && old._kill) old._kill();
+  vw.innerHTML = `<div class="vw-bar"><div class="t">${esc(f.name)}</div>${many ? `<span class="n">${at + 1} / ${list.length}</span>` : `<span class="n" id="vw-n"></span>`}<a class="vw-b" href="${esc(url)}" download target="_blank" rel="noopener" data-hit="${esc(f.path)}">↓ <span class="lbl">Tải về</span></a><button type="button" class="vw-b" id="vw-x" aria-label="Đóng">✕</button></div><div class="vw-stage ${f.kind}" id="vw-s"></div>`;
+  vw.hidden = false; document.documentElement.style.overflow = "hidden"; $("vw-x").focus();
+  const stage = $("vw-s");
+  if (f.kind === "img"){ stage.innerHTML = `<img src="${esc(url)}" alt="${esc(f.name)}">` + (many ? `<button type="button" class="vw-nav p" data-step="-1" aria-label="Ảnh trước">‹</button><button type="button" class="vw-nav x" data-step="1" aria-label="Ảnh sau">›</button>` : ""); return; }
+  if (f.kind === "m3d"){ stage.innerHTML = `<div class="m3d"></div>`; mount3d(stage.firstChild, url); return; }
+  stage.innerHTML = `<div class="vw-msg">Đang mở PDF…</div>`;
+  loadScript(PDFJS + "pdf.min.js").then(() => { pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js"; return pdfjsLib.getDocument({url, cMapUrl:PDFJS + "cmaps/", cMapPacked:true}).promise; }).then(async pdf => {
+    if (job !== vwJob){ pdf.destroy(); return; }
+    const first = await pdf.getPage(1); if (job !== vwJob) return;
+    const v1 = first.getViewport({scale:1}), W = Math.min(stage.clientWidth - 20, 1000), ratio = v1.height / v1.width, dpr = Math.min(devicePixelRatio || 1, 2);
+    stage.innerHTML = ""; $("vw-n").textContent = pdf.numPages + " trang";
+    const io = new IntersectionObserver(es => es.forEach(async en => {
+      if (!en.isIntersecting || job !== vwJob) return; const box = en.target; io.unobserve(box);
+      try { const pg = await pdf.getPage(+box.dataset.p); const vp = pg.getViewport({scale:W / pg.getViewport({scale:1}).width * dpr}); const c = document.createElement("canvas"); c.width = vp.width; c.height = vp.height; box.style.height = (vp.height / dpr) + "px"; box.appendChild(c); await pg.render({canvasContext:c.getContext("2d"), viewport:vp}).promise; } catch(e){}
+    }), {root:stage, rootMargin:"800px 0px"});
+    for (let n = 1; n <= pdf.numPages; n++){ const box = document.createElement("div"); box.className = "vw-page"; box.dataset.p = n; box.style.width = W + "px"; box.style.height = (W * ratio) + "px"; stage.appendChild(box); io.observe(box); }
+  }).catch(() => { if (job === vwJob) stage.innerHTML = `<div class="vw-msg">Không mở được PDF này ngay trên trang. Bấm "Tải về" ở góc trên để mở bằng ứng dụng khác.</div>`; });
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest && e.target.closest("[data-view],[data-part],[data-step],#vw-x"); if (!t) return;
+  if (t.id === "vw-x"){ closeViewer(); return; }
+  if (t.dataset.step){ openViewer(vwList, (vwAt + +t.dataset.step + vwList.length) % vwList.length); return; }
+  if (t.dataset.part){ t.parentNode.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === t)); mount3d($("m3d-in"), href(t.dataset.part)); return; }
+  const kind = t.dataset.kind, one = {path:t.dataset.view, name:t.dataset.name, kind};
+  if (kind !== "img"){ openViewer([one], 0); return; }
+  const seen = new Set(), list = []; document.querySelectorAll('#main [data-view][data-kind="img"]').forEach(b => { if (!seen.has(b.dataset.view)){ seen.add(b.dataset.view); list.push({path:b.dataset.view, name:b.dataset.name, kind:"img"}); } });
+  openViewer(list, Math.max(0, list.findIndex(x => x.path === one.path)));
+});
+document.addEventListener("keydown", e => { if (vw.hidden) return;
+  if (e.key === "Escape"){ e.preventDefault(); closeViewer(); }
+  else if (vwList.length > 1 && (e.key === "ArrowLeft" || e.key === "ArrowRight")) openViewer(vwList, (vwAt + (e.key === "ArrowLeft" ? -1 : 1) + vwList.length) % vwList.length); });
+window.addEventListener("hashchange", closeViewer); window.addEventListener("popstate", closeViewer);
 
 /* ---------- routing ---------- */
 function render(){ renderChrome(); if (st.view === "admin" && !token && !sbAdmin()) st.view = "home"; if (st.view === "section" && !SECS[st.sec]) st.view = "home";
