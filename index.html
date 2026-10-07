@@ -717,7 +717,7 @@ function accountDlg(tab, hint){
   if (me){ const p = me.profile || {};
     openDlg(`${dhead("Tài khoản")}<div class="db"><div class="spec" style="margin:0"><div>Họ tên</div><div>${esc(p.full_name || "—")}</div><div>Email</div><div>${esc(me.user.email || "")}</div><div>MSSV · Lớp</div><div>${esc([p.student_id,p.class].filter(Boolean).join(" · ") || "—")}</div><div>Trạng thái</div><div>${p.is_admin ? `<span class="st adm">Quản trị</span>` : p.approved ? `<span class="st ok">Đã duyệt</span>` : `<span class="st wait">Chờ duyệt</span>`}</div></div>
       ${sbApproved() ? "" : `<div class="msg">Tài khoản của bạn đang chờ chủ trang duyệt. Sau khi được duyệt, bạn tải được mỗi file khóa 1 lần.</div>`}${p.is_admin || token ? owner : ""}</div>
-      <div class="df"><button type="button" class="btn" data-close>Đóng</button><button type="button" class="btn danger" id="sb-out">Đăng xuất</button></div>`); return; }
+      <div class="df"><button type="button" class="btn" data-close>Đóng</button><button type="button" class="btn" id="pw-open">Đổi mật khẩu</button><button type="button" class="btn danger" id="sb-out">Đăng xuất</button></div>`); return; }
   const up = tab === "signup";
   openDlg(`<form id="auth-form" novalidate data-mode="${up ? "signup" : "login"}">${dhead(up ? "Đăng ký tài khoản" : "Đăng nhập")}<div class="db">
     <div class="tabs" role="tablist"><button type="button" data-auth-tab="login" aria-selected="${!up}">Đăng nhập</button><button type="button" data-auth-tab="signup" aria-selected="${up}">Đăng ký</button></div>
@@ -729,6 +729,17 @@ function accountDlg(tab, hint){
     <div class="msg err" id="auth-err" hidden></div>${owner}</div>
   <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="auth-go">${up ? "Đăng ký" : "Đăng nhập"}</button></div></form>`);
   $(up ? "a-name" : "a-email").focus();
+}
+function passwordDlg(){
+  openDlg(`<form id="pw-form" novalidate>${dhead("Đổi mật khẩu")}<div class="db"><label class="f">Mật khẩu mới (ít nhất 8 ký tự)<input class="field" id="pw-1" type="password" autocomplete="new-password"></label><label class="f">Nhập lại mật khẩu mới<input class="field" id="pw-2" type="password" autocomplete="new-password"></label><div class="msg err" id="pw-err" hidden></div></div>
+  <div class="df"><button type="button" class="btn" data-close>Hủy</button><button class="btn primary" type="submit" id="pw-go">Lưu mật khẩu</button></div></form>`); $("pw-1").focus();
+}
+async function doPassword(){
+  const er = $("pw-err"); const fail = m => { er.textContent = m; er.hidden = false; }; const a = $("pw-1").value, b = $("pw-2").value;
+  if (a.length < 8) return fail("Mật khẩu cần ít nhất 8 ký tự."); if (a !== b) return fail("Hai lần nhập chưa giống nhau.");
+  $("pw-go").disabled = true; const r = await sb.auth.updateUser({password:a});
+  if (r.error){ $("pw-go").disabled = false; return fail("Chưa đổi được: " + (r.error.message || "lỗi")); }
+  closeDlg(); toast("Đã đổi mật khẩu.");
 }
 async function doAuth(f){
   const up = f.dataset.mode === "signup"; const er = $("auth-err"); er.hidden = true;
@@ -912,6 +923,7 @@ document.addEventListener("click", async e => {
   switch (t.id){
     case "login-btn": case "login-btn2": if (SB_ON) accountDlg("login"); else token ? signOut() : loginDlg(); break;
     case "owner-login": closeDlg(); loginDlg(); break;
+    case "pw-open": passwordDlg(); break;
     case "owner-out": closeDlg(); signOut(); break;
     case "sb-out": await sb.auth.signOut(); me = null; closeDlg(); render(); toast("Đã đăng xuất."); break;
     case "add-sec": admRead(); adm.push({key:"c-" + Date.now().toString(36), label:"Mục mới", short:"", blurb:"", hidden:false, layout:"card", custom:true}); $("sec-rows").innerHTML = admRows(); { const rows = document.querySelectorAll(".secrow"); const last = rows[rows.length-1]; if (last){ const f = last.querySelector('[data-a="label"]'); f.focus(); f.select(); } } break;
@@ -943,6 +955,7 @@ document.addEventListener("submit", async e => {
   e.preventDefault(); const f = e.target;
   if (f.id === "login-form") return doLogin();
   if (f.id === "auth-form") return doAuth(f);
+  if (f.id === "pw-form") return doPassword();
   if (f.id === "sub-form"){
     const er = $("sub-err"); const name = $("s-name").value.trim(); const code = $("s-code").value.trim().replace(/[^A-Za-z0-9_-]/g,"");
     if (!name || !code){ er.textContent = "Cần nhập tên môn và mã môn (mã chỉ gồm chữ, số)."; er.hidden = false; return; }
