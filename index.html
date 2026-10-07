@@ -278,7 +278,9 @@ footer b{color:#fff}
 <script>
 (function(){
 "use strict";
-const OWNER = "hautam0654-glitch", REPO = "hautam0654-glitch.github.io", BRANCH = "main";
+/* owner and repo follow the address the site is served from, so renaming the account needs no code change */
+const HOST = location.hostname.toLowerCase();
+const OWNER = HOST.endsWith(".github.io") ? HOST.slice(0, -10) : "hautam0654-glitch", REPO = OWNER + ".github.io", BRANCH = "main";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
 const TOKEN_KEY = "tl-oto-token";
 /* member accounts, locked files and download counts live in Supabase; empty = feature off */
