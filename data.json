@@ -682,17 +682,28 @@
     "short": "Mô hình và đồ án đã chế tạo",
     "blurb": "Mô hình đã chế tạo, đồ án hoàn thành và sản phẩm dự thi.",
     "hidden": false
+   },
+   "services": {
+    "label": "Dịch vụ",
+    "short": "In 3D kỹ thuật, hỗ trợ đồ án",
+    "blurb": "Các dịch vụ kỹ thuật mình nhận làm. Gửi yêu cầu, mình sẽ liên hệ lại.",
+    "hidden": false
    }
   },
-  "footer": "Email: hautam0654@gmail.com      Đ/c: https://maps.app.goo.gl/ZzkwCMRU9aU7ssX67",
+  "footer": "Email: hautam0654@gmail.com     https://maps.app.goo.gl/ZzkwCMRU9aU7ssX67",
+  "contact": {
+   "phone": "",
+   "zalo": "",
+   "email": "hautam0654@gmail.com",
+   "facebook": "",
+   "address": "Xem vị trí trên bản đồ",
+   "map": "https://maps.app.goo.gl/ZzkwCMRU9aU7ssX67",
+   "title": "Liên hệ và hỗ trợ",
+   "lead": "Cần in 3D, cần hỗ trợ đồ án hoặc muốn hỏi về tài liệu? Gửi yêu cầu, mình sẽ phản hồi sớm."
+  },
   "theme": {
    "navy": "#0f2757",
    "accent": "#bd7b00"
-  },
-  "contact": {
-   "email": "hautam0654@gmail.com",
-   "address": "Xem vị trí trên bản đồ",
-   "map": "https://maps.app.goo.gl/ZzkwCMRU9aU7ssX67"
   }
  }
 }
