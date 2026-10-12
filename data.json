@@ -503,9 +503,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/slide/NGUYEN-LY-CHI-TIET-MAY-muvasl1ktp.pptx",
+     "path": "L/slide/NGUYEN-LY-CHI-TIET-MAY-muvasl1ktp.pptx",
      "name": "NGUYÊN LÝ CHI TIẾT MÁY.pptx",
-     "size": 5103653
+     "size": 5103653,
+     "locked": true
     }
    ],
    "links": [],
