@@ -787,6 +787,49 @@
    ],
    "links": [],
    "context": ""
+  },
+  {
+   "id": "xmv5aksws2hlm",
+   "section": "c-mv5a10bx",
+   "added": "2026-10-12T13:32:40.156Z",
+   "title": "Các Skill ADD cho AI",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "L/c-mv5a10bx/dung-truoc-khi-viet-mv5agoeuml.zip",
+     "name": "dùng trước khi viết.zip",
+     "size": 665983,
+     "locked": true
+    },
+    {
+     "path": "L/c-mv5a10bx/humanizer-main-mv5ags8e9i.zip",
+     "name": "humanizer-main.zip",
+     "size": 24296,
+     "locked": true
+    },
+    {
+     "path": "L/c-mv5a10bx/ip-diagram-creator-Claude-upload-mv5agso8a5.zip",
+     "name": "ip-diagram-creator-Claude-upload.zip",
+     "size": 19933427,
+     "locked": true
+    },
+    {
+     "path": "L/c-mv5a10bx/kimi-skills-Claude-upload-mv5aknp4yh.zip",
+     "name": "kimi-skills-Claude-upload.zip",
+     "size": 359614,
+     "locked": true
+    },
+    {
+     "path": "L/c-mv5a10bx/literature-review-skill-main-mv5akqrdlu.zip",
+     "name": "literature-review-skill-main.zip",
+     "size": 204211,
+     "locked": true
+    }
+   ],
+   "links": [],
+   "context": ""
   }
  ],
  "site": {
