@@ -450,20 +450,68 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 .detail.solo{grid-template-columns:minmax(0,1fr);max-width:860px}
 .detail .pic img[data-view]{cursor:zoom-in}
 @media (max-width:640px){.vw-bar{padding:8px 10px}.vw-b span.lbl{display:none}.m3d{aspect-ratio:1/1}}
+/* ===== v3 look: one glass top bar, duotone hero, bento cards ===== */
+.navwrap{background:color-mix(in srgb,var(--navy-3) 95%,transparent)}
+.topbar{display:flex;align-items:center;gap:18px;min-height:66px}
+.topbar .brand b{color:#fff;font-size:16.5px;letter-spacing:-.01em}
+.topbar .brand span span{color:#93A0BA;font-size:12px}
+.topbar .logo{width:40px;height:40px;border-radius:11px}
+.topbar .logo svg{width:24px;height:24px}
+.topbar .nav{flex:1;min-width:0;justify-content:center;padding-block:0}
+.topbar .nav button{font-size:13.5px;padding:8px 13px;color:#C3CDE2}
+.topbar .nav button[aria-current="page"]{color:#fff;background:color-mix(in srgb,var(--amber) 20%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--amber) 45%,transparent)}
+.nav-r{display:flex;gap:8px;align-items:center;flex:none}
+.nav-r .thm{width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.14);cursor:pointer}
+.nav-r .cta{appearance:none;border:0;cursor:pointer;font:700 13.5px var(--font);color:var(--amber-ink);background:var(--grad);padding:10px 18px;border-radius:11px;box-shadow:0 8px 20px var(--ring);white-space:nowrap}
+.nav-r .cta:hover{filter:brightness(1.06)}
+.hero{background:var(--navy-3)}
+.hero-bg{filter:grayscale(1) contrast(1.15) brightness(.62);mix-blend-mode:luminosity;opacity:.55}
+.hero::before{background:radial-gradient(700px 460px at 80% 48%,color-mix(in srgb,var(--amber) 22%,transparent),transparent 70%),linear-gradient(90deg,var(--navy-3) 0%,color-mix(in srgb,var(--navy-3) 82%,transparent) 42%,color-mix(in srgb,var(--navy-3) 30%,transparent) 100%),linear-gradient(180deg,transparent 62%,var(--navy-3) 100%)}
+.hero .in{padding-block:92px 104px}
+.hero canvas{right:max(-40px,calc((100vw - var(--w)) / 2 - 80px));width:min(600px,62vw);height:min(600px,62vw);filter:drop-shadow(0 0 26px color-mix(in srgb,var(--amber) 30%,transparent))}
+.hmeta{display:flex;flex-wrap:wrap;gap:8px;margin:-2px 0 20px}
+.hmeta span{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#D5DCEC;padding:5px 12px 5px 9px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.hmeta svg{width:15px;height:15px;color:var(--amber)}
+.hstats{margin-top:40px;padding:16px 22px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:inline-flex;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.feat{margin-top:-56px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.feat .fcard{grid-column:span var(--sp,3);overflow:hidden;margin-top:0;min-height:172px;padding:22px 22px 20px;display:flex;flex-direction:column;align-items:flex-start;border-radius:20px;background:linear-gradient(160deg,color-mix(in srgb,var(--navy) 88%,#fff),var(--navy) 60%)}
+.feat .fcard:hover{background:linear-gradient(160deg,color-mix(in srgb,var(--navy) 80%,#fff),var(--navy) 60%)}
+.feat .fcard .bump{position:static;width:46px;height:46px;border-radius:13px;margin-bottom:16px}
+.feat .fcard .bump svg{width:22px;height:22px}
+.feat .fcard b{font-size:18px}
+.feat .fcard span:not(.bump):not(.go){margin-top:4px;max-width:36ch}
+.feat .fcard i{margin-top:auto;padding-top:14px;background:none;color:var(--amber);font-size:13px;padding-inline:0;border-radius:0}
+.feat .fcard::after{content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;border:16px solid rgba(255,255,255,.035);pointer-events:none}
+@media (max-width:1100px){.topbar .nav{justify-content:flex-start}}
+@media (max-width:900px){
+  .topbar{flex-wrap:wrap;gap:10px;min-height:0;padding-top:10px}
+  .topbar .brand{flex:1}
+  .topbar .nav{order:3;flex:0 0 calc(100% + 32px);max-width:calc(100% + 32px);margin-inline:-16px;padding:0 12px 8px;justify-content:flex-start}
+  .feat .fcard{grid-column:span 6}
+  .feat .fcard:last-child:nth-child(odd){grid-column:span 12}
+}
+@media (max-width:760px){
+  .hero .in{padding-block:48px 84px}
+  .hero canvas{opacity:.28}
+  .hstats{display:flex;padding:12px 16px}
+  .feat{margin-top:-44px;gap:12px}
+  .feat .fcard{min-height:150px;padding:16px}
+  .feat .fcard span:not(.bump):not(.go){font-size:12.5px}
+  .topbar .brand span span{display:none}
+}
 </style>
 <script>try{var t=localStorage.getItem("tl-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
 <div class="progress" id="progress"></div>
-<div class="strip"><div class="in"><span id="strip-l"></span><span id="strip-r"></span></div></div>
-<header class="head"><div class="in">
-  <button class="brand" data-go="home">
+<div class="navwrap"><div class="in topbar">
+  <button class="brand" data-go="home" aria-label="Về trang chủ">
     <span class="logo" id="logo-svg"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2.4"/><g stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M6.8 25.2l2.8-2.8M22.4 9.6l2.8-2.8"/></g></svg></span>
     <span><b id="brand-name">Hồ sơ Ô tô</b><span id="brand-sub">Công nghệ Kỹ thuật Ô tô</span></span>
   </button>
-  <div class="infos" id="infos"></div>
-</div></header>
-<div class="navwrap"><div class="in"><nav class="nav" id="nav" aria-label="Các mục"></nav></div></div>
+  <nav class="nav" id="nav" aria-label="Các mục"></nav>
+  <div class="nav-r" id="nav-r"></div>
+</div></div>
 <main id="main"></main>
 <footer><div class="in" id="foot"></div></footer>
 <button class="totop" id="totop" aria-label="Lên đầu trang" hidden>↑</button>
@@ -703,15 +751,13 @@ function compressImage(file, max){
 /* ---------- chrome ---------- */
 function renderChrome(){
   const p = data.profile;
-  $("strip-l").innerHTML = `Hồ sơ học tập của <b>${esc(p.name || "")}</b>`;
-  $("strip-r").innerHTML = (token || sbAdmin()) ? `Đang đăng nhập (quản trị) · <button data-go="admin">Mở trang quản trị</button>` : me ? `Xin chào <b>${esc((me.profile && me.profile.full_name) || me.user.email)}</b>${sbApproved() ? "" : " · đang chờ duyệt"}` : esc(p.nganh || "");
-  $("strip-r").insertAdjacentHTML("beforeend", `<button class="thm" id="theme-btn" aria-label="Đổi giao diện sáng / tối" title="Đổi giao diện sáng / tối">${isDark() ? IC.sun : IC.moon}</button>`);
+  const who = me ? ((me.profile && me.profile.full_name) || me.user.email) : "";
+  $("nav-r").innerHTML = `<button class="thm" id="theme-btn" aria-label="Đổi giao diện sáng / tối" title="Đổi giao diện sáng / tối">${isDark() ? IC.sun : IC.moon}</button><button class="cta" id="login-btn" ${who ? `title="${esc(who)}${sbApproved() ? "" : " · đang chờ duyệt"}"` : ""}>${SB_ON ? (me ? "Tài khoản" : "Đăng nhập") : (token ? "Đăng xuất" : "Đăng nhập")}</button>`;
   $("brand-name").textContent = "Hồ sơ Ô tô " + (p.lop || "");
   $("brand-sub").textContent = p.nganh || "Công nghệ Kỹ thuật Ô tô";
-  $("infos").innerHTML = [[IC.cap,"Lớp",p.lop],[IC.pin,"Trường",p.truong],[IC.cal,"Niên khóa",p.nienKhoa]].filter(x=>x[2]).map(([i,k,v]) => `<div class="info">${i}<div><b>${esc(k)}</b><span>${esc(v)}</span></div></div>`).join("");
   const cur = st.view === "home" ? "home" : st.view === "admin" ? "admin" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
   const tabs = [["home","Trang chủ"]].concat(SUBJ.hidden ? [] : [["subjects",SUBJ.label]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k,s.label])).concat((token || sbAdmin()) ? [["admin","Quản trị"]] : []);
-  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("") + `<span class="sp"></span><button class="cta" id="login-btn">${SB_ON ? (me ? "Tài khoản" : "Đăng nhập") : (token ? "Đăng xuất" : "Đăng nhập")}</button>`;
+  $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("");
   const fab = $("fab-contact"); fab.hidden = !SB_ON || st.view === "admin" || !!token; fab.innerHTML = IC.chat + "<span>Liên hệ</span>";
   const n = data.docs.length + data.items.length;
   $("foot").innerHTML = `<div class="foot">
@@ -723,6 +769,9 @@ function renderChrome(){
 
 /* ---------- home ---------- */
 function countOf(k){ return k === "subjects" ? data.subjects.length : data.items.filter(i => i.section === k).length; }
+/* bento: rows of at most 4 cards on a 12-column grid, every row filled edge to edge */
+function spanOf(n, total){ const rows = Math.ceil(total / 4), base = Math.floor(total / rows), extra = total % rows; let i = n, r = 0;
+  while (true){ const inRow = base + (r < extra ? 1 : 0); if (i < inRow) return 12 / inRow; i -= inRow; r++; } }
 function renderHome(){
   const p = data.profile;
   const feats = (SUBJ.hidden ? [] : [["subjects", SUBJ.label, SUBJ.short, data.subjects.length + " môn"]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k, s.label, s.short, countOf(k) + " " + s.one]));
@@ -737,11 +786,12 @@ function renderHome(){
   <section class="hero"><div class="hero-bg" ${p.cover ? `style="background-image:url('${esc(href(p.cover))}')"` : ""}></div><canvas id="gear" width="900" height="900" aria-hidden="true" ${showGear ? "" : "hidden"}></canvas>
     <div class="in">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}
       <h1>${esc(txt("hero","t1","Hồ sơ học tập"))} <em>${esc(txt("hero","t2","Kỹ thuật Ô tô"))}</em></h1>
+      <div class="hmeta">${[[IC.cap,p.lop],[IC.pin,p.truong],[IC.cal,p.nienKhoa]].filter(x => x[1]).map(([i,v]) => `<span>${i}${esc(v)}</span>`).join("")}</div>
       <p>${esc(p.intro || "")}</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">${first && b1 ? `<button class="pillbtn" data-go="${first}">${esc(b1)}</button>` : ""}${second && b2 ? `<button class="pillbtn ghost" data-go="${second}">${esc(b2)}</button>` : ""}</div>
       <div class="hstats"><div><b data-count="${data.subjects.length}">${data.subjects.length}</b><span>môn học</span></div><div><b data-count="${data.docs.length}">${data.docs.length}</b><span>tài liệu</span></div><div><b data-count="${data.items.length}">${data.items.length}</b><span>bài đăng</span></div></div>
     </div></section>
-  <div class="in"><div class="feat">${feats.map(([k,l,b,c]) => `<button class="fcard" data-go="${k}"><span class="bump">${icon(k)}</span><span class="go" aria-hidden="true">↗</span><b>${esc(l)}</b><span>${esc(b)}</span><i>${esc(c)}</i></button>`).join("")}</div></div>
+  <div class="in"><div class="feat">${feats.map(([k,l,b,c],n) => `<button class="fcard" data-go="${k}" style="--sp:${spanOf(n, feats.length)}"><span class="bump">${icon(k)}</span><span class="go" aria-hidden="true">↗</span><b>${esc(l)}</b><span>${esc(b)}</span><i>${esc(c)}</i></button>`).join("")}</div></div>
   ${st.error ? `<div class="in" style="margin-top:28px"><div class="empty"><h3>Không tải được dữ liệu</h3><p>${esc(st.error)}</p></div></div>` : ""}
   ${txt("home","showRecent",true) === false ? "" : `<section class="sec"><div class="in"><div class="sec-title"><h2>${esc(txt("home","recentTitle","Mới cập nhật"))}</h2><p>${esc(txt("home","recentSub","Những tài liệu và sản phẩm vừa được đưa lên hồ sơ."))}</p></div>
     ${recent.length ? `<div class="docs" style="margin-top:0">${recent.map(r => `<div class="doc"><span class="ext ${extClass(r.ext)}">${esc(String(r.ext).slice(0,4).toUpperCase())}</span><div style="min-width:0"><div class="t">${esc(r.t)}</div><div class="d">${esc([r.kind, fmtDate(r.when)].filter(Boolean).join(" · "))}</div></div><div class="acts"><button class="btn sm navy" ${r.go}>Xem</button></div></div>`).join("")}</div>`
