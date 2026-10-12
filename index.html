@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>HT Automobile – Hầu Ngọc Minh Tâm</title>
+<title>VEGAPUNK – Hầu Ngọc Minh Tâm</title>
 <meta name="description" content="Hồ sơ học tập ngành Công nghệ Kỹ thuật Ô tô của Hầu Ngọc Minh Tâm – Đại học Lạc Hồng: môn học, bài báo, slide, thiết kế 3D và sản phẩm.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="HT Automobile">
-<meta property="og:title" content="HT Automobile – Hầu Ngọc Minh Tâm">
+<meta property="og:site_name" content="VEGAPUNK">
+<meta property="og:title" content="VEGAPUNK – Tài liệu môn học của Hầu Ngọc Minh Tâm">
 <meta property="og:description" content="Môn học, bài báo, slide, thiết kế 3D, sản phẩm và dịch vụ in 3D kỹ thuật của sinh viên Công nghệ Kỹ thuật Ô tô.">
 <meta property="og:url" content="https://hautam0654-glitch.github.io/">
 <meta property="og:image" content="https://hautam0654-glitch.github.io/og.png">
@@ -553,7 +553,7 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 <div class="navwrap"><div class="in topbar">
   <button class="brand" data-go="home" aria-label="Về trang chủ">
     <span class="logo" id="logo-svg"><img src="logo-icon.png" alt="" width="40" height="40"></span>
-    <span><b id="brand-name">HT Automobile</b><span id="brand-sub">Ô tô &amp; Pin Lithium</span></span>
+    <span><b id="brand-name">VEGAPUNK</b><span id="brand-sub">Tài liệu môn học</span></span>
   </button>
   <nav class="nav" id="nav" aria-label="Các mục"></nav>
   <div class="nav-r" id="nav-r"></div>
@@ -827,8 +827,8 @@ function compressImage(file, max){
 }
 
 /* ---------- chrome ---------- */
-const brandName = () => (site().brand && site().brand.name) || "HT Automobile";
-const brandSub = () => (site().brand && site().brand.sub) || "Ô tô & Pin Lithium";
+const brandName = () => (site().brand && site().brand.name) || "VEGAPUNK";
+const brandSub = () => (site().brand && site().brand.sub) || "Tài liệu môn học";
 function fitNav(){ const tb = document.querySelector(".topbar"), nav = $("nav"); if (!tb || !nav) return; tb.classList.remove("wrap"); if (innerWidth > 900 && nav.scrollWidth > nav.clientWidth + 1) tb.classList.add("wrap"); }
 addEventListener("resize", () => { clearTimeout(fitNav.t); fitNav.t = setTimeout(fitNav, 120); });
 if (document.fonts) document.fonts.ready.then(fitNav);

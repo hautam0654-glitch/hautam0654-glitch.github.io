@@ -908,6 +908,10 @@
   "theme": {
    "navy": "#0f2757",
    "accent": "#bd7b00"
+  },
+  "brand": {
+   "name": "VEGAPUNK",
+   "sub": "Tài liệu môn học"
   }
  }
 }
