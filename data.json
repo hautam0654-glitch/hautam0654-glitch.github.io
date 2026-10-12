@@ -740,9 +740,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/san-pham/Nhom-4mm-muvbuq1rsi.dxf",
+     "path": "L/san-pham/Nhom-4mm-muvbuq1rsi.dxf",
      "name": "Nhom 4mm.dxf",
-     "size": 21196
+     "size": 21196,
+     "locked": true
     }
    ],
    "links": [],
