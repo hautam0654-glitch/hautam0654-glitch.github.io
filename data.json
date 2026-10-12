@@ -620,9 +620,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/thiet-ke-3d/A4-Main-Shaft-SPUR-Gears-muvbgebx9k.stl",
+     "path": "L/thiet-ke-3d/A4-Main-Shaft-SPUR-Gears-muvbgebx9k.stl",
      "name": "A4-Main Shaft SPUR Gears.stl",
-     "size": 1840384
+     "size": 1840384,
+     "locked": true
     },
     {
      "path": "files/thiet-ke-3d/A2-Sliding-Dog-Clutch-muvbghdp75.stl",
