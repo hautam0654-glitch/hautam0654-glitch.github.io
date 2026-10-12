@@ -656,9 +656,10 @@
      "locked": true
     },
     {
-     "path": "files/thiet-ke-3d/C2-Bearings-muvbgsbxt7.stl",
+     "path": "L/thiet-ke-3d/C2-Bearings-muvbgsbxt7.stl",
      "name": "C2-Bearings.stl",
-     "size": 621584
+     "size": 621584,
+     "locked": true
     },
     {
      "path": "files/thiet-ke-3d/C1-Housing-muvbgur1id.stl",
