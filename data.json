@@ -581,9 +581,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/bai-bao/bai-bao-AMT-PGT-2026-muvbc0vczz.pdf",
+     "path": "L/bai-bao/bai-bao-AMT-PGT-2026-muvbc0vczz.pdf",
      "name": "bài báo AMT PGT 2026.pdf",
-     "size": 2285556
+     "size": 2285556,
+     "locked": true
     }
    ],
    "links": [],
