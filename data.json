@@ -805,6 +805,14 @@
     "short": "In 3D kỹ thuật, hỗ trợ đồ án",
     "blurb": "Các dịch vụ kỹ thuật mình nhận làm. Gửi yêu cầu, mình sẽ liên hệ lại.",
     "hidden": false
+   },
+   "c-mv5a10bx": {
+    "label": "Trenining AI Hướng dẫn cách dùng AI",
+    "short": "Hướng dẫn cách dùng AI như nào sử dụng tối ưu biết cách sài tối đa  về AI",
+    "blurb": "",
+    "hidden": false,
+    "custom": true,
+    "layout": "card"
    }
   },
   "footer": "Email: hautam0654@gmail.com     https://maps.app.goo.gl/ZzkwCMRU9aU7ssX67",
