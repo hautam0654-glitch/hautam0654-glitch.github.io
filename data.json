@@ -522,9 +522,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/slide/CHAT-LUONG-BE-MAT-CHI-TIET-MAY-muvat85rag.pptx",
+     "path": "L/slide/CHAT-LUONG-BE-MAT-CHI-TIET-MAY-muvat85rag.pptx",
      "name": "CHẤT LƯỢNG BỀ MẶT CHI TIẾT MÁY.pptx",
-     "size": 2761132
+     "size": 2761132,
+     "locked": true
     }
    ],
    "links": [],
