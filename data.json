@@ -598,9 +598,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/slide/Phan-chia-cong-suat-Chi-dung-PGT-muvbdopc9g.pptx",
+     "path": "L/slide/Phan-chia-cong-suat-Chi-dung-PGT-muvbdopc9g.pptx",
      "name": "Phân chia công suất  Chỉ dùng PGT.pptx",
-     "size": 25788833
+     "size": 25788833,
+     "locked": true
     }
    ],
    "links": [],
