@@ -561,9 +561,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/bai-bao/Nghien-cuu-HT-boi-tron-wankel-muvb6ez3rk.docx",
+     "path": "L/bai-bao/Nghien-cuu-HT-boi-tron-wankel-muvb6ez3rk.docx",
      "name": "Nghiên cứu HT bôi trơn wankel.docx",
-     "size": 985842
+     "size": 985842,
+     "locked": true
     }
    ],
    "links": [],
