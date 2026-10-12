@@ -759,9 +759,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/san-pham/Suspension-Dot2-muw9zk7e6r.docx",
+     "path": "L/san-pham/Suspension-Dot2-muw9zk7e6r.docx",
      "name": "Suspension Dot2.docx",
-     "size": 7227748
+     "size": 7227748,
+     "locked": true
     }
    ],
    "links": [],
