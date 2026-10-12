@@ -793,6 +793,25 @@
    "links": [],
    "price": "Trao đổi theo nội dung",
    "time": "Theo tiến độ đồ án"
+  },
+  {
+   "id": "xmv59tz2doy3s",
+   "section": "products",
+   "added": "2026-10-12T13:11:48.421Z",
+   "title": "Phiếu đo kiểm thân máy 1NZ-FE",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "L/san-pham/Phieu-do-kiem-than-may-1NZ-FE-mv59tx06uh.pdf",
+     "name": "Phiếu đo kiểm thân máy 1NZ-FE.pdf",
+     "size": 263802,
+     "locked": true
+    }
+   ],
+   "links": [],
+   "context": ""
   }
  ],
  "site": {
