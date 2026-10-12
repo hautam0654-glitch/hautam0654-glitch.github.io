@@ -662,9 +662,10 @@
      "locked": true
     },
     {
-     "path": "files/thiet-ke-3d/C1-Housing-muvbgur1id.stl",
+     "path": "L/thiet-ke-3d/C1-Housing-muvbgur1id.stl",
      "name": "C1-Housing.stl",
-     "size": 1493184
+     "size": 1493184,
+     "locked": true
     }
    ],
    "links": [],
