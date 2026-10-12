@@ -541,9 +541,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/bai-bao/wankel-2-muvb4w00fi.pdf",
+     "path": "L/bai-bao/wankel-2-muvb4w00fi.pdf",
      "name": "wankel 2.pdf",
-     "size": 19712416
+     "size": 19712416,
+     "locked": true
     }
    ],
    "links": [],
