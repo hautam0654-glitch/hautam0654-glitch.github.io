@@ -718,9 +718,10 @@
    "cover": null,
    "files": [
     {
-     "path": "files/thiet-ke-3d/Engine-Toyota-1NZ-muvbtn1rva.stp",
+     "path": "L/thiet-ke-3d/Engine-Toyota-1NZ-muvbtn1rva.stp",
      "name": "Engine Toyota 1NZ.stp",
-     "size": 26532012
+     "size": 26532012,
+     "locked": true
     }
    ],
    "links": [],
