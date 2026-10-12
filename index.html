@@ -16,6 +16,8 @@
 <meta property="og:locale" content="vi_VN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0F1E3D">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap">
@@ -453,11 +455,14 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 /* ===== v3 look: one glass top bar, duotone hero, bento cards ===== */
 .navwrap{background:color-mix(in srgb,var(--navy-3) 95%,transparent)}
 .topbar{display:flex;align-items:center;gap:18px;min-height:66px}
+.in.topbar{max-width:1440px}
+.topbar.wrap{max-width:var(--w)}
 .topbar .brand b{color:#fff;font-size:16.5px;letter-spacing:-.01em}
 .topbar .brand span span{color:#93A0BA;font-size:12px}
 .topbar .logo{width:40px;height:40px;border-radius:11px}
 .topbar .logo svg{width:24px;height:24px}
-.topbar .nav{flex:1;min-width:0;justify-content:center;padding-block:0}
+.logo img{width:84%;height:84%;object-fit:contain;display:block}
+.topbar .nav{flex:1;min-width:0;justify-content:safe center;padding-block:0}
 .topbar .nav button{font-size:13.5px;padding:8px 13px;color:#C3CDE2}
 .topbar .nav button[aria-current="page"]{color:#fff;background:color-mix(in srgb,var(--amber) 20%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--amber) 45%,transparent)}
 .nav-r{display:flex;gap:8px;align-items:center;flex:none}
@@ -483,10 +488,14 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 .feat .fcard i{margin-top:auto;padding-top:14px;background:none;color:var(--amber);font-size:13px;padding-inline:0;border-radius:0}
 .feat .fcard::after{content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;border:16px solid rgba(255,255,255,.035);pointer-events:none}
 @media (max-width:1100px){.topbar .nav{justify-content:flex-start}}
+/* when the tabs do not fit beside the brand, they move to their own row */
+.topbar.wrap{flex-wrap:wrap;gap:10px;min-height:0;padding-top:10px}
+.topbar.wrap .brand{flex:1}
+.topbar.wrap .nav{order:3;flex:0 0 100%;max-width:100%;padding:0 0 8px;justify-content:safe center}
 @media (max-width:900px){
   .topbar{flex-wrap:wrap;gap:10px;min-height:0;padding-top:10px}
   .topbar .brand{flex:1}
-  .topbar .nav{order:3;flex:0 0 calc(100% + 32px);max-width:calc(100% + 32px);margin-inline:-16px;padding:0 12px 8px;justify-content:flex-start}
+  .topbar .nav,.topbar.wrap .nav{order:3;flex:0 0 calc(100% + 32px);max-width:calc(100% + 32px);margin-inline:-16px;padding:0 12px 8px;justify-content:flex-start}
   .feat .fcard{grid-column:span 6}
   .feat .fcard:last-child:nth-child(odd){grid-column:span 12}
 }
@@ -506,7 +515,7 @@ main.enter :is(.fcard,.sub,.card,.cite):nth-child(n+6){animation-delay:.34s}
 <div class="progress" id="progress"></div>
 <div class="navwrap"><div class="in topbar">
   <button class="brand" data-go="home" aria-label="Về trang chủ">
-    <span class="logo" id="logo-svg"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2.4"/><g stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M6.8 25.2l2.8-2.8M22.4 9.6l2.8-2.8"/></g></svg></span>
+    <span class="logo" id="logo-svg"><img src="logo-icon.png" alt="" width="40" height="40"></span>
     <span><b id="brand-name">Hồ sơ Ô tô</b><span id="brand-sub">Công nghệ Kỹ thuật Ô tô</span></span>
   </button>
   <nav class="nav" id="nav" aria-label="Các mục"></nav>
@@ -749,6 +758,9 @@ function compressImage(file, max){
 }
 
 /* ---------- chrome ---------- */
+function fitNav(){ const tb = document.querySelector(".topbar"), nav = $("nav"); if (!tb || !nav) return; tb.classList.remove("wrap"); if (innerWidth > 900 && nav.scrollWidth > nav.clientWidth + 1) tb.classList.add("wrap"); }
+addEventListener("resize", () => { clearTimeout(fitNav.t); fitNav.t = setTimeout(fitNav, 120); });
+if (document.fonts) document.fonts.ready.then(fitNav);
 function renderChrome(){
   const p = data.profile;
   const who = me ? ((me.profile && me.profile.full_name) || me.user.email) : "";
@@ -758,6 +770,7 @@ function renderChrome(){
   const cur = st.view === "home" ? "home" : st.view === "admin" ? "admin" : (st.view === "subjects" || st.view === "subject") ? "subjects" : st.sec;
   const tabs = [["home","Trang chủ"]].concat(SUBJ.hidden ? [] : [["subjects",SUBJ.label]]).concat(Object.entries(SECS).filter(([k,s]) => !s.hidden).map(([k,s]) => [k,s.label])).concat((token || sbAdmin()) ? [["admin","Quản trị"]] : []);
   $("nav").innerHTML = tabs.map(([k,l]) => `<button data-go="${k}" ${cur===k ? 'aria-current="page"' : ""}>${esc(l)}</button>`).join("");
+  fitNav();
   const fab = $("fab-contact"); fab.hidden = !SB_ON || st.view === "admin" || !!token; fab.innerHTML = IC.chat + "<span>Liên hệ</span>";
   const n = data.docs.length + data.items.length;
   $("foot").innerHTML = `<div class="foot">
