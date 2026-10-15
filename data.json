@@ -629,7 +629,7 @@
    "title": "Mạch xe rc hybird",
    "desc": "",
    "date": "",
-   "cover": "files/san-pham/anh-mv94myb0h2.jpg",
+   "cover": null,
    "files": [
     {
      "path": "L/san-pham/so-do-mach-muvbi34aaj.png",
@@ -687,7 +687,7 @@
    "title": "Sàn Rc",
    "desc": "",
    "date": "",
-   "cover": "files/san-pham/anh-mv94mdhpw1.jpg",
+   "cover": null,
    "files": [
     {
      "path": "L/san-pham/Nhom-4mm-muvbuq1rsi.dxf",
@@ -770,7 +770,7 @@
    "title": "CODE ARDUINO",
    "desc": "",
    "date": "",
-   "cover": "files/san-pham/anh-mv94kkr85e.jpg",
+   "cover": null,
    "files": [
     {
      "path": "L/san-pham/Code-xe-Hybrid-mv5af81qbp.ino",
@@ -851,23 +851,48 @@
    "context": ""
   },
   {
-   "id": "xmv94jcvkwn9u",
-   "section": "products",
-   "added": "2026-10-15T05:54:39.728Z",
-   "title": "Sơ đồ đấu máy khởi động",
+   "id": "xmv94tmaz9gyv",
+   "section": "papers",
+   "added": "2026-10-15T06:02:38.507Z",
+   "title": "bài báo",
    "desc": "",
    "date": "",
-   "cover": "files/san-pham/anh-mv94iyf158.jpg",
+   "cover": null,
    "files": [
     {
-     "path": "L/san-pham/1792043579816-273312752021020708-5650124615790317446-626c4ac-mv94j0xp63.jpg",
-     "name": "1792043579816_273312752021020708_5650124615790317446_626c4ac4537c30d266dd934b0d6dbbf1.jpg",
-     "size": 785676,
+     "path": "L/bai-bao/Bai-01-Nhan-dang-cau-truc-va-phan-tich-dong-hoc-hop-so-hybri-mv94o3zwqu.docx",
+     "name": "Bài 01 - Nhận dạng cấu trúc và phân tích động học hộp số hybrid.docx",
+     "size": 1691853,
+     "locked": true
+    },
+    {
+     "path": "L/bai-bao/Bai-02-Mo-men-phan-tu-duong-truyen-cong-suat-va-hieu-suat-an-mv94ozh1uh.docx",
+     "name": "Bài 02 - Mô-men phần tử, đường truyền công suất và hiệu suất ăn khớp.docx",
+     "size": 1206399,
+     "locked": true
+    },
+    {
+     "path": "L/bai-bao/Bai-03-Sai-so-roi-rac-hoa-chu-trinh-lai-trong-mo-phong-lui-mv94pm02eh.docx",
+     "name": "Bài 03 - Sai số rời rạc hóa chu trình lái trong mô phỏng lùi.docx",
+     "size": 2265960,
+     "locked": true
+    },
+    {
+     "path": "L/bai-bao/Bai-04-Anh-huong-cua-ba-tham-so-dieu-khien-den-tieu-hao-nhie-mv94qstdwk.docx",
+     "name": "Bài 04 - Ảnh hưởng của ba tham số điều khiển đến tiêu hao nhiên liệu.docx",
+     "size": 2711771,
+     "locked": true
+    },
+    {
+     "path": "L/bai-bao/Bai-05-Khong-gian-so-rang-kha-thi-cua-hop-so-hybrid-mv94sh300g.docx",
+     "name": "Bài 05 - Không gian số răng khả thi của hộp số hybrid.docx",
+     "size": 2453434,
      "locked": true
     }
    ],
    "links": [],
-   "context": ""
+   "authors": "",
+   "venue": ""
   }
  ],
  "site": {
