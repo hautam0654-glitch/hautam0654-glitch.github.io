@@ -817,18 +817,6 @@
    "cover": null,
    "files": [
     {
-     "path": "L/c-mv5a10bx/caveman-main-mv5aqgm0md.zip",
-     "name": "caveman-main.zip",
-     "size": 6818383,
-     "locked": true
-    },
-    {
-     "path": "L/c-mv5a10bx/claude-video-main-mv5as774lr.zip",
-     "name": "claude-video-main.zip",
-     "size": 54360,
-     "locked": true
-    },
-    {
      "path": "L/c-mv5a10bx/Deep-Research-skills-master-mv5as820y2.zip",
      "name": "Deep-Research-skills-master.zip",
      "size": 538190,
@@ -838,12 +826,6 @@
      "path": "L/c-mv5a10bx/dung-truoc-khi-viet-mv5asczgnq.zip",
      "name": "dùng trước khi viết.zip",
      "size": 665983,
-     "locked": true
-    },
-    {
-     "path": "L/c-mv5a10bx/humanizer-main-mv5asjta8x.zip",
-     "name": "humanizer-main.zip",
-     "size": 24296,
      "locked": true
     }
    ],
