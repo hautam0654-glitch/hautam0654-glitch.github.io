@@ -919,43 +919,6 @@
    "files": [],
    "links": [],
    "context": ""
-  },
-  {
-   "id": "xmvcf6ssiw3u8",
-   "section": "c-mv5a10bx",
-   "added": "2026-10-17T13:16:08.130Z",
-   "title": "Hướng dẫn cách làm việc",
-   "desc": "",
-   "date": "",
-   "cover": null,
-   "files": [
-    {
-     "path": "L/c-mv5a10bx/04-Cach-dat-form-prompt-cho-AI-hieu-qua-mvcf6n14uw.pdf",
-     "name": "04 – Cách đặt form (prompt) cho AI hiệu quả.pdf",
-     "size": 77036,
-     "locked": true
-    },
-    {
-     "path": "L/c-mv5a10bx/03-Connector-va-cong-cu-ket-noi-mvcf6oef7v.pdf",
-     "name": "03 – Connector và công cụ kết nối.pdf",
-     "size": 80543,
-     "locked": true
-    },
-    {
-     "path": "L/c-mv5a10bx/01-Cai-dat-ca-nhan-hoa-Claude-mvcf6pnkl8.pdf",
-     "name": "01 – Cài đặt cá nhân hóa Claude.pdf",
-     "size": 93924,
-     "locked": true
-    },
-    {
-     "path": "L/c-mv5a10bx/02-Skill-va-Plugin-da-cai-cho-Claude-mvcf6rc3vi.pdf",
-     "name": "02 – Skill và Plugin đã cài cho Claude.pdf",
-     "size": 101858,
-     "locked": true
-    }
-   ],
-   "links": [],
-   "context": ""
   }
  ],
  "site": {
