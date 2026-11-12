@@ -1027,6 +1027,25 @@
    ],
    "links": [],
    "context": ""
+  },
+  {
+   "id": "xmwdmam0b5tqg",
+   "section": "products",
+   "added": "2026-11-12T14:02:31.787Z",
+   "title": "xe tự né",
+   "desc": "",
+   "date": "",
+   "cover": null,
+   "files": [
+    {
+     "path": "L/san-pham/xe-tranh-vat-can-v27-mwdmaj409g.ino",
+     "name": "xe_tranh_vat_can_v27.ino",
+     "size": 6498,
+     "locked": true
+    }
+   ],
+   "links": [],
+   "context": ""
   }
  ],
  "site": {
